@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.RestaurantForYou.dto.LoginDTO;
+import com.sbnz.RestaurantForYou.dto.RegistrationDTO;
 import com.sbnz.RestaurantForYou.dto.TokenDTO;
 import com.sbnz.RestaurantForYou.service.UserService;
 
@@ -27,6 +28,14 @@ public class UserController {
 	public  ResponseEntity<TokenDTO> logIn( @RequestBody LoginDTO dto ) {
 		String token = userService.logIn(dto);
 		return new ResponseEntity<TokenDTO>(new TokenDTO(token), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/registration")
+	public ResponseEntity<Boolean> register (@RequestBody RegistrationDTO dto){
+		if (userService.registrtion(dto) == null) {
+			return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 	
 }

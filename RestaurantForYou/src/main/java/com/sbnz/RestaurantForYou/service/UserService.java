@@ -7,7 +7,10 @@ import org.springframework.security.authentication.InternalAuthenticationService
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import com.sbnz.RestaurantForYou.converter.RegistrationDTOConverter;
 import com.sbnz.RestaurantForYou.dto.LoginDTO;
+import com.sbnz.RestaurantForYou.dto.RegistrationDTO;
+import com.sbnz.RestaurantForYou.model.RegisteredUser;
 import com.sbnz.RestaurantForYou.model.User;
 import com.sbnz.RestaurantForYou.repository.UserRepository;
 import com.sbnz.RestaurantForYou.security.JwtToken;
@@ -40,6 +43,16 @@ public class UserService {
 		}
 		final User user = repository.findOneByUsername(dto.getUsername());
 		return jwtTokenUtil.generateToken(user.getUsername(), user.getRole().toString());
+	}
+	
+	public RegisteredUser registrtion(RegistrationDTO dto) {
+		// check if username is taken
+		if (repository.findOneByUsername(dto.getUsername()) != null) {
+			return null;
+		}
+		RegisteredUser newUser = RegistrationDTOConverter.convertFromDTO(dto);
+		repository.save(newUser);
+		return newUser;
 	}
 	
 

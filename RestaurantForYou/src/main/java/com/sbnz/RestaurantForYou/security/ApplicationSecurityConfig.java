@@ -59,7 +59,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// don't authenticate this particular request
 				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**")
-				.permitAll().antMatchers(HttpMethod.POST, "/api/users/login").permitAll()
+				.permitAll().antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration").permitAll()
 
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and()
@@ -71,6 +71,6 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter will ignore the following
-		web.ignoring().antMatchers(HttpMethod.POST, "/api/users/login");
+		web.ignoring().antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration");
 	}
 }
