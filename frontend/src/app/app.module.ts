@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user.service';
 import { ConstantsService } from './service/constants.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ConstantsService } from './service/constants.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    RouterModule,
     MaterialModule,
     HttpClientModule,
     UsersModule

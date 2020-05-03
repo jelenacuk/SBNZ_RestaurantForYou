@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+    /* The image used */
+    background-image:url("src\assets\images\bg14.jpg");
+    /* Full height */
+    height: 100%;
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+ }
 
 .form-wrapper {
     margin-top: 5%;
@@ -9,7 +19,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .box {
     margin: auto;
-    opacity: 1;
+    opacity: 0.9;
     padding: 60px 50px 40px 50px;
     width: 100%;
     background: #fff;
