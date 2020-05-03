@@ -10,11 +10,13 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm: FormGroup;
+  private loginForm: FormGroup;
+  private hide: boolean;
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) { }
 
   ngOnInit() {
+    this.hide = true;
     this.loginForm = this.formBuilder.group({
       username: ['', [
         Validators.required

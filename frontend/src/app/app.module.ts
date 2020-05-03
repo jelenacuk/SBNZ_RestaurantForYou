@@ -10,6 +10,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user.service';
 import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NavbarModule } from './navbar/navbar.module';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,11 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     BrowserAnimationsModule,
     RouterModule,
+    FormsModule,
     MaterialModule,
     HttpClientModule,
-    UsersModule
+    UsersModule,
+    NavbarModule
   ],
   providers: [
     UserService,
