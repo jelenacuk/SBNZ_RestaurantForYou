@@ -4,7 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material/material/material.module';
+import { MaterialModule } from './material/matrial.module';
+import { UsersModule } from './users/users.module';
+import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './service/user.service';
+import { ConstantsService } from './service/constants.service';
 
 @NgModule({
   declarations: [
@@ -14,9 +18,14 @@ import { MaterialModule } from './material/material/material.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule,
+    UsersModule
   ],
-  providers: [],
+  providers: [
+    UserService,
+    ConstantsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
