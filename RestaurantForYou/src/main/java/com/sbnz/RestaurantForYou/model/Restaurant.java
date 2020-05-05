@@ -24,6 +24,8 @@ public class Restaurant {
 	private Long id;
 	@Column(nullable = false)
 	private String name;
+	@Column(nullable = false)
+	private String description;
 	@Enumerated(EnumType.STRING)
 	private Price price;
 	@Enumerated(EnumType.STRING)
@@ -34,6 +36,8 @@ public class Restaurant {
 	private Music music;
 	@Enumerated(EnumType.STRING)
 	private Ambience ambience;
+	@Column
+	private String image;
 	@Column
 	private boolean programForChildern;
 	@Column
@@ -149,6 +153,22 @@ public class Restaurant {
 
 	public void setWorkingDays(Map<String, WorkingDay> workingDays) {
 		this.workingDays = workingDays;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

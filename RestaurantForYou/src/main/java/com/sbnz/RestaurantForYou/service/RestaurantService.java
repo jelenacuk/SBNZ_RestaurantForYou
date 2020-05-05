@@ -33,7 +33,7 @@ public class RestaurantService {
 		Page<Restaurant> restaurants = repository.findAll(pageable);
 		return (restaurants.stream().map(restaurant -> {
 			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant);
-			// set total size
+			dto.setSize(restaurants.getSize());
 			return dto;
 		})).collect(Collectors.toList());
 	}

@@ -12,10 +12,14 @@ import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavbarModule } from './navbar/navbar.module';
+import { RestaurantsListComponent } from './restaurants/restaurants-list/restaurants-list.component';
+import { AddRestaurantComponent } from './restaurants/add-restaurant/add-restaurant.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RestaurantsListComponent,
+    AddRestaurantComponent
   ],
   imports: [
     BrowserModule,

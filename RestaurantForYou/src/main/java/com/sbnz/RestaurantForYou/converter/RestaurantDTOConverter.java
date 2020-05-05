@@ -29,6 +29,7 @@ public class RestaurantDTOConverter {
 		restaurant.setProgramForChildern(dto.isProgramForChildern());
 		restaurant.setGarden(dto.isGarden());
 		restaurant.setWideRangeOfWines(dto.isWideRangeOfWines());
+		restaurant.setDescription(dto.getDescription());
 		Location location = new Location(dto.getStreet(), dto.getNumber(), dto.getLatitude(), dto.getLongitude());
 		restaurant.setLocation(location);
 
@@ -59,6 +60,9 @@ public class RestaurantDTOConverter {
 		dto.setLongitude(restaurant.getLocation().getLongitude());
 		dto.setStreet(restaurant.getLocation().getStreet());
 		dto.setNumber(restaurant.getLocation().getNumber());
+		dto.setImage(restaurant.getImage());
+		dto.setId(restaurant.getId());
+		dto.setDescription(restaurant.getDescription());
 		for (WorkingDay workingDay : restaurant.getWorkingDays().values()) {
 			dto.getWorkingDays().add(convertWorkingDay(workingDay));
 		}

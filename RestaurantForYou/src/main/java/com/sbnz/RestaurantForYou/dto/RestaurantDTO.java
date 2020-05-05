@@ -5,7 +5,10 @@ import java.util.List;
 
 public class RestaurantDTO {
 
+	private Long id;
+	private String image;
 	private String name;
+	private String description;
 	private String price;
 	private String capacity;
 	private String kitchen;
@@ -18,6 +21,7 @@ public class RestaurantDTO {
 	private String number;
 	private double latitude;
 	private double longitude;
+	private int size;
 	private List<WorkingDayDTO> workingDays = new ArrayList<WorkingDayDTO>();
 
 	public RestaurantDTO() {
@@ -134,6 +138,38 @@ public class RestaurantDTO {
 
 	public void setWorkingDays(List<WorkingDayDTO> workingDays) {
 		this.workingDays = workingDays;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 
 	
