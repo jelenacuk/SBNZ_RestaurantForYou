@@ -21,7 +21,7 @@ public class RestaurantDTO {
 	private String number;
 	private double latitude;
 	private double longitude;
-	private int size;
+	private long size;
 	private List<WorkingDayDTO> workingDays = new ArrayList<WorkingDayDTO>();
 
 	public RestaurantDTO() {
@@ -164,11 +164,11 @@ public class RestaurantDTO {
 		this.description = description;
 	}
 
-	public int getSize() {
+	public long getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
+	public void setSize(long size) {
 		this.size = size;
 	}
 

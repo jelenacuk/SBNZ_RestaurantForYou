@@ -1,3 +1,5 @@
+import { WorkingDayDto } from './working-day-dto';
+
 export class AddRestaurantDto {
 
     name: string;
@@ -15,5 +17,6 @@ export class AddRestaurantDto {
     number: string;
     latitude: number;
     longitude: number;
+    workingDays: WorkingDayDto[];
 
 }

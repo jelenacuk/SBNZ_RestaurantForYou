@@ -1,7 +1,7 @@
 <div >
     <div class="float-container">
         <div class="float-child card" *ngFor="let restaurant of restaurants">
-            <img class="card-img-top" src="..\..\assets\images\bg14.jpg" alt="Card image cap">
+            <img class="card-img-top" src={{getPicture(restaurant.image)}} width="220" height="220" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{restaurant.name}}</h5>
               <span class="card-subtitle">{{restaurant.street + ' ' + restaurant.number}}</span>

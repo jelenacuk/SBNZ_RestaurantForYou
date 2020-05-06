@@ -14,12 +14,11 @@ import { FormsModule } from '@angular/forms';
 import { NavbarModule } from './navbar/navbar.module';
 import { RestaurantsListComponent } from './restaurants/restaurants-list/restaurants-list.component';
 import { AddRestaurantComponent } from './restaurants/add-restaurant/add-restaurant.component';
+import { RestaurantsModule } from './restaurants/restaurants.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RestaurantsListComponent,
-    AddRestaurantComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +29,8 @@ import { AddRestaurantComponent } from './restaurants/add-restaurant/add-restaur
     MaterialModule,
     HttpClientModule,
     UsersModule,
-    NavbarModule
+    NavbarModule,
+    RestaurantsModule
   ],
   providers: [
     UserService,

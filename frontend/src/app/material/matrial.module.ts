@@ -5,7 +5,7 @@ import {
   MatDatepickerModule, MatListModule, MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS,
   MatSelectModule, MatTooltipModule, MatToolbarModule, MatTabsModule, MatTableModule, MatPaginatorModule,
   MatMenuModule, MatExpansionModule, MatSortModule, MatAutocompleteModule, MatSlideToggleModule,
-  MatRadioModule, MatDialogModule, MatCheckboxModule, MatChipsModule
+  MatRadioModule, MatDialogModule, MatCheckboxModule, MatChipsModule, MatOptionModule
 } from '@angular/material';
 
 const MatererialComponents = [
@@ -15,7 +15,10 @@ const MatererialComponents = [
   MatIconModule,
   MatToolbarModule,
   MatChipsModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatOptionModule,
+  MatSelectModule,
+  MatCheckboxModule
 ];
 
 @NgModule({

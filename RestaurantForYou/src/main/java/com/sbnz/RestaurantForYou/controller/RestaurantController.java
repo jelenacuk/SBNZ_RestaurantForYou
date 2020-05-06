@@ -1,5 +1,7 @@
 package com.sbnz.RestaurantForYou.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class RestaurantController {
 
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping(value = "/addRestaurant")
-	public ResponseEntity<Boolean> addNewRestaurant(@RequestBody RestaurantDTO dto) {
+	public ResponseEntity<Boolean> addNewRestaurant(@RequestBody RestaurantDTO dto) throws FileNotFoundException, IOException {
 		boolean result = restaurantService.addNewRestaurant(dto);
 		if (result) {
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
