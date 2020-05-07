@@ -11,10 +11,8 @@ import { UserService } from './service/user.service';
 import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NavbarModule } from './navbar/navbar.module';
-import { RestaurantsListComponent } from './restaurants/restaurants-list/restaurants-list.component';
-import { AddRestaurantComponent } from './restaurants/add-restaurant/add-restaurant.component';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { HomePageModule } from './homepage-common/homepage.module.';
 
 @NgModule({
   declarations: [
@@ -29,8 +27,8 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
     MaterialModule,
     HttpClientModule,
     UsersModule,
-    NavbarModule,
-    RestaurantsModule
+    RestaurantsModule,
+    HomePageModule
   ],
   providers: [
     UserService,

@@ -1,0 +1,17 @@
+<mat-toolbar class="navbar_style">
+    <mat-toolbar-row>
+
+        <button mat-button routerLink = "/"><h4>RestaurantForYou </h4></button>
+        <span class="spacer"></span>
+        <div *ngIf="!loggedIn">
+            <button mat-button routerLink = "/register"><i class="fa fa-users fa-2x" aria-hidden="true"></i>&nbsp; &nbsp;Register</button>
+            <button mat-button routerLink = "/login" ><i  class="fa fa-sign-in fa-2x" aria-hidden="true"></i>&nbsp; &nbsp;Log In</button>
+        </div>
+        <div *ngIf="loggedIn">
+            <button mat-button routerLink = "/"><i class="fa fa-home fa-2x" aria-hidden="true"> </i>&nbsp;Home</button>
+            <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/add-restaurant"><i class="fa fa-home fa-2x" aria-hidden="true"> </i>&nbsp;Add Restaurant</button>
+            <button mat-button><i class="fa fa-user fa-2x" aria-hidden="true"> </i>&nbsp;Profile</button>
+            <button mat-button (click)="onLogOut()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Log Out</button>
+        </div>
+    </mat-toolbar-row>
+</mat-toolbar>

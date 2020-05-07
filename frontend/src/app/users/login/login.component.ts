@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginDto } from 'src/app/dto/login-dto';
 import { UserService } from 'src/app/service/user.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,7 @@ export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
   private hide: boolean;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private router: Router) { }
 
   ngOnInit() {
     this.hide = true;
@@ -37,7 +39,11 @@ export class LoginComponent implements OnInit {
       (response => {
         if (response != null) {
           localStorage.setItem('token', response.token);
-          alert('Successfuly!');
+          const jwt: JwtHelperService = new JwtHelperService();
+          const info = jwt.decodeToken(response.token);
+          const role = info.role[0].authority;
+          localStorage.setItem('role', info.role[0].authority);
+          this.router.navigateByUrl('/');
         }
       }),
       (error => {

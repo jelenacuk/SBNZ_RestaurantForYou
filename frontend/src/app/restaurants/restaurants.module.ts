@@ -19,6 +19,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MaterialModule,
     ReactiveFormsModule,
     FormsModule
+  ],
+  exports: [
+    RestaurantsListComponent,
   ]
 })
 export class RestaurantsModule { }

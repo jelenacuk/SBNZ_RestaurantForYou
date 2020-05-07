@@ -19,7 +19,7 @@ export class RestaurantService {
 
   getRestaurants(event: PageEvent): Observable<RestaurantDto[]> {
     return this.http.get<RestaurantDto[]>(this.constants.restaurantPath + '/?page=' + event.pageIndex + '&size=' +
-    event.pageSize, { headers: this.headers });
+    event.pageSize);
   }
 
   getRestaurantById(id: number): Observable<RestaurantDto> {
