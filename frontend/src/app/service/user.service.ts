@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConstantsService } from './constants.service';
-import { LoginDto } from '../dto/loginDto';
+import { LoginDto } from '../dto/login-dto';
 import { Observable } from 'rxjs';
-import { TokenDto } from '../dto/tokenDto';
+import { TokenDto } from '../dto/token-dto';
 import { UserDto } from '../dto/user-dto';
 
 @Injectable({

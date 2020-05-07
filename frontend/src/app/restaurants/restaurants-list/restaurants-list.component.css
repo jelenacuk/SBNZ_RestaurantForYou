@@ -1,0 +1,28 @@
+.float-container {
+    padding: 20px;
+    display: inline-block;
+}
+
+.float-child {
+    width: 20%;
+    float: left;
+    margin: 2%;
+    max-height: 80%;
+    text-align: justify;
+    opacity: 0.9;
+        border: solid 1px #5C6BC0 ;
+          box-shadow:  0 0 10px  rgba(0,0,0,0.6);
+          -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+          -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+          -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+          flex: 0 1 calc(23.3% - 22px);
+}  
+
+.paginator {
+    margin-left: 15%;
+    margin-bottom: 5%;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    color: black;
+}

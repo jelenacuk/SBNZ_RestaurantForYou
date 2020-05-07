@@ -1,0 +1,29 @@
+<div >
+    <div style="margin-top: 5%;">
+      <!-- Search form -->
+      <form class="form-inline d-flex justify-content-center md-form form-sm mt-0" style="width: 30%; margin: auto;">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+          aria-label="Search">
+          <mat-icon matSuffix>search</mat-icon>
+      </form>
+    </div>
+    <div class="float-container">
+        <div class="float-child card" *ngFor="let restaurant of restaurants">
+            <img class="card-img-top" src={{getPicture(restaurant.image)}} width="220" height="220" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{restaurant.name}}</h5>
+              <span class="card-subtitle">{{restaurant.street + ' ' + restaurant.number}}</span>
+              <mat-chip-list aria-label="Fish selection">
+                <mat-chip>{{restaurant.kitchen}}</mat-chip>
+                <mat-chip>{{restaurant.ambience}}</mat-chip>
+              </mat-chip-list>
+              <p class="card-text">{{restaurant.description}}</p>
+              <a href="#" class="btn btn-outline-primary">READ MORE</a>
+            </div>
+        </div>
+    </div>
+    <mat-paginator class="paginator" [length]="page.length" [pageIndex]="page.pageIndex" [pageSize]="page.pageSize" [pageSizeOptions]="[3, 4, 5, 6, 7, 8]" (page)="nextPage($event)" showFirstLastButtons>
+    </mat-paginator>
+    
+</div>

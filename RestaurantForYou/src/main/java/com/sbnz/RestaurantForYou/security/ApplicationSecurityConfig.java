@@ -58,8 +58,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
 				// don't authenticate this particular request
-				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**")
-				.permitAll().antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration").permitAll()
+				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration").permitAll()
+				.antMatchers(HttpMethod.GET, "/images/**", "/api/restaraunts/").permitAll()
 
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and()
@@ -67,10 +68,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				// intercept every request and add filter
 				.addFilterBefore(verifyTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-	
+
 	@Override
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter will ignore the following
 		web.ignoring().antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration");
+		web.ignoring().antMatchers(HttpMethod.GET, "/api/restaraunts/");
 	}
 }

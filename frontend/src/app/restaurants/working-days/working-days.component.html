@@ -1,0 +1,36 @@
+<div class="form-wrapper" *ngIf = "restaurantDto">
+    <mat-card class="box" >
+        <mat-card-header>
+            <mat-card-title >Working Days</mat-card-title>
+          </mat-card-header>
+          <br>
+          <mat-card-content>
+            <form class="form" noval>
+                <div class="row" *ngFor = "let workingDay of workingDays">
+                    <h5 style="margin: auto;" class="col">{{workingDay.day}}:</h5>
+                    <mat-form-field class="col">
+                      <input id="opening"
+                        matInput
+                        required length="5" pattern="[0,1,2][0-9]*:[0,1,2,3,4,5][0-9]*"
+                        [ngModelOptions]="{standalone: true}"
+                        placeholder="Opening"
+                        [(ngModel)] = "workingDay.openingTime"  #name="ngModel"/>
+                        <mat-error >hh:mm</mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col">
+                      <input id="closing"
+                        matInput
+                        required length="5" pattern="[0-9][0-9]:[0-9][0-9]"
+                        [ngModelOptions]="{standalone: true}"
+                        placeholder="Closing"
+                        [(ngModel)] = "workingDay.closingTime"  #name="ngModel"/>
+                        <mat-error >hh:mm</mat-error>
+                    </mat-form-field>
+                </div>
+                <div  style="text-align: center; margin-top: 5%;">
+                    <button type="button" (click)= "onAddRestaurantSubmit()" class="btn btn-success">Finish</button>
+                </div>
+            </form>
+          </mat-card-content>
+    </mat-card>
+</div>

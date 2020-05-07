@@ -11,7 +11,8 @@ import { UserService } from './service/user.service';
 import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { NavbarModule } from './navbar/navbar.module';
+import { RestaurantsModule } from './restaurants/restaurants.module';
+import { HomePageModule } from './homepage-common/homepage.module.';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NavbarModule } from './navbar/navbar.module';
     MaterialModule,
     HttpClientModule,
     UsersModule,
-    NavbarModule
+    RestaurantsModule,
+    HomePageModule
   ],
   providers: [
     UserService,
