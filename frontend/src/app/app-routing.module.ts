@@ -5,15 +5,17 @@ import { RegistrationComponent } from './users/registration/registration.compone
 import { RestaurantsListComponent } from './restaurants/restaurants-list/restaurants-list.component';
 import { AddRestaurantComponent } from './restaurants/add-restaurant/add-restaurant.component';
 import { HomepageComponent } from './homepage-common/homepage/homepage.component';
+import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: '/home'},
-  {path: 'home', component: HomepageComponent},
+  {path: '', pathMatch: 'full', redirectTo: '/home/false'},
+  {path: 'home/:loggedIn', component: HomepageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'restaurants-list', component: RestaurantsListComponent},
-  {path: 'add-restaurant', component: AddRestaurantComponent}
+  {path: 'add-restaurant', component: AddRestaurantComponent},
+  {path: 'recommandation', component: RestaurantRecommandationComponent}
 ];
 
 @NgModule({

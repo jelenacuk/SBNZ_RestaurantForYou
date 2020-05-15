@@ -10,13 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserService } from './service/user.service';
 import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { HomePageModule } from './homepage-common/homepage.module.';
+import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RestaurantRecommandationComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +30,8 @@ import { HomePageModule } from './homepage-common/homepage.module.';
     HttpClientModule,
     UsersModule,
     RestaurantsModule,
-    HomePageModule
+    HomePageModule,
+    ReactiveFormsModule
   ],
   providers: [
     UserService,

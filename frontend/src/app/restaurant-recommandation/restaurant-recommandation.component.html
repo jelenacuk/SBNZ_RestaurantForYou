@@ -1,0 +1,34 @@
+<app-navbar [loggedIn] = 'true'></app-navbar>
+    <div class="box">
+        <br>
+        <form [formGroup] ="questionsForm" (ngSubmit)="questionsForm.valid && onFormSubmit()" noval>
+            <div *ngFor = "let question of questions1">
+                <div class="row text">{{question.text}}</div><br>
+            
+                    <mat-radio-group *ngIf = "question.name !== 'numOfPeople'" aria-label="Select an option" formControlName={{question.name}}>
+                        <div class="row" style="width: 90%;">
+                            <mat-radio-button *ngFor = "let answer of question.answers" value={{answer}}>{{answer}}</mat-radio-button>
+                        </div>
+                        <br>
+                    </mat-radio-group>
+                    <mat-form-field *ngIf = "question.name === 'numOfPeople'" style="width: 100%;">
+                        <input id="numOfPeople"
+                          matInput
+                          type="number"
+                          formControlName="numOfPeople" />
+                    </mat-form-field>
+                <mat-divider></mat-divider><br>
+            </div>
+            <div class="row text">   
+                <mat-form-field appearance="fill" class="col" *ngFor = "let question of questions2" >
+                    <mat-label>{{question.text}}</mat-label>
+                    <mat-select formControlName={{question.name}}>
+                        <mat-option *ngFor = "let answer of question.answers" value={{answer}}>{{answer}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div  class="submitDiv">
+                <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+        </form>
+    </div>
