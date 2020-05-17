@@ -2,7 +2,7 @@ package com.sbnz.RestaurantForYou.model;
 
 public enum Kitchen {
 
-	LOCAL, ITALIAN, CHINESE, HEALTHY, FISH;
+	LOCAL, ITALIAN, CHINESE, HEALTHY, FISH, FAST_FOOD;
 	
 	public static Kitchen StringToEnum(String string){
 		String s = string.toUpperCase();
@@ -16,7 +16,9 @@ public enum Kitchen {
 			return Kitchen.HEALTHY;
 		} else if (s.equals("FISH")) {
 			return Kitchen.FISH;
-		} else {
+		} else if (s.equals("FAST_FOOD")) {
+			return Kitchen.FAST_FOOD;
+		}  else {
 			return null;
 		}
 	}

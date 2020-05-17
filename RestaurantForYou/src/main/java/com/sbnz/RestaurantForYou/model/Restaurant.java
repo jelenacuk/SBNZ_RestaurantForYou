@@ -46,6 +46,8 @@ public class Restaurant {
 	private boolean wideRangeOfWines;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Location location;
+	@Column
+	private int rating;
 	
 	@OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "time_mapping", 
@@ -55,7 +57,7 @@ public class Restaurant {
 	private Map<String, WorkingDay> workingDays = new HashMap<String, WorkingDay>();
 
 	public Restaurant() {
-		// TODO Auto-generated constructor stub
+		this.rating = 0;
 	}
 
 	public Long getId() {
@@ -169,6 +171,14 @@ public class Restaurant {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 
 }
