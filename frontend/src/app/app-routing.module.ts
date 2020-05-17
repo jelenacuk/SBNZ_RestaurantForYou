@@ -6,6 +6,7 @@ import { RestaurantsListComponent } from './restaurants/restaurants-list/restaur
 import { AddRestaurantComponent } from './restaurants/add-restaurant/add-restaurant.component';
 import { HomepageComponent } from './homepage-common/homepage/homepage.component';
 import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
+import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
 
 
 const routes: Routes = [
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'register', component: RegistrationComponent},
   {path: 'restaurants-list', component: RestaurantsListComponent},
   {path: 'add-restaurant', component: AddRestaurantComponent},
-  {path: 'recommandation', component: RestaurantRecommandationComponent}
+  {path: 'recommandation', component: RestaurantRecommandationComponent},
+  {path: 'restaurant-details', component: RestaurantDetailsComponent}
 ];
 
 @NgModule({

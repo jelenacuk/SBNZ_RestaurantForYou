@@ -16,7 +16,7 @@ public enum Kitchen {
 			return Kitchen.HEALTHY;
 		} else if (s.equals("FISH")) {
 			return Kitchen.FISH;
-		} else if (s.equals("FAST_FOOD")) {
+		} else if (s.equals("FAST FOOD")) {
 			return Kitchen.FAST_FOOD;
 		}  else {
 			return null;

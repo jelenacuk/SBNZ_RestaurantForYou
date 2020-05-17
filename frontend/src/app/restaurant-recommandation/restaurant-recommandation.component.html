@@ -1,5 +1,5 @@
 <app-navbar [loggedIn] = 'true'></app-navbar>
-    <div class="box">
+    <div class="box" *ngIf = "showForm">
         <br>
         <form [formGroup] ="questionsForm" (ngSubmit)="questionsForm.valid && onFormSubmit()" noval>
             <div *ngFor = "let question of questions1">
@@ -28,7 +28,36 @@
                 </mat-form-field>
             </div>
             <div  class="submitDiv">
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" (click)= 'onFormSubmit()' class="btn btn-success">Submit</button>
             </div>
         </form>
+    </div>
+
+    <div *ngIf = "showResult" style="margin: 5%; width: 100%;">
+        <h2 style="text-align:center;">Results:</h2><br>
+        <mat-card  *ngFor = "let restaurant of result; index as i" style="width: 100%;">
+            <div class="row">
+                <div style="width: 5%;">
+                    <p style="margin:50%; font-size: larger;">{{i+1}}.</p>
+                </div>
+                <img src={{getPicture(restaurant.image)}} width="20%" height="20%">
+                <div style="margin-left: 2%; width: 50%;">
+                    <mat-card-title>{{restaurant.name}}</mat-card-title>
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip>{{restaurant.kitchen}}</mat-chip>
+                        <mat-chip>{{restaurant.ambience}}</mat-chip>
+                        <mat-chip>{{restaurant.music}} MUSIC</mat-chip>
+                      </mat-chip-list><br>
+                    <p  style="background-color: aliceblue;">{{restaurant.description}}</p> 
+                    <button class="btn btn-outline-success" (click) = "goToDetails(restaurant.id)">Read More</button>
+                </div>
+            </div>
+        </mat-card>
+        <br>
+
+    </div>
+
+    <div *ngIf = "showDetails" style="margin: 5%;">
+        <app-restaurant-details></app-restaurant-details>
+        <button  (click) = "goBack()">Back</button>
     </div>

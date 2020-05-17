@@ -63,6 +63,9 @@ public class RestaurantService {
 		for (Restaurant restaurant : restaurants) {
 			System.out.println(restaurant.getName() + " : " + restaurant.getRating());
 		}
+		if (restaurants.size() > 3) {
+			restaurants =  restaurants.subList(0, 3);
+		}
 		return (restaurants.stream().map(restaurant -> {
 			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant);
 			return dto;

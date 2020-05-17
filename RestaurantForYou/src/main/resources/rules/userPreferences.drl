@@ -1,0 +1,154 @@
+package rules;
+import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
+import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
+import com.sbnz.RestaurantForYou.model.Kitchen;
+import com.sbnz.RestaurantForYou.model.Capacity;
+import com.sbnz.RestaurantForYou.model.Price;
+import com.sbnz.RestaurantForYou.model.Music;
+import com.sbnz.RestaurantForYou.model.Ambience;
+
+global RestaurantRrequirements restRequirements;
+
+rule "Luxurious1"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(price=="Expensive");
+	then
+		restRequirements.getAmbience().add(Ambience.LUXURIOUS);
+end;
+
+rule "Luxurious2: Business dinner"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO((price=="Expensive" || price == "Unimportant") && occasion=="Business");
+	then
+		restRequirements.getAmbience().add(Ambience.LUXURIOUS);
+end;
+
+rule "Luxurious3: Romantic celebration"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO((price=="Expensive" || price == "Unimportant") && occasion=="Celebration" && company=="Partner" );
+	then
+		restRequirements.getAmbience().add(Ambience.LUXURIOUS);
+end;
+
+
+rule "Relaxed&Peacful ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(company !="Colleagues" && occasion=="No special reason");
+	then
+		restRequirements.getAmbience().add(Ambience.RELAXED);
+		restRequirements.getAmbience().add(Ambience.PEACEFUL);
+end;
+
+rule "Peacful ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(company== "Colleagues");
+	then
+		restRequirements.getAmbience().add(Ambience.PEACEFUL);
+end;
+
+rule "Relaxed ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(company== "Alone");
+	then
+		restRequirements.getAmbience().add(Ambience.PEACEFUL);
+end;
+
+rule "Traditional ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(kitchen == Kitchen.LOCAL || age == "Older" || tourist == "Yes");
+	then
+		restRequirements.getAmbience().add(Ambience.TRADITIONAL);
+end;
+
+
+rule "Modern ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO( (age == "Younger" || company == "Friends") && tourist=="No");
+	then
+		restRequirements.getAmbience().add(Ambience.MODERN);
+		restRequirements.getAmbience().add(Ambience.CREATIVE);
+end;
+
+rule "Classical music"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO( (occasion=="Celebration" && company=="Partner") || occasion=="Business" );
+	then
+		restRequirements.getMusic().add(Music.CLASSICAL);
+end;
+
+rule "Folk music"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO( age=="Older" && occasion=="Celebration" && kitchen == 'Local' );
+	then
+		restRequirements.getMusic().add(Music.TAMBURITZA);
+		restRequirements.getMusic().add(Music.FOLK);
+end;
+
+rule "capacity1"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO((company=="Family" || company == "Colleagues" || occasion == "Business") && numOfPeople > 3 );
+then
+	restRequirements.getCapacity().add(Capacity.MEDIUM);
+	restRequirements.getCapacity().add(Capacity.LARGE);
+end;
+
+rule "capacity2"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(numOfPeople > 10 );
+then
+	restRequirements.getCapacity().add(Capacity.LARGE);
+end;
+
+rule "childern"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(company== "Family");
+then
+	restRequirements.setProgramForChildern(true);
+end;
+
+rule "garden"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(weather=="spring" || weather == "summer");
+then
+	restRequirements.setGarden(true);
+end;
+
+rule "nearest"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(onFoot=="Yes" );
+then
+	restRequirements.setNearest(true);
+end;
+
+
+rule "price"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO($price: price);
+then
+	restRequirements.getPrice().add(Price.StringToEnum($price));
+end;
+
+rule "kitchen"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO($kitchen: kitchen);
+then
+	restRequirements.getKitchen().add(Kitchen.StringToEnum($kitchen));
+end;
+

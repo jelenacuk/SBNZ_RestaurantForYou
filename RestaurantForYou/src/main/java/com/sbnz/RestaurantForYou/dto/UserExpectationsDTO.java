@@ -3,17 +3,13 @@ package com.sbnz.RestaurantForYou.dto;
 public class UserExpectationsDTO {
 	
 	private String kitchen;
-	private String mood;
+	private String tourist;
 	private int numOfPeople;
-	private String hungry;
 	private String onFoot;
 	private String price;
-	private String when;
 	private String company;
 	private String occasion;
 	private String weather;
-	private String ambience;
-	private String music;
 	private String age;
 	
 	public UserExpectationsDTO() {
@@ -28,13 +24,6 @@ public class UserExpectationsDTO {
 		this.kitchen = kitchen;
 	}
 
-	public String getMood() {
-		return mood;
-	}
-
-	public void setMood(String mood) {
-		this.mood = mood;
-	}
 
 	public int getNumOfPeople() {
 		return numOfPeople;
@@ -44,14 +33,7 @@ public class UserExpectationsDTO {
 		this.numOfPeople = numOfPeople;
 	}
 
-	public String getHungry() {
-		return hungry;
-	}
-
-	public void setHungry(String hungry) {
-		this.hungry = hungry;
-	}
-
+	
 	public String getOnFoot() {
 		return onFoot;
 	}
@@ -68,13 +50,6 @@ public class UserExpectationsDTO {
 		this.price = price;
 	}
 
-	public String getWhen() {
-		return when;
-	}
-
-	public void setWhen(String when) {
-		this.when = when;
-	}
 
 	public String getCompany() {
 		return company;
@@ -100,28 +75,20 @@ public class UserExpectationsDTO {
 		this.weather = weather;
 	}
 
-	public String getAmbience() {
-		return ambience;
-	}
-
-	public void setAmbience(String ambience) {
-		this.ambience = ambience;
-	}
-
-	public String getMusic() {
-		return music;
-	}
-
-	public void setMusic(String music) {
-		this.music = music;
-	}
-
 	public String getAge() {
 		return age;
 	}
 
 	public void setAge(String age) {
 		this.age = age;
+	}
+
+	public String getTourist() {
+		return tourist;
+	}
+
+	public void setTourist(String tourist) {
+		this.tourist = tourist;
 	}
 	
 	
