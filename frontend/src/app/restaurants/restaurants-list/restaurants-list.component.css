@@ -10,7 +10,7 @@
     max-height: 80%;
     text-align: justify;
     opacity: 0.9;
-        border: solid 1px #5C6BC0 ;
+        border: solid 1.5px gray ;
           box-shadow:  0 0 10px  rgba(0,0,0,0.6);
           -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
           -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);

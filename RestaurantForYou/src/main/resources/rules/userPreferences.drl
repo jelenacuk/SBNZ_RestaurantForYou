@@ -1,0 +1,180 @@
+package rules;
+import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
+import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
+import com.sbnz.RestaurantForYou.model.Kitchen;
+import com.sbnz.RestaurantForYou.model.Capacity;
+import com.sbnz.RestaurantForYou.model.Price;
+import com.sbnz.RestaurantForYou.model.Music;
+import com.sbnz.RestaurantForYou.model.Ambience;
+
+
+rule "Luxurious1"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(price=="Expensive");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.LUXURIOUS);};
+end;
+
+rule 'large selection of wines'
+	salience -100
+	agenda-group "expectations"
+	when
+		restRequirements: RestaurantRrequirements(ambience contains Ambience.LUXURIOUS);
+		userExpectation: UserExpectationsDTO(occasion=="Business" || occasion=="Romance" || occasion=="Celebration");
+	then
+		modify(restRequirements){setWideVariatyOfWine(true);};
+end;
+
+rule "Luxurious2: Business dinner"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO((price=="Expensive" || price == "Unimportant") && occasion=="Business");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.LUXURIOUS);};
+end;
+
+
+rule "Luxurious3: Romantic celebration"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO((price=="Expensive" || price == "Unimportant") && occasion=="Celebration" && company=="Partner" );
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.LUXURIOUS);};
+end;
+
+rule "Relaxed&Peacful ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(company !="Colleagues" && occasion=="No special reason");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.RELAXED);};
+		modify(restRequirements){getAmbience().add(Ambience.PEACEFUL);};
+end;
+
+rule "Peaceful ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(company== "Colleagues");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.PEACEFUL);};
+end;
+
+rule "Relaxed ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(company== "Alone");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.RELAXED);};
+end;
+
+rule "Traditional ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO(kitchen == Kitchen.LOCAL || age == "Older" || tourist == "Yes");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.TRADITIONAL);};
+end;
+
+
+rule "Modern ambience"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO( (age == "Younger" || company == "Friends") && tourist=="No");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.MODERN);};
+		modify(restRequirements){getAmbience().add(Ambience.CREATIVE);};
+end;
+
+rule "Classical music"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO( (occasion=="Celebration" && company=="Partner") || occasion=="Business" );
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getMusic().add(Music.CLASSICAL);};
+end;
+
+rule "Folk music"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO( age=="Older" && occasion=="Celebration" && kitchen == 'Local' );
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getMusic().add(Music.TAMBURITZA)};
+		modify(restRequirements){getMusic().add(Music.FOLK)};
+end;
+
+rule "capacity1"
+	agenda-group "expectations"
+	when
+		userExpectation: UserExpectationsDTO((company=="Family" || company == "Colleagues" || occasion == "Business") && numOfPeople > 3 );
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getCapacity().add(Capacity.LARGE);};
+		modify(restRequirements){getCapacity().add(Capacity.MEDIUM);};
+	end;
+
+rule "capacity2"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(numOfPeople > 10 );
+	restRequirements: RestaurantRrequirements();
+then
+	modify(restRequirements){getCapacity().add(Capacity.LARGE);};
+end;
+
+rule "childern"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(company== "Family");
+	restRequirements: RestaurantRrequirements();
+then
+	modify(restRequirements){setProgramForChildern(true);};
+end;
+
+rule "garden"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(weather=="spring" || weather == "summer");
+	restRequirements: RestaurantRrequirements();
+then
+	modify(restRequirements){setGarden(true);};
+end;
+
+rule "nearest"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO(onFoot=="Yes" );
+	restRequirements: RestaurantRrequirements();
+then
+	modify(restRequirements){setNearest(true);};
+end;
+
+
+rule "price"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO($price: price);
+	restRequirements: RestaurantRrequirements();
+then
+	modify(restRequirements){getPrice().add(Price.StringToEnum($price));};
+end;
+
+rule "kitchen"
+agenda-group "expectations"
+when
+	userExpectation: UserExpectationsDTO($kitchen: kitchen);
+	restRequirements: RestaurantRrequirements();
+then
+	modify(restRequirements){getKitchen().add(Kitchen.StringToEnum($kitchen));};
+end;
+

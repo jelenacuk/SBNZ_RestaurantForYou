@@ -130,23 +130,22 @@ export class AddRestaurantComponent implements OnInit {
     this.kitchenValues.push('Local');
     this.kitchenValues.push('Italian');
     this.kitchenValues.push('Chinese');
-    this.kitchenValues.push('Healthy');
+    this.kitchenValues.push('Fast food');
     this.kitchenValues.push('Fish');
 
-    this.musicValues.push('Classic');
-    this.musicValues.push('Foreign');
-    this.musicValues.push('Live');
+    this.musicValues.push('Classical');
+    this.musicValues.push('Folk');
     this.musicValues.push('Pop');
     this.musicValues.push('Jazz');
-    this.musicValues.push('Old town');
+    this.musicValues.push('Rock');
     this.musicValues.push('Tamburitza');
 
-    this.ambienceValues.push('Traditionaly');
-    this.ambienceValues.push('Homly');
-    this.ambienceValues.push('Classic');
+    this.ambienceValues.push('Traditional');
+    this.ambienceValues.push('Peaceful');
+    this.ambienceValues.push('Relaxed');
     this.ambienceValues.push('Modern');
     this.ambienceValues.push('Creative');
-    this.ambienceValues.push('Artistic');
+    this.ambienceValues.push('Luxurious');
   }
 
 }

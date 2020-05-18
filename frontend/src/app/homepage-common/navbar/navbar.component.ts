@@ -14,10 +14,11 @@ export class NavbarComponent implements OnInit {
   constructor( private router: Router) { }
 
   ngOnInit() {
-    this.role = localStorage.getItem('role');
-    if (localStorage.getItem('token') !== '' && localStorage.getItem('token') !== null ) {
-      this.loggedIn = true;
+
+    if (this.loggedIn) {
+      this.role = localStorage.getItem('role');
     }
+
   }
 
   onLogOut() {
@@ -25,6 +26,14 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('role', '');
     this.router.navigate(['/login']);
     this.loggedIn = false;
+  }
+
+  navigateToHome() {
+    if (this.loggedIn) {
+      this.router.navigate(['/home', true]);
+    } else {
+      this.router.navigate(['/home', false]);
+    }
   }
 
 }

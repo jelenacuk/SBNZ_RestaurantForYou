@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
           const info = jwt.decodeToken(response.token);
           const role = info.role[0].authority;
           localStorage.setItem('role', info.role[0].authority);
-          this.router.navigateByUrl('/');
+          this.router.navigate(['/home', true]);
         }
       }),
       (error => {

@@ -5,6 +5,7 @@ import { AddRestaurantComponent } from './add-restaurant/add-restaurant.componen
 import { MaterialModule } from '../material/matrial.module';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
 
 
 
@@ -12,7 +13,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   declarations: [
     RestaurantsListComponent,
     AddRestaurantComponent,
-    WorkingDaysComponent
+    WorkingDaysComponent,
+    RestaurantDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -22,6 +24,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
   ],
   exports: [
     RestaurantsListComponent,
+    RestaurantDetailsComponent
   ]
 })
 export class RestaurantsModule { }

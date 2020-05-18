@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RestaurantDto } from '../dto/restaurant-dto';
 import { PageEvent } from '@angular/material';
 import { AddRestaurantDto } from '../dto/add-restaurant-dto';
+import { UserExpectations } from '../dto/user-expectations-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +29,10 @@ export class RestaurantService {
 
   addRestaurantd(dto: AddRestaurantDto): Observable<boolean> {
     return this.http.post<boolean>(this.constants.restaurantPath + '/addRestaurant', dto, { headers: this.headers });
+  }
+
+  restaurantRecommandation(dto: UserExpectations): Observable<Array<RestaurantDto>> {
+    return this.http.post<Array<RestaurantDto>>(this.constants.restaurantPath + '/restaurantRecommandation',
+     dto, { headers: this.headers });
   }
 }

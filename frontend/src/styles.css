@@ -16,7 +16,7 @@ body {
     opacity: 1;
     padding: 60px 50px 40px 50px;
     width: fit-content;
-    border: solid 1px #5C6BC0 ;
+    border: solid 1.5px  gray;
       box-shadow:  0 0 10px  rgba(0,0,0,0.6);
       -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
       -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
@@ -66,4 +66,9 @@ body {
 .navbar_style{
     background-color: #FF6A5C;
     color: white;
+}
+
+.submitDiv{
+    text-align: center;
+    margin-top: 5%
 }

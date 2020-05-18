@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
+import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
 import com.sbnz.RestaurantForYou.service.RestaurantService;
 
 @RestController
@@ -52,5 +53,11 @@ public class RestaurantController {
 			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		}
 		return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping(value = "/restaurantRecommandation")
+	public ResponseEntity<List<RestaurantDTO>> reccomandation(@RequestBody UserExpectationsDTO dto) {
+		List<RestaurantDTO> restaurants = restaurantService.recommandRestaurant(dto);
+		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
 }

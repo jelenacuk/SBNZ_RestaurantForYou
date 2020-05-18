@@ -1,0 +1,45 @@
+package rules;
+import com.sbnz.RestaurantForYou.model.Restaurant;
+import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
+
+global RestaurantRrequirements requirements;
+
+rule "capacity_"
+agenda-group "recommendation"
+when
+	restaurant: Restaurant(capacity memberOf requirements.getCapacity, $rating: rating);
+then
+	restaurant.setRating($rating +1);
+end;
+
+rule "price_"
+agenda-group "recommendation"
+when
+	restaurant: Restaurant(price memberOf requirements.getPrice, $rating: rating);
+then
+	restaurant.setRating($rating +1);
+end;
+
+rule "ambience_"
+agenda-group "recommendation"
+when
+	restaurant: Restaurant(ambience memberOf requirements.getAmbience, $rating: rating);
+then
+	restaurant.setRating($rating +1);
+end;
+
+rule "music_"
+agenda-group "recommendation"
+when
+	restaurant: Restaurant(music memberOf requirements.getMusic, $rating: rating);
+then
+	restaurant.setRating($rating +1);
+end;
+
+rule "kitchen_"
+agenda-group "recommendation"
+when
+	restaurant: Restaurant(kitchen memberOf requirements.getKitchen, $rating: rating);
+then
+	restaurant.setRating($rating +2);
+end;
