@@ -12,7 +12,7 @@ public enum Price {
 			return Price.AFFORDABLE;
 		} else if (s.equals("EXPENSIVE")) {
 			return Price.EXPENSIVE;
-		} else {
+		}else {
 			return null;
 		}
 	}

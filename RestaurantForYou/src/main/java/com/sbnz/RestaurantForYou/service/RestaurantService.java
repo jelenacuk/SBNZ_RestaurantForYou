@@ -41,30 +41,33 @@ public class RestaurantService {
 
 		// get the stateful session
 		KieSession kieSession = kieContainer.newKieSession("rulesSession");
+		List<Restaurant> restaurants = repository.findAll();
 
-		RestaurantRrequirements restRequirments = new RestaurantRrequirements();
+		// Apply rules to find restaurant features
+		RestaurantRrequirements restRequirements = new RestaurantRrequirements();
 		kieSession.insert(userExpectations);
-		kieSession.setGlobal("restRequirements", restRequirments);
+		kieSession.insert(restRequirements);
 		kieSession.getAgenda().getAgendaGroup("expectations").setFocus();
 		kieSession.fireAllRules();
+		System.out.println("Restaurants Features: \n\t" + restRequirements);
 
-		List<Restaurant> restaurants = repository.findAll();
+		// Apply rules for scoring each restaurant
 		for (Restaurant restaurant : restaurants) {
 			kieSession.insert(restaurant);
 		}
-		kieSession.setGlobal("restRequirements", restRequirments);
+		kieSession.setGlobal("requirements", restRequirements);
 		kieSession.getAgenda().getAgendaGroup("recommendation").setFocus();
 		kieSession.fireAllRules();
 
-		Comparator<Restaurant> compareByIRating = (Restaurant r1, Restaurant r2) -> Integer.compare(r1.getRating(),
+		// Sorting restaurants by rating
+		Comparator<Restaurant> compareByRating = (Restaurant r1, Restaurant r2) -> Integer.compare(r1.getRating(),
 				r2.getRating());
-		Collections.sort(restaurants, compareByIRating.reversed());
-		System.out.println(restRequirments);
-		for (Restaurant restaurant : restaurants) {
-			System.out.println(restaurant.getName() + " : " + restaurant.getRating());
-		}
+		Collections.sort(restaurants, compareByRating.reversed());
+		System.out.println("Most Points: \n\t" + restaurants.get(0).getName() + " : " + restaurants.get(0).getRating());
+
+		// Return first three restaurants
 		if (restaurants.size() > 3) {
-			restaurants =  restaurants.subList(0, 3);
+			restaurants = restaurants.subList(0, 3);
 		}
 		return (restaurants.stream().map(restaurant -> {
 			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant);
