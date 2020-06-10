@@ -1,3 +1,6 @@
+import { ReportDTO } from './report-dto';
+import { FeaturesDTO } from './features-dto';
+
 export class RestaurantDto {
 
     id: string;
@@ -9,13 +12,12 @@ export class RestaurantDto {
     kitchen: string;
     music: string;
     ambience: string;
-    programForChildern: boolean;
-    garden: boolean;
-    wideRangeOfWines: boolean;
     price: string;
     street: string;
     latitude: number;
     longitude: number;
     size: number;
+    reportDTO: ReportDTO;
+    features: FeaturesDTO;
 
 }

@@ -70,7 +70,7 @@ export class RestaurantRecommandationComponent implements OnInit {
     dto.kitchen = this.questionsForm.controls.kitchen.value;
     dto.tourist = this.questionsForm.controls.tourist.value;
     dto.numOfPeople = this.questionsForm.controls.numOfPeople.value;
-    dto.age = this.questionsForm.controls.age.value;
+    dto.music = this.questionsForm.controls.music.value;
     return dto;
   }
 
@@ -82,6 +82,7 @@ export class RestaurantRecommandationComponent implements OnInit {
       onFoot: ['', [Validators.required]],
       price: ['', [Validators.required]],
       kitchen: ['', [Validators.required]],
+      music: ['', [Validators.required]],
       numOfPeople: ['', [Validators.required]],
       age: ['', Validators.required],
       tourist: ['', Validators.required]
@@ -92,14 +93,13 @@ export class RestaurantRecommandationComponent implements OnInit {
   initializeQuestions() {
     this.questions1 = new Array<Question>();
     this.questions1.push(new Question('company', 'Who are you going with?', ['Alone', 'Partner', 'Family', 'Friends', 'Colleagues']));
-    this.questions1.push(new Question('occasion', 'On what ocassion?', ['Celebration', 'Romance', 'Business',
-     'Exploring', 'No special reason']));
+    this.questions1.push(new Question('occasion', 'On what ocassion?', ['Special', 'No occasion']));
     this.questions1.push(new Question('numOfPeople', 'Number of people?', []));
     this.questions1.push(new Question('tourist', 'Are you a tourist?', ['Yes', 'No']));
-    this.questions1.push(new Question('age', 'Age?', ['Younger', 'Older']));
     this.questions1.push(new Question('onFoot', 'Will you go on foot?', ['Yes', 'No']));
     this.questions1.push(new Question('price', 'What prices suit you?', ['Cheap', 'Affordable', 'Expensive', 'Unimportant']));
     this.questions1.push(new Question('kitchen', 'Kitchen', ['Whatever', 'Local', 'Chinese', 'Italian', 'Fish', 'Fast food']));
+    this.questions1.push(new Question('music', 'Music', ['Whatever', 'Classical', 'Folk', 'Pop', 'Jazz', 'Rock', 'Tamburitza']));
   }
 
   getPicture(picture: string): string {

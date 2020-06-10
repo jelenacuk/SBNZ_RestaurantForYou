@@ -64,9 +64,15 @@ export class AddRestaurantComponent implements OnInit {
     this.restaurantDto.music = this.addRestauratForm.controls.music.value;
     this.restaurantDto.price = this.addRestauratForm.controls.price.value;
     this.restaurantDto.image = this.path;
-    this.restaurantDto.garden = this.addRestauratForm.controls.garden.value;
-    this.restaurantDto.wideRangeOfWines = this.addRestauratForm.controls.wine.value;
-    this.restaurantDto.programForChildern = this.addRestauratForm.controls.childern.value;
+
+    this.restaurantDto.features.outdoorSeating = this.addRestauratForm.controls.garden.value;
+    this.restaurantDto.features.alcohol = this.addRestauratForm.controls.wine.value;
+    this.restaurantDto.features.programForChiledern = this.addRestauratForm.controls.childern.value;
+    this.restaurantDto.features.liveMusic = this.addRestauratForm.controls.liveMusic.value;
+    this.restaurantDto.features.reservations = this.addRestauratForm.controls.reservations.value;
+    this.restaurantDto.features.parking = this.addRestauratForm.controls.parking.value;
+    this.restaurantDto.features.wifi = this.addRestauratForm.controls.wifi.value;
+    this.restaurantDto.features.tv = this.addRestauratForm.controls.tv.value;
   }
 
   buildForm() {
@@ -114,6 +120,16 @@ export class AddRestaurantComponent implements OnInit {
       childern: ['', [
       ]],
       garden: ['', [
+      ]],
+      liveMusic: ['', [
+      ]],
+      reservations: ['', [
+      ]],
+      parking: ['', [
+      ]],
+      wifi: ['', [
+      ]],
+      tv: ['', [
       ]]
     });
   }
@@ -141,9 +157,8 @@ export class AddRestaurantComponent implements OnInit {
     this.musicValues.push('Tamburitza');
 
     this.ambienceValues.push('Traditional');
-    this.ambienceValues.push('Peaceful');
     this.ambienceValues.push('Relaxed');
-    this.ambienceValues.push('Modern');
+    this.ambienceValues.push('Romantic');
     this.ambienceValues.push('Creative');
     this.ambienceValues.push('Luxurious');
   }
