@@ -13,13 +13,14 @@
             <img class="card-img-top" src={{getPicture(restaurant.image)}} width="220" height="220" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{restaurant.name}}</h5>
-              <span class="card-subtitle">{{restaurant.street + ' ' + restaurant.number}}</span>
+              <span class="card-subtitle">Address: {{restaurant.street + ' ' + restaurant.number}}</span><br>
+              <span>Rating: {{restaurant.reportDTO.average}}</span><br>
               <mat-chip-list aria-label="Fish selection">
                 <mat-chip>{{restaurant.kitchen}}</mat-chip>
                 <mat-chip>{{restaurant.ambience}}</mat-chip>
               </mat-chip-list>
               <p class="card-text">{{restaurant.description}}</p>
-              <a href="#" class="btn btn-outline-primary">READ MORE</a>
+              <a  class="btn btn-outline-primary" (click) = "goToDetails(restaurant.id)">READ MORE</a>
             </div>
         </div>
     </div>

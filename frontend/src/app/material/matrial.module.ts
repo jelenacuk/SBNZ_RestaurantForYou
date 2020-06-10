@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
 import {
   MatButtonModule, MatInputModule, MatIconModule, MatCardModule, MatNativeDateModule,
   MatDatepickerModule, MatListModule, MatSnackBarModule, MAT_SNACK_BAR_DEFAULT_OPTIONS,
@@ -21,7 +22,8 @@ const MatererialComponents = [
   MatCheckboxModule,
   MatListModule,
   MatDividerModule,
-  MatRadioModule
+  MatRadioModule,
+  ChartsModule
 ];
 
 @NgModule({

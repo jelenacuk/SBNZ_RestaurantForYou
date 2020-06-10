@@ -14,10 +14,10 @@ export class UserService {
   constructor(private http: HttpClient, private constants: ConstantsService) { }
 
   login(dto: LoginDto): Observable<TokenDto> {
-    return this.http.post<TokenDto>(this.constants.userPath + '/login', dto);
+    return this.http.post<TokenDto>(this.constants.authPath + '/login', dto);
   }
 
   register(dto: UserDto): Observable<boolean> {
-    return this.http.post<boolean>(this.constants.userPath + '/registration', dto);
+    return this.http.post<boolean>(this.constants.authPath + '/registration', dto);
   }
 }

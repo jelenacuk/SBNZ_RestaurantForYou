@@ -1,0 +1,27 @@
+template header
+
+minRating
+maxRating
+
+package rules;
+
+import com.sbnz.RestaurantForYou.model.*;
+import java.util.List;
+import java.util.ArrayList;
+global ArrayList<Restaurant> result;
+
+template "rating-rules"
+
+rule "Get restaurants with rating in the given range_@{row.rowNumber}"
+no-loop true
+when
+	$restaurant: Restaurant();
+	$mark: Number( @{minRating} <= doubleValue <= @{maxRating}) from accumulate(
+            Review($rating: rating) from $restaurant.getResetaurantReviews(),
+            average($rating)
+        );
+then
+    modify (result){ add($restaurants)};
+end
+
+end template

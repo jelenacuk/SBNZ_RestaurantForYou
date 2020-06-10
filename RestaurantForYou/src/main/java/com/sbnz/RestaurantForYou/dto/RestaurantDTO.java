@@ -14,15 +14,14 @@ public class RestaurantDTO {
 	private String kitchen;
 	private String music;
 	private String ambience;
-	private boolean programForChildern;
-	private boolean garden;
-	private boolean wideRangeOfWines;
 	private String street;
 	private String number;
 	private double latitude;
 	private double longitude;
 	private long size;
 	private List<WorkingDayDTO> workingDays = new ArrayList<WorkingDayDTO>();
+	private ReportDTO reportDTO;
+	private RestaurantFeaturesDTO features;
 
 	public RestaurantDTO() {
 		// TODO Auto-generated constructor stub
@@ -74,30 +73,6 @@ public class RestaurantDTO {
 
 	public void setAmbience(String ambience) {
 		this.ambience = ambience;
-	}
-
-	public boolean isProgramForChildern() {
-		return programForChildern;
-	}
-
-	public void setProgramForChildern(boolean programForChildern) {
-		this.programForChildern = programForChildern;
-	}
-
-	public boolean isGarden() {
-		return garden;
-	}
-
-	public void setGarden(boolean garden) {
-		this.garden = garden;
-	}
-
-	public boolean isWideRangeOfWines() {
-		return wideRangeOfWines;
-	}
-
-	public void setWideRangeOfWines(boolean wideRangeOfWines) {
-		this.wideRangeOfWines = wideRangeOfWines;
 	}
 
 	public String getStreet() {
@@ -170,6 +145,22 @@ public class RestaurantDTO {
 
 	public void setSize(long size) {
 		this.size = size;
+	}
+
+	public ReportDTO getReportDTO() {
+		return reportDTO;
+	}
+
+	public void setReportDTO(ReportDTO reportDTO) {
+		this.reportDTO = reportDTO;
+	}
+
+	public RestaurantFeaturesDTO getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(RestaurantFeaturesDTO features) {
+		this.features = features;
 	}
 
 	

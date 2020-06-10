@@ -1,0 +1,30 @@
+package rules;
+import com.sbnz.RestaurantForYou.model.*;
+import com.sbnz.RestaurantForYou.events.*;
+
+declare BadRatingAlarm
+    @role(event)
+    restaurantId: Long
+    restaurantName: String
+    rating: Number
+end;
+
+rule "The restaurant rating is below 2.5 a minimum of 5 users rated it"
+	agenda-group "rating"
+    when
+        $ratingEvent: RatingEvent($review: review);
+        $mark: Number(doubleValue <= 2.5) from accumulate(
+            Review($rating: rating) from $review.getRestaurant().getResetaurantReviews(),
+            average($rating)
+        );
+        $usersCnt: Number(intValue >= 5) from accumulate(
+            Review($rating: rating) from $review.getRestaurant().getResetaurantReviews(),
+            count(1)
+        );
+        not(BadRatingAlarm(restaurantId == $review.getRestaurant().getId(), restaurantName == $review.getRestaurant().getName()));
+    then
+    	System.out.println("WARNING: The rating of the restaurant: " + $review.getRestaurant().getName()+  " is very bad => " + $mark);
+    	insert(new BadRatingAlarm($review.getRestaurant().getId(),  $review.getRestaurant().getName(), $mark));
+end;
+
+

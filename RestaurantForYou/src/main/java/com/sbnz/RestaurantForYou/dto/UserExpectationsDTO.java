@@ -11,6 +11,7 @@ public class UserExpectationsDTO {
 	private String occasion;
 	private String weather;
 	private String age;
+	private String music;
 	
 	public UserExpectationsDTO() {
 		// TODO Auto-generated constructor stub
@@ -89,6 +90,14 @@ public class UserExpectationsDTO {
 
 	public void setTourist(String tourist) {
 		this.tourist = tourist;
+	}
+
+	public String getMusic() {
+		return music;
+	}
+
+	public void setMusic(String music) {
+		this.music = music;
 	}
 	
 	

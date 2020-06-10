@@ -10,13 +10,20 @@ public class RestaurantRrequirements {
 	private List<Music> music = new ArrayList<Music>();
 	private List<Capacity> capacity = new ArrayList<Capacity>();
 	private List<Price> price = new ArrayList<Price>();
-	private boolean programForChildern;
-	private boolean wideVariatyOfWine;
-	private boolean garden;
-	private boolean nearest;
-	private boolean openNow;
+	private RestaurantFeatures features;
+	private boolean nearest = false;
+	private boolean openNow = false;
 	
 	public RestaurantRrequirements() {
+		features = new RestaurantFeatures();
+		features.setAlcohol(false);
+		features.setLiveMusic(false);
+		features.setOutdoorSeating(false);
+		features.setParking(false);
+		features.setProgramForChildern(false);
+		features.setTv(false);
+		features.setWifi(false);
+		features.setReservations(false);
 	}
 	
 	
@@ -50,24 +57,7 @@ public class RestaurantRrequirements {
 	public void setPrice(List<Price> price) {
 		this.price = price;
 	}
-	public boolean isProgramForChildern() {
-		return programForChildern;
-	}
-	public void setProgramForChildern(boolean programForChilern) {
-		this.programForChildern = programForChilern;
-	}
-	public boolean isWideVariatyOfWine() {
-		return wideVariatyOfWine;
-	}
-	public void setWideVariatyOfWine(boolean wideVariatyOfWine) {
-		this.wideVariatyOfWine = wideVariatyOfWine;
-	}
-	public boolean isGarden() {
-		return garden;
-	}
-	public void setGarden(boolean garden) {
-		this.garden = garden;
-	}
+	
 	public boolean isNearest() {
 		return nearest;
 	}
@@ -85,10 +75,24 @@ public class RestaurantRrequirements {
 	@Override
 	public String toString() {
 		return "RestaurantRrequirements [kitchen=" + kitchen + ", ambience=" + ambience + ", music=" + music
-				+ ", capacity=" + capacity + ", price=" + price + ", programForChildern=" + programForChildern
-				+ ", wideVariatyOfWine=" + wideVariatyOfWine + ", garden=" + garden + ", nearest=" + nearest
+				+ ", capacity=" + capacity + ", price=" + price + ", programForChildern=" + features.isProgramForChildern()
+				+ ", alcohol=" + features.isAlcohol() + ", garden=" + features.isOutdoorSeating() 
+				 + ", wifi=" + features.isWifi()  + ", tv=" + features.isTv()  + ", reservations=" + features.isReservations()
+				 + ", parking=" + features.isParking() + ", liveMusic=" + features.isLiveMusic()
+				 + ", nearest=" + nearest
 				+ ", openNow=" + openNow + "]";
 	}
+
+
+	public RestaurantFeatures getFeatures() {
+		return features;
+	}
+
+
+	public void setFeatures(RestaurantFeatures features) {
+		this.features = features;
+	}
+
 	
 	
 

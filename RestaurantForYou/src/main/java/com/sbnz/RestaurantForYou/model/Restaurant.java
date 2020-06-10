@@ -1,7 +1,9 @@
 package com.sbnz.RestaurantForYou.model;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +17,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 public class Restaurant {
@@ -38,26 +43,27 @@ public class Restaurant {
 	private Ambience ambience;
 	@Column
 	private String image;
-	@Column
-	private boolean programForChildern;
-	@Column
-	private boolean garden;
-	@Column
-	private boolean wideRangeOfWines;
+	@OneToOne
+	private RestaurantFeatures features;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Location location;
 	@Column
-	private int rating;
-	
+	private int score;
+	@OneToMany()
+	private Set<Review> restaurantReviews = new HashSet<Review>();
 	@OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "time_mapping", 
       joinColumns = {@JoinColumn (name = "restaurant_id", referencedColumnName = "id")},
       inverseJoinColumns = {@JoinColumn (name = "workingday_id", referencedColumnName = "id")})
     @MapKey(name = "day")
 	private Map<String, WorkingDay> workingDays = new HashMap<String, WorkingDay>();
+	@JsonInclude()
+	@Transient
+	private Double average;
+	
 
 	public Restaurant() {
-		this.rating = 0;
+		this.score = 0;
 	}
 
 	public Long getId() {
@@ -116,31 +122,6 @@ public class Restaurant {
 		this.location = location;
 	}
 
-
-	public boolean isProgramForChildern() {
-		return programForChildern;
-	}
-
-	public void setProgramForChildern(boolean programForChildern) {
-		this.programForChildern = programForChildern;
-	}
-
-	public boolean isGarden() {
-		return garden;
-	}
-
-	public void setGarden(boolean garden) {
-		this.garden = garden;
-	}
-
-	public boolean isWideRangeOfWines() {
-		return wideRangeOfWines;
-	}
-
-	public void setWideRangeOfWines(boolean wideRangeOfWines) {
-		this.wideRangeOfWines = wideRangeOfWines;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -173,12 +154,40 @@ public class Restaurant {
 		this.description = description;
 	}
 
-	public int getRating() {
-		return rating;
+	public int getScore() {
+		return score;
 	}
 
-	public void setRating(int rating) {
-		this.rating = rating;
+	public void setScore(int rating) {
+		this.score = rating;
+	}
+
+	public Set<Review> getResetaurantReviews() {
+		return restaurantReviews;
+	}
+
+	public void setRestaurantReviews(Set<Review> resetaurantReviews) {
+		this.restaurantReviews = resetaurantReviews;
+	}
+
+	public RestaurantFeatures getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(RestaurantFeatures features) {
+		this.features = features;
+	}
+
+	public Set<Review> getRestaurantReviews() {
+		return restaurantReviews;
+	}
+
+	public double getAverage() {
+		return average;
+	}
+
+	public void setAverage(double average) {
+		this.average = average;
 	}
 
 }

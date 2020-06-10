@@ -4,42 +4,95 @@ import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
 
 global RestaurantRrequirements requirements;
 
-rule "capacity_"
-agenda-group "recommendation"
+
+rule "price"
+salience 80
 when
-	restaurant: Restaurant(capacity memberOf requirements.getCapacity, $rating: rating);
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(price memberOf $requirements.getPrice, $score: score);
 then
-	restaurant.setRating($rating +1);
+	restaurant.setScore($score +1);
 end;
 
-rule "price_"
-agenda-group "recommendation"
+rule "music"
+salience 80
 when
-	restaurant: Restaurant(price memberOf requirements.getPrice, $rating: rating);
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(music memberOf $requirements.getMusic, $score: score);
 then
-	restaurant.setRating($rating +1);
+	restaurant.setScore($score + 3);
 end;
 
-rule "ambience_"
-agenda-group "recommendation"
+rule "kitchen"
+salience 80
 when
-	restaurant: Restaurant(ambience memberOf requirements.getAmbience, $rating: rating);
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(kitchen memberOf $requirements.getKitchen, $score: score);
 then
-	restaurant.setRating($rating +1);
+	restaurant.setScore($score + 5);
 end;
 
-rule "music_"
-agenda-group "recommendation"
+
+rule "wifi"
+salience 80
 when
-	restaurant: Restaurant(music memberOf requirements.getMusic, $rating: rating);
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isWifi() == true &&  features.isWifi() == $requirements.getFeatures().isWifi() , $score: score);
 then
-	restaurant.setRating($rating +1);
+	restaurant.setScore($score +1);
 end;
 
-rule "kitchen_"
-agenda-group "recommendation"
+rule "liveMusic"
+salience 80
 when
-	restaurant: Restaurant(kitchen memberOf requirements.getKitchen, $rating: rating);
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isLiveMusic() == true &&  features.isLiveMusic() == $requirements.getFeatures().isLiveMusic() , $score: score);
 then
-	restaurant.setRating($rating +2);
+	restaurant.setScore($score +1);
+end;
+
+rule "Alcohol"
+salience 80
+when
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isAlcohol() == true &&  features.isAlcohol() == $requirements.getFeatures().isAlcohol() , $score: score);
+then
+	restaurant.setScore($score +1);
+end;
+
+rule "Reservations"
+salience 80
+when
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isReservations() == true &&  features.isReservations() == $requirements.getFeatures().isReservations() , $score: score);
+then
+	restaurant.setScore($score +1);
+end;
+
+rule "ProgramForChildern"
+salience 80
+when
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isProgramForChildern() == true &&  features.isProgramForChildern() == $requirements.getFeatures().isProgramForChildern() , $score: score);
+then
+	restaurant.setScore($score +1);
+end;
+
+rule "outdoorSeating"
+salience 80
+when
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isOutdoorSeating() == true &&  features.isOutdoorSeating() == $requirements.getFeatures().isOutdoorSeating() , $score: score);
+then
+	restaurant.setScore($score +1);
+end;
+
+
+rule "parking"
+salience 80
+when
+	$requirements: RestaurantRrequirements();
+	restaurant: Restaurant(features.isParking() == true &&  features.isParking() == $requirements.getFeatures().isParking() , $score: score);
+then
+	restaurant.setScore($score +1);
 end;

@@ -1,0 +1,27 @@
+template header
+
+restaurantId
+rating
+
+package rules;
+
+import com.sbnz.RestaurantForYou.model.*;
+import java.util.List;
+import java.util.ArrayList;
+global ArrayList<Long> result;
+
+template "numOfVotes-rules"
+
+rule "Get number of votes for particular grade_@{row.rowNumber}"
+no-loop true
+when
+	$restaurant: Restaurant(id == @{restaurantId});
+	$numOfVotes: Number() from accumulate(
+            Review(rating== @{rating}) from $restaurant.getResetaurantReviews(),
+            count(1)
+        );
+then
+	result.add(Long.parseLong($numOfVotes.toString()));
+end
+
+end template

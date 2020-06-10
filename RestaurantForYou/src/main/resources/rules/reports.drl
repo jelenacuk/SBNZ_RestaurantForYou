@@ -1,0 +1,46 @@
+package rules;
+import com.sbnz.RestaurantForYou.model.*
+import java.util.HashSet;
+import java.util.Set;
+
+
+query "Average rating"
+	$restaurant: Restaurant();
+	$reviewSum: Number() from accumulate (
+		Review( $mark: rating) from $restaurant.getResetaurantReviews(),
+		sum($mark));
+	$reviewNum: Number() from accumulate (
+		Review() from $restaurant.getResetaurantReviews(),
+		count(1));
+end;
+
+
+query "User ratings"(Long restaurantId)
+	$restaurant: Restaurant(id == restaurantId);
+	$reviewSum: Number() from accumulate (
+		Review( $mark: rating) from $restaurant.getResetaurantReviews(),
+		sum($mark));
+	$reviewNum: Number() from accumulate (
+		Review() from $restaurant.getResetaurantReviews(),
+		count(1));
+	$ones: Number() from accumulate (
+		Review( rating == 1) from $restaurant.getResetaurantReviews(),
+		count(1));
+	$twos: Number() from accumulate (
+		Review( rating == 2) from $restaurant.getResetaurantReviews(),
+		count(1));
+	$threes: Number() from accumulate (
+		Review( rating == 3) from $restaurant.getResetaurantReviews(),
+		count(1));
+	$fours: Number() from accumulate (
+		Review( rating == 4) from $restaurant.getResetaurantReviews(),
+		count(1));
+	$fives: Number() from accumulate (
+		Review( rating == 5) from $restaurant.getResetaurantReviews(),
+		count(1));
+end;
+
+
+
+
+

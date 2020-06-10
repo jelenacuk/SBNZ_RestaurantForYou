@@ -14,11 +14,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { HomePageModule } from './homepage-common/homepage.module.';
 import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
+import { ChartsModule } from 'ng2-charts';
+import { ReportsComponent } from './reports/reports.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RestaurantRecommandationComponent
+    RestaurantRecommandationComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { RestaurantRecommandationComponent } from './restaurant-recommandation/r
     UsersModule,
     RestaurantsModule,
     HomePageModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [
     UserService,
