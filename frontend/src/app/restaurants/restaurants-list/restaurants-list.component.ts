@@ -3,6 +3,7 @@ import { RestaurantDto } from 'src/app/dto/restaurant-dto';
 import { RestaurantService } from 'src/app/service/restaurant.service';
 import { PageEvent } from '@angular/material';
 import { ConstantsService } from 'src/app/service/constants.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-restaurants-list',
@@ -14,7 +15,7 @@ export class RestaurantsListComponent implements OnInit {
   private restaurants: RestaurantDto[];
   private page: PageEvent = new PageEvent();
 
-  constructor(private restaurantService: RestaurantService, private constants: ConstantsService) { }
+  constructor(private restaurantService: RestaurantService, private constants: ConstantsService, private router: Router) { }
 
   ngOnInit() {
     this.page.pageIndex = 0;
@@ -39,6 +40,11 @@ export class RestaurantsListComponent implements OnInit {
         alert(error.error.message);
       })
     );
+  }
+
+  goToDetails( id: number ) {
+    localStorage.setItem('restaurantId', id.toString());
+    this.router.navigateByUrl('restaurant-details');
   }
 
   getPicture(picture: string): string {

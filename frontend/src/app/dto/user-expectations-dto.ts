@@ -6,6 +6,6 @@ export class UserExpectations {
     company: string;
     numOfPeople: 4;
     occasion: string;
-    age: string;
     tourist: string;
+    music: string;
 }

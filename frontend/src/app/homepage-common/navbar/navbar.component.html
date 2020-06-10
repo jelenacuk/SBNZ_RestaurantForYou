@@ -10,8 +10,9 @@
         </div>
         <div *ngIf="loggedIn">
             <button mat-button (click) = "navigateToHome()"><i class="fa fa-home fa-2x" aria-hidden="true"> </i>&nbsp;Home</button>
-            <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/add-restaurant"><i class="fa fa-home fa-2x" aria-hidden="true"> </i>&nbsp;Add Restaurant</button>
-            <button mat-button *ngIf = "role === 'ROLE_REGISTERED'" routerLink = "/recommandation"><i class="fa fa-home fa-2x" aria-hidden="true"> </i>&nbsp;Restaurant Reccomandation</button>
+            <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/add-restaurant"><i class="fa fa-plus-circle fa-2x" aria-hidden="true"> </i>&nbsp;Add Restaurant</button>
+            <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/reports"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"> </i>&nbsp;Reports</button>
+            <button mat-button *ngIf = "role === 'ROLE_REGISTERED'" routerLink = "/recommandation"><i class="fa fa-cutlery fa-2x" aria-hidden="true"> </i>&nbsp;Restaurant Reccomandation</button>
             <button mat-button><i class="fa fa-user fa-2x" aria-hidden="true"> </i>&nbsp;Profile</button>
             <button mat-button (click)="onLogOut()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Log Out</button>
         </div>

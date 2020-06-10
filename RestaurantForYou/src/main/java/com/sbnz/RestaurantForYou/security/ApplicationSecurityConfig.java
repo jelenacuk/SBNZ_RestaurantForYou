@@ -59,8 +59,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// don't authenticate this particular request
 				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration").permitAll()
-				.antMatchers(HttpMethod.GET, "/images/**", "/api/restaraunts/").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/registration", "/api/user/rate").permitAll()
+				.antMatchers(HttpMethod.GET, "/images/**", "/api/restaraunts/", "api/user/").permitAll()
 
 				// all other requests need to be authenticated
 				.anyRequest().authenticated().and()
@@ -72,7 +72,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter will ignore the following
-		web.ignoring().antMatchers(HttpMethod.POST, "/api/users/login", "/api/users/registration");
-		web.ignoring().antMatchers(HttpMethod.GET, "/api/restaraunts/");
+		web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/registration", "/api/user/rate", "/api/restaraunts/addRestaurant");
+		web.ignoring().antMatchers(HttpMethod.GET, "/api/restaraunts/", "api/user");
 	}
 }

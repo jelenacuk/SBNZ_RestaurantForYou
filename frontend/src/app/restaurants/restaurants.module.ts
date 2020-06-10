@@ -6,6 +6,8 @@ import { MaterialModule } from '../material/matrial.module';
 import { WorkingDaysComponent } from './working-days/working-days.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
+import { ChartsModule } from 'ng2-charts';
+import { HomePageModule } from '../homepage-common/homepage.module.';
 
 
 
@@ -20,11 +22,13 @@ import { RestaurantDetailsComponent } from './restaurant-details/restaurant-deta
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   exports: [
     RestaurantsListComponent,
-    RestaurantDetailsComponent
+    RestaurantDetailsComponent,
+    ChartsModule
   ]
 })
 export class RestaurantsModule { }

@@ -1,0 +1,49 @@
+<app-navbar [loggedIn]= true ></app-navbar>
+<div class="form-wrapper">
+    <div class="center-div">
+        <div class="row">
+            <span class="text">Enter the range of average restaurant ratings:</span>
+            <input id="from"
+                  matInput
+                  pattern="/^[0-5].[0-9]+$"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)] = "from"  
+                  placeholder="From" 
+                  #name="ngModel"/>
+            <input id="to"
+                  matInput
+                  pattern="/^[0-5].[0-9]+$"
+                  [ngModelOptions]="{standalone: true}"
+                  [(ngModel)] = "to" 
+                  placeholder="To"
+                  #name="ngModel" />
+        </div>
+        <div  class="submitDiv">
+            <button type="submit" (click) = "getRestaurants()" class="btn btn-success">Get Restaurants</button>
+        </div>
+
+    </div>
+
+    <div *ngIf = "showResult" style="margin: 5%; width: 100%;">
+        <mat-card  *ngFor = "let restaurant of restaurants; index as i" style="width: 100%;">
+            <div class="row">
+                <div style="width: 5%;">
+                    <p style="margin:50%; font-size: larger;">{{i+1}}.</p>
+                </div>
+                <img src={{getPicture(restaurant.image)}} width="20%" height="20%">
+                <div style="margin-left: 2%; width: 50%;">
+                    <mat-card-title>{{restaurant.name}} <mat-chip color="accent" selected>{{restaurant.reportDTO.average}}</mat-chip></mat-card-title>
+                    <mat-chip-list aria-label="Fish selection">
+                        <mat-chip>{{restaurant.kitchen}}</mat-chip>
+                        <mat-chip>{{restaurant.ambience}}</mat-chip>
+                        <mat-chip>{{restaurant.music}} MUSIC</mat-chip>
+                      </mat-chip-list><br>
+                    <p  style="background-color: beige;">{{restaurant.description}}</p> 
+                    <button class="btn btn-outline-success" (click) = "goToDetails(restaurant.id)">Read More</button>
+                </div>
+            </div>
+        </mat-card>
+        <br>
+
+    </div>
+</div>

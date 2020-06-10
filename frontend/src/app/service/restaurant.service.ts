@@ -6,6 +6,8 @@ import { RestaurantDto } from '../dto/restaurant-dto';
 import { PageEvent } from '@angular/material';
 import { AddRestaurantDto } from '../dto/add-restaurant-dto';
 import { UserExpectations } from '../dto/user-expectations-dto';
+import { ReviewDto } from '../dto/review-dto';
+import { RatingRangeDTO } from '../dto/rating-range-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +36,13 @@ export class RestaurantService {
   restaurantRecommandation(dto: UserExpectations): Observable<Array<RestaurantDto>> {
     return this.http.post<Array<RestaurantDto>>(this.constants.restaurantPath + '/restaurantRecommandation',
      dto, { headers: this.headers });
+  }
+
+  rateRestaurant(dto: ReviewDto): Observable<boolean> {
+    return this.http.post<boolean>(this.constants.userPath + '/rate' , dto, { headers: this.headers });
+  }
+
+  getRestaurantsByRatingRange(dto: RatingRangeDTO): Observable<RestaurantDto[]> {
+    return this.http.post<RestaurantDto[]>(this.constants.restaurantPath + '/getRestaurantsByRatingRange', dto, { headers: this.headers });
   }
 }

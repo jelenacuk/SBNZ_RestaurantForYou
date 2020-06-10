@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
 import com.sbnz.RestaurantForYou.service.RestaurantService;
+import com.sbnz.RestaurantForYou.template.RatingRange;
 
 @RestController
 @RequestMapping("/api/restaraunts")
@@ -45,7 +45,6 @@ public class RestaurantController {
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	@PostMapping(value = "/addRestaurant")
 	public ResponseEntity<Boolean> addNewRestaurant(@RequestBody RestaurantDTO dto) throws FileNotFoundException, IOException {
 		boolean result = restaurantService.addNewRestaurant(dto);
@@ -58,6 +57,12 @@ public class RestaurantController {
 	@PostMapping(value = "/restaurantRecommandation")
 	public ResponseEntity<List<RestaurantDTO>> reccomandation(@RequestBody UserExpectationsDTO dto) {
 		List<RestaurantDTO> restaurants = restaurantService.recommandRestaurant(dto);
+		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/getRestaurantsByRatingRange")
+	public ResponseEntity<List<RestaurantDTO>> getRestaurantsByRatingRange(@RequestBody RatingRange dto) {
+		List<RestaurantDTO> restaurants = restaurantService.getRestaurantsByRatingRange(dto);
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
 }
