@@ -15,7 +15,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.loggedIn) {
+
+    if (localStorage.getItem('token') !== '' ) {
       this.role = localStorage.getItem('role');
     }
 

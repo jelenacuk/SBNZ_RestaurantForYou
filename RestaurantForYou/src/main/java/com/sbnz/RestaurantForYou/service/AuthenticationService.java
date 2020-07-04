@@ -2,11 +2,6 @@ package com.sbnz.RestaurantForYou.service;
 
 import java.util.Date;
 
-import org.kie.api.KieBase;
-import org.kie.api.KieBaseConfiguration;
-import org.kie.api.KieServices;
-import org.kie.api.conf.EventProcessingOption;
-import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,15 +25,15 @@ public class AuthenticationService {
 	private UserRepository repository;
 	private AuthenticationManager authenticationManager;
 	private JwtToken jwtTokenUtil;
-	private final KieContainer kieContainer;
+	private KnowledgeService knowledgeService;
 
 	@Autowired
 	public AuthenticationService(UserRepository userRepository, AuthenticationManager authenticationManager,
-			JwtToken jwtTokenUtil, KieContainer kieContainer) {
+			JwtToken jwtTokenUtil, KnowledgeService knowledgeService) {
 		this.repository = userRepository;
 		this.authenticationManager = authenticationManager;
 		this.jwtTokenUtil = jwtTokenUtil;
-		this.kieContainer = kieContainer;
+		this.knowledgeService = knowledgeService;
 	}
 
 	
@@ -52,11 +47,11 @@ public class AuthenticationService {
 			User user = repository.findOneByUsername(dto.getUsername());
 			if (user != null) {
 				FailedLogInEvent event = new FailedLogInEvent(new Date(), user);
-				KieSession kieSession = getKieSession();
+				KieSession kieSession = knowledgeService.getEventsSession();
 				kieSession.insert(event);
 				kieSession.fireAllRules();
 			}
-			e.printStackTrace();
+			throw new BadCredentialsException("Bad credentials.");
 		}
 		final User user = repository.findOneByUsername(dto.getUsername());
 		return jwtTokenUtil.generateToken(user.getUsername(), user.getRole().toString());
@@ -71,15 +66,7 @@ public class AuthenticationService {
 		repository.save(newUser);
 		return newUser;
 	}
-	
-	private KieSession getKieSession() {
-		KieServices ks = KieServices.Factory.get();
-		KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
-		kbconf.setOption(EventProcessingOption.STREAM);
-		KieBase kbase = kieContainer.newKieBase(kbconf);
-		KieSession kieSession = kbase.newKieSession();
-		return kieSession;
-	}
+
 	
 
 }

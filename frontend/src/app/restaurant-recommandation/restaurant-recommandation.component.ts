@@ -17,7 +17,7 @@ export class RestaurantRecommandationComponent implements OnInit {
   private questionsForm: FormGroup;
   private questions1: Question[];
   private questions2: Question[];
-  private result: Array<RestaurantDto>;
+  private result: RestaurantDto;
   private showForm: boolean;
   private showResult: boolean;
   private showDetails: boolean;

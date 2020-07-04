@@ -4,12 +4,19 @@
             <div class="text-center">
                 <img style="display: block; margin: auto;" src={{getPicture(restaurant.image)}}  alt="..." width="350" height="230">
                 <h2>{{restaurant.name}}</h2>
-                <span>Rating: {{restaurant.reportDTO.average}} ( {{restaurant.reportDTO.numOfReviews}} )</span>
+                <span style="font-size: 22px;">Rating: {{restaurant.reportDTO.average}} ( {{restaurant.reportDTO.numOfReviews}} )</span>
             </div><br>
+
+            <div class="row">
+                <div class="col">
+                    
+                </div>
+                <div class="col"></div>
+            </div>
        
 
         <!--Rating-->
-        <div class="row">
+        <div  style="text-align: center; margin: auto; padding: 0;" *ngIf = "this.role === 'ROLE_REGISTERED'">
             <div class="col-sm">
                 <ul class="list-inline rating-list" 
                     *ngFor="let star of stars" style="display: inline-block" >
@@ -21,8 +28,28 @@
             </div>
         </div>
         <br>
+         <!--Content-->
+         <div class="restaurantContent">
+            Kitchen: {{restaurant.kitchen}} <br>
+            Ambience: {{restaurant.ambience}} <br>
+            Music: {{restaurant.music}} <br>
+            Price: {{restaurant.price}} <br>
+            Capacity: {{restaurant.capacity}} <br>
+            Features: <span  *ngIf = "restaurant.features.outdoorSeating">Outdoor Seating, </span> 
+            <span  *ngIf = "restaurant.features.liveMusic">Live Music, </span>
+            <span  *ngIf = "restaurant.features.alcohol">Alcohol, </span>
+            <span  *ngIf = "restaurant.features.tv">Tv, </span>
+            <span  *ngIf = "restaurant.features.wifi">Wifi, </span>
+            <span  *ngIf = "restaurant.features.programForChiledern">Program for childern, </span>
+            <span  *ngIf = "restaurant.features.parking">Parking, </span>
+            <span  *ngIf = "restaurant.features.reservations">Reservations </span>
+             <br><br>
+            {{restaurant.description}}
+         </div>
+         <br><br>
+
          <!--Chart-->
-        <div class="chart-wrapper">
+         <div *ngIf = "this.role === 'ROLE_ADMIN'" class="chart-wrapper">
             <canvas baseChart 
             [datasets]="barChartData"
             [labels]="barChartLabels"
@@ -32,15 +59,5 @@
             [chartType]="barChartType">
           </canvas>
         </div>
-
-         <!--Content-->
-        Kitchen: {{restaurant.kitchen}} <br>
-        Ambience: {{restaurant.ambience}} <br>
-        Music: {{restaurant.music}} <br>
-        Price: {{restaurant.price}} <br>
-        Capacity: {{restaurant.capacity}} <br>
-        Description: {{restaurant.description}} <br>
-
-
     </div>
 </div>

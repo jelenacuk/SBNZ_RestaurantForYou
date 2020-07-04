@@ -13,6 +13,7 @@ public class RestaurantRrequirements {
 	private RestaurantFeatures features;
 	private boolean nearest = false;
 	private boolean openNow = false;
+	private boolean processed = false;
 	
 	public RestaurantRrequirements() {
 		features = new RestaurantFeatures();
@@ -91,6 +92,16 @@ public class RestaurantRrequirements {
 
 	public void setFeatures(RestaurantFeatures features) {
 		this.features = features;
+	}
+
+
+	public boolean isProcessed() {
+		return processed;
+	}
+
+
+	public void setProcessed(boolean processed) {
+		this.processed = processed;
 	}
 
 	

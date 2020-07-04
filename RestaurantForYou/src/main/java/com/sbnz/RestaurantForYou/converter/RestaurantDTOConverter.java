@@ -82,6 +82,32 @@ public class RestaurantDTOConverter {
 		return dto;
 	}
 	
+	public static RestaurantDTO convertToDTO(Restaurant restaurant, ReportDTO reportDTO, int rated) {
+		RestaurantDTO dto = new RestaurantDTO();
+		dto.setAmbience(restaurant.getAmbience().toString());
+		dto.setCapacity(restaurant.getCapacity().toString());
+		dto.setKitchen(restaurant.getKitchen().toString());
+		dto.setMusic(restaurant.getMusic().toString());
+		dto.setName(restaurant.getName());
+		dto.setPrice(restaurant.getPrice().toString());
+		dto.setLatitude(restaurant.getLocation().getLatitude());
+		dto.setLongitude(restaurant.getLocation().getLongitude());
+		dto.setStreet(restaurant.getLocation().getStreet());
+		dto.setNumber(restaurant.getLocation().getNumber());
+		dto.setImage(restaurant.getImage());
+		dto.setId(restaurant.getId());
+		dto.setDescription(restaurant.getDescription());
+		for (WorkingDay workingDay : restaurant.getWorkingDays().values()) {
+			dto.getWorkingDays().add(convertWorkingDay(workingDay));
+		}
+		dto.setFeatures(convertFeaturesToDTO(restaurant.getFeatures()));
+		dto.setReportDTO(reportDTO);
+		dto.setGrade(rated);
+		return dto;
+
+	}
+	
+	
 	private static RestaurantFeatures convertFeaturesFromDTO( RestaurantFeaturesDTO dto) {
 		RestaurantFeatures features = new RestaurantFeatures();
 		features.setAlcohol(dto.isAlcohol());

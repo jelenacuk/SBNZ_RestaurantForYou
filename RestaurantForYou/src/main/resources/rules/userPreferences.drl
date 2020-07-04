@@ -5,6 +5,7 @@ import com.sbnz.RestaurantForYou.model.*;
 
 rule "Special occasion"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO( occasion=="Special");
 		restRequirements: RestaurantRrequirements();
@@ -14,6 +15,7 @@ end;
 
 rule "Cheerful atmosphere"
 	salience 90
+	agenda-group "requirments"
 	when
 		restRequirements: RestaurantRrequirements( ambience contains Ambience.CHEERFUL);
 	then
@@ -24,6 +26,7 @@ end;
 
 rule "Special occasion with partner"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO( occasion=="Special" && company == "Partner" );
 		restRequirements: RestaurantRrequirements();
@@ -34,6 +37,7 @@ end;
 
 rule "Special occasion with business partners"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO( occasion=="Special" && company == "Colleagues" );
 		restRequirements: RestaurantRrequirements();
@@ -43,6 +47,7 @@ end;
 
 rule "No occasion"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO( occasion=="No occasion");
 		restRequirements: RestaurantRrequirements();
@@ -52,6 +57,7 @@ end;
 
 rule "The user goes alone or with friends for no particular reason"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO(company == "Alone" || company == "Friends");
 		restRequirements: RestaurantRrequirements();
@@ -61,6 +67,7 @@ end;
 
 rule "Relaxed atmosphere"
 	salience 90
+	agenda-group "requirments"
 	when
 		restRequirements: RestaurantRrequirements( ambience contains Ambience.RELAXED);
 	then
@@ -70,6 +77,7 @@ end;
 
 rule "Family lunch"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO(company== "Family");
 		restRequirements: RestaurantRrequirements();
@@ -80,6 +88,7 @@ end;
 
 rule "Outdoor seating"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO(weather=="spring" || weather == "summer");
 		restRequirements: RestaurantRrequirements();
@@ -90,6 +99,7 @@ end;
 
 rule "The nearest restaurant if you go on foot"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO(onFoot=="Yes" );
 		restRequirements: RestaurantRrequirements();
@@ -99,6 +109,7 @@ end;
 
 rule "Parking available if you have transportation"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO(onFoot=="No" );
 		restRequirements: RestaurantRrequirements();
@@ -108,6 +119,7 @@ end;
 
 rule "Needed space for more than four people"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO( numOfPeople > 4 );
 		restRequirements: RestaurantRrequirements();
@@ -119,6 +131,7 @@ end;
 
 rule "Price"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO($price: price);
 		restRequirements: RestaurantRrequirements();
@@ -128,15 +141,18 @@ end;
 
 rule "Cuisine"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO($kitchen: kitchen);
 		restRequirements: RestaurantRrequirements();
 	then
+		System.out.println("PRVO OVO");
 		modify(restRequirements){getKitchen().add(Kitchen.StringToEnum($kitchen));};
 end;
 
 rule "Music"
 	salience 100
+	agenda-group "requirments"
 	when
 		userExpectation: UserExpectationsDTO($music: music);
 		restRequirements: RestaurantRrequirements();

@@ -15,7 +15,6 @@
     list-style: none;
   }
 
-  .chart-wrapper{
-    width: 60%;
-    height: 70%;
+  .restaurantContent {
+    font-size: 18px;
   }

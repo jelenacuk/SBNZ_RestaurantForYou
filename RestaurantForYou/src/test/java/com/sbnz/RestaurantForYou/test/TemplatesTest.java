@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.drools.template.ObjectDataCompiler;
@@ -34,18 +35,18 @@ public class TemplatesTest {
 		
 		rest1 = new Restaurant();
 		rest1.setId(101l);
-		rest1.getResetaurantReviews().add(new Review(user, rest1, 1));
-		rest1.getResetaurantReviews().add(new Review(user, rest1, 2));
+		rest1.getResetaurantReviews().add(new Review(user, rest1, 1, new Date()));
+		rest1.getResetaurantReviews().add(new Review(user, rest1, 2, new Date()));
 		
 		rest2 = new Restaurant();
 		rest2.setId(102l);
-		rest2.getResetaurantReviews().add(new Review(user, rest2, 2));
-		rest2.getResetaurantReviews().add(new Review(user, rest2, 3));
+		rest2.getResetaurantReviews().add(new Review(user, rest2, 2, new Date()));
+		rest2.getResetaurantReviews().add(new Review(user, rest2, 3, new Date()));
 		
 		rest3 = new Restaurant();
 		rest3.setId(103l);
-		rest3.getResetaurantReviews().add(new Review(user, rest3, 3));
-		rest3.getResetaurantReviews().add(new Review(user, rest3, 4));
+		rest3.getResetaurantReviews().add(new Review(user, rest3, 3, new Date()));
+		rest3.getResetaurantReviews().add(new Review(user, rest3, 4, new Date()));
 	}
 	
 	@Test

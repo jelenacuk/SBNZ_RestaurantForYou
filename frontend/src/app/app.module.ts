@@ -12,16 +12,23 @@ import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RestaurantsModule } from './restaurants/restaurants.module';
-import { HomePageModule } from './homepage-common/homepage.module.';
+import { HomePageModule } from './homepage-common/homepage.module';
 import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
 import { ChartsModule } from 'ng2-charts';
-import { ReportsComponent } from './reports/reports.component';
+import { RatingRangeComponent } from './reports/rating-range/rating-range.component';
+import { UserRatingsComponent } from './reports/user-ratings/user-ratings.component';
+import { ReportsPageComponent } from './reports/reports-page/reports-page.component';
+import { DissatisfiedUsersComponent } from './reports/dissatisfied-users/dissatisfied-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RestaurantRecommandationComponent,
-    ReportsComponent
+    ReportsPageComponent,
+    RatingRangeComponent,
+    UserRatingsComponent,
+    ReportsPageComponent,
+    DissatisfiedUsersComponent,
   ],
   imports: [
     BrowserModule,

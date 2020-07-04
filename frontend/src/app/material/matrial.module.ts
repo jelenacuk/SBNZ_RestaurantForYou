@@ -23,7 +23,9 @@ const MatererialComponents = [
   MatListModule,
   MatDividerModule,
   MatRadioModule,
-  ChartsModule
+  ChartsModule,
+  MatTabsModule,
+  MatExpansionModule
 ];
 
 @NgModule({

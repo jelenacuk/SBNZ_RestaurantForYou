@@ -17,6 +17,8 @@ export class RestaurantDetailsComponent implements OnInit {
 
   private restaurantId: number;
   private restaurant: RestaurantDto;
+  role: string;
+
   // rating
   stars: number[] = [1, 2, 3, 4, 5];
   selectedValue: number;
@@ -32,6 +34,7 @@ export class RestaurantDetailsComponent implements OnInit {
   constructor(private restaurantService: RestaurantService, private constants: ConstantsService) { }
 
   ngOnInit() {
+      this.role = localStorage.getItem('role');
       this.restaurantId = Number(localStorage.getItem('restaurantId'));
       this.getRestaurant();
       }
@@ -49,6 +52,7 @@ export class RestaurantDetailsComponent implements OnInit {
       (response => {
         this.restaurant = response;
         this.createChart();
+        this.selectedValue = this.restaurant.grade;
       }),
        (error => {
         alert(error.error.message);
@@ -57,7 +61,6 @@ export class RestaurantDetailsComponent implements OnInit {
   }
 
   countStar(star) {
-    this.selectedValue = star;
     const dto: ReviewDto = new ReviewDto();
     dto.rating = star;
     dto.restaurantId = this.restaurantId;
@@ -65,6 +68,9 @@ export class RestaurantDetailsComponent implements OnInit {
       (response => {
         if (response === true) {
           alert('Success!');
+          this.selectedValue = star;
+        } else {
+          alert('You can only rate restaurants that are recommended to you.');
         }
       }),
       (error => {

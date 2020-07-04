@@ -19,6 +19,7 @@ public class RestaurantDTO {
 	private double latitude;
 	private double longitude;
 	private long size;
+	private int grade;
 	private List<WorkingDayDTO> workingDays = new ArrayList<WorkingDayDTO>();
 	private ReportDTO reportDTO;
 	private RestaurantFeaturesDTO features;
@@ -161,6 +162,14 @@ public class RestaurantDTO {
 
 	public void setFeatures(RestaurantFeaturesDTO features) {
 		this.features = features;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 
 	

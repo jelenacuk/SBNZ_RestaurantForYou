@@ -1,7 +1,79 @@
 package rules;
-import com.sbnz.RestaurantForYou.model.*
+import com.sbnz.RestaurantForYou.model.*;
+import com.sbnz.RestaurantForYou.dto.UserRestaurantsDTO;
+
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalDate;
+
+global Restaurant mostRecommendedRestaurant;
+global Restaurant leastRecommendedRestaurant;
+global List<UserRestaurantsDTO> dissatisfiedUsers;
+
+declare AlreadyProcessed
+	ruleName: String
+end
+
+
+rule "In the last two months for 5 recommended restaurants user gave a bad grade in at least 3 cases"
+	agenda-group "reports"
+	when
+		$user: RegisteredUser($recommendedRestaurants: recommendedRestaurants, recommendedRestaurants.size() >= 5);
+		accumulate (
+			Restaurant( $restaurant: this, $reviews: restaurantReviews) from $recommendedRestaurants
+			and 
+			List(size == 1) from collect(
+         		Review( user == $user &&  rating < 2.5 && creationDate.isAfter(LocalDate.now().minusMonths(2)) )
+         		from $reviews
+         	),
+			$restaurants: collectList($restaurant)
+		);
+		eval($restaurants.size() >= 3);
+	then
+		System.out.println("\tDissatisfied User => : " + $user.getUsername() + ", bad grades: " + $restaurants.size());			
+		dissatisfiedUsers.add(new UserRestaurantsDTO($user, $restaurants ));
+end;
+
+query getNumOfRecommendations(Long restaurantId, Long $NumOfRecommendations)
+	$users:  List() from collect(RegisteredUser());
+	$NumOfRecommendations:= Number() from accumulate (
+		RegisteredUser($user: this, $recommendedRestaurants: recommendedRestaurants ) from $users
+		and
+		List(size == 1) from collect(
+         	Restaurant( id == restaurantId ) from $recommendedRestaurants
+         ),
+		count($user)
+	);		
+end;
+rule "Most times recommended restaurant"
+	agenda-group "reports"
+	salience ($NumOfRecommendations*10)
+	when
+		not AlreadyProcessed(ruleName == "Most recommended");
+		$restaurant:  Restaurant( $id: id, $name: name );
+		?getNumOfRecommendations($id, $NumOfRecommendations;)
+	then 
+		System.out.println("\tMost recommended restaurant => : " + $name + ", => " + $NumOfRecommendations);
+		mostRecommendedRestaurant = $restaurant;
+		drools.getKnowledgeRuntime().setGlobal("mostRecommendedRestaurant", $restaurant);
+		insert( new AlreadyProcessed("Most recommended") );
+end;
+
+rule "The least times recommended restaurant"
+	agenda-group "reports"
+	salience (100/($NumOfRecommendations+1))
+	when
+		not AlreadyProcessed(ruleName == "Least recommended");
+		$restaurant:  Restaurant( $id: id, $name: name );
+		?getNumOfRecommendations($id, $NumOfRecommendations;)
+	then 
+		System.out.println("\tLeast Recommended Restaurant => : " + $name + ", => " + $NumOfRecommendations);
+		leastRecommendedRestaurant = $restaurant;
+		drools.getKnowledgeRuntime().setGlobal("leastRecommendedRestaurant", $restaurant);
+		insert( new AlreadyProcessed("Least recommended") );
+end;
 
 
 query "Average rating"
@@ -39,6 +111,9 @@ query "User ratings"(Long restaurantId)
 		Review( rating == 5) from $restaurant.getResetaurantReviews(),
 		count(1));
 end;
+
+
+
 
 
 

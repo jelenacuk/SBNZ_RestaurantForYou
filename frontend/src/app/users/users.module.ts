@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { MaterialModule } from '../material/matrial.module';
-import { HomePageModule } from '../homepage-common/homepage.module.';
+import { HomePageModule } from '../homepage-common/homepage.module';
 
 @NgModule({
   declarations: [

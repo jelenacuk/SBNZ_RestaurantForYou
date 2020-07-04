@@ -1,0 +1,19 @@
+<div class="reports-wrapper">
+
+    <mat-tab-group mat-align-tabs = "center">
+
+        <mat-tab label="Rating Range">
+            <app-rating-range></app-rating-range>
+        </mat-tab>
+
+        <mat-tab label="Popularity">
+            <app-user-ratings [mostRecommended] = mostRecommended [leastRecommended] = leastRecommended></app-user-ratings>
+        </mat-tab>
+
+        <mat-tab label="Dissatisfied users">
+            <app-dissatisfied-users [dissatisfiedUsers] = dissatisfiedUsers></app-dissatisfied-users>
+        </mat-tab>
+
+    </mat-tab-group>
+
+</div>
