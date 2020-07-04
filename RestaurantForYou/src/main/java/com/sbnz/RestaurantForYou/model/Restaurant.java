@@ -1,8 +1,6 @@
 package com.sbnz.RestaurantForYou.model;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,9 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -51,12 +46,6 @@ public class Restaurant {
 	private int score;
 	@OneToMany()
 	private Set<Review> restaurantReviews = new HashSet<Review>();
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "time_mapping", 
-      joinColumns = {@JoinColumn (name = "restaurant_id", referencedColumnName = "id")},
-      inverseJoinColumns = {@JoinColumn (name = "workingday_id", referencedColumnName = "id")})
-    @MapKey(name = "day")
-	private Map<String, WorkingDay> workingDays = new HashMap<String, WorkingDay>();
 	@JsonInclude()
 	@Transient
 	private Double average;
@@ -128,14 +117,6 @@ public class Restaurant {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Map<String, WorkingDay> getWorkingDays() {
-		return workingDays;
-	}
-
-	public void setWorkingDays(Map<String, WorkingDay> workingDays) {
-		this.workingDays = workingDays;
 	}
 
 	public String getImage() {

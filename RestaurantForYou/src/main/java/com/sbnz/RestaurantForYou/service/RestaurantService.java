@@ -35,6 +35,7 @@ import com.sbnz.RestaurantForYou.model.RegisteredUser;
 import com.sbnz.RestaurantForYou.model.Restaurant;
 import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
 import com.sbnz.RestaurantForYou.model.Review;
+import com.sbnz.RestaurantForYou.repository.FeaturesRepository;
 import com.sbnz.RestaurantForYou.repository.RestaurantRepository;
 import com.sbnz.RestaurantForYou.repository.UserRepository;
 import com.sbnz.RestaurantForYou.template.RatingRange;
@@ -45,13 +46,15 @@ public class RestaurantService {
 	private RestaurantRepository repository;
 	private KnowledgeService knowledgeService;
 	private UserRepository userRepository;
+	private FeaturesRepository featuresRepository;
 
 	@Autowired
 	public RestaurantService(RestaurantRepository repository, KnowledgeService knowledgeService,
-			UserRepository userRepository) {
+			UserRepository userRepository, FeaturesRepository featuresRepository) {
 		this.repository = repository;
 		this.knowledgeService = knowledgeService;
 		this.userRepository = userRepository;
+		this.featuresRepository = featuresRepository;
 	}
 	
 
@@ -185,7 +188,7 @@ public class RestaurantService {
 	public boolean addNewRestaurant(RestaurantDTO dto) throws FileNotFoundException, IOException {
 
 		Restaurant newRestaurant = RestaurantDTOConverter.convertFromDTO(dto);
-		if (dto.getImage() != "") {
+		if (dto.getImage() != "" && dto.getImage() != null) {
 			byte[] imageByte = Base64.decode((dto.getImage().split(","))[1]);
 			String directory = "/images";
 			File f = new File(directory);
@@ -197,6 +200,7 @@ public class RestaurantService {
 		} else {
 			newRestaurant.setImage("/images/" + "defaultTicketBackground" + ".jpg");
 		}
+		featuresRepository.save(newRestaurant.getFeatures());
 		repository.save(newRestaurant);
 		return true;
 	}
