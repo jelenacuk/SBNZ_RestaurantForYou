@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AddRestaurantDto } from 'src/app/dto/add-restaurant-dto';
+import { RestaurantService } from 'src/app/service/restaurant.service';
+import { FeaturesDTO } from 'src/app/dto/features-dto';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -15,23 +17,32 @@ export class AddRestaurantComponent implements OnInit {
   private kitchenValues: string[] = new Array<string>();
   private musicValues: string[] = new Array<string>();
   private ambienceValues: string[] = new Array<string>();
-  constructor(private formBuilder: FormBuilder) { }
 
   private path: string;
-  private workingDays: boolean;
   private restaurantDto: AddRestaurantDto = new AddRestaurantDto();
+
+  constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantService) { }
 
   ngOnInit() {
     this.path = '../../assets/images/default.jpg';
-    this.workingDays = false;
     this.initializeCollectionValues();
     this.buildForm();
 
   }
 
-  goToWorkingDays() {
+
+  onAddRestaurantSubmit() {
     this.restaurantData();
-    this.workingDays = true;
+    this.restaurantService.addRestaurantd(this.restaurantDto).subscribe(
+      (response => {
+        if (response === true) {
+          alert('Successfuly!');
+        }
+      }),
+      (error => {
+        alert(error.error.message);
+      })
+    );
   }
 
   openInput() {
@@ -64,6 +75,8 @@ export class AddRestaurantComponent implements OnInit {
     this.restaurantDto.music = this.addRestauratForm.controls.music.value;
     this.restaurantDto.price = this.addRestauratForm.controls.price.value;
     this.restaurantDto.image = this.path;
+
+    this.restaurantDto.features = new FeaturesDTO();
 
     this.restaurantDto.features.outdoorSeating = this.addRestauratForm.controls.garden.value;
     this.restaurantDto.features.alcohol = this.addRestauratForm.controls.wine.value;

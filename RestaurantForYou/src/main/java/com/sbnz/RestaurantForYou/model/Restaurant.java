@@ -1,8 +1,6 @@
 package com.sbnz.RestaurantForYou.model;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,9 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
@@ -51,12 +46,6 @@ public class Restaurant {
 	private int score;
 	@OneToMany()
 	private Set<Review> restaurantReviews = new HashSet<Review>();
-	@OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "time_mapping", 
-      joinColumns = {@JoinColumn (name = "restaurant_id", referencedColumnName = "id")},
-      inverseJoinColumns = {@JoinColumn (name = "workingday_id", referencedColumnName = "id")})
-    @MapKey(name = "day")
-	private Map<String, WorkingDay> workingDays = new HashMap<String, WorkingDay>();
 	@JsonInclude()
 	@Transient
 	private Double average;
@@ -130,14 +119,6 @@ public class Restaurant {
 		this.name = name;
 	}
 
-	public Map<String, WorkingDay> getWorkingDays() {
-		return workingDays;
-	}
-
-	public void setWorkingDays(Map<String, WorkingDay> workingDays) {
-		this.workingDays = workingDays;
-	}
-
 	public String getImage() {
 		return image;
 	}
@@ -188,6 +169,66 @@ public class Restaurant {
 
 	public void setAverage(double average) {
 		this.average = average;
+	}
+	
+	public int calculateMatching(RestaurantRrequirements requerments) {
+		int matching = 0;
+		System.out.println(name.toUpperCase());
+		if (requerments.getPrice().contains(price)) {
+			System.out.println("\tMatch => PRICE");
+			matching +=2;
+		}
+		if (requerments.getCapacity().contains(capacity)) {
+			System.out.println("\tMatch => CAPACITY");
+			matching +=1;
+		}
+		if (requerments.getKitchen().contains(kitchen)) {
+			System.out.println("\tMatch => KITCHEN");
+			matching +=2;
+		}
+		if (requerments.getMusic().contains(music)) {
+			System.out.println("\tMatch => MUSIC");
+			matching +=1;
+		}
+		if (requerments.getAmbience().contains(ambience)) {
+			System.out.println("\tMatch => AMBIENCE");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isAlcohol() && features.isAlcohol()) {
+			System.out.println("\tMatch => ALCOHOL");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isLiveMusic() && features.isLiveMusic()) {
+			System.out.println("\tMatch => LIVE MUSIC");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isOutdoorSeating() && features.isOutdoorSeating()) {
+			System.out.println("\tMatch => BASTA");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isParking() && features.isParking()) {
+			System.out.println("\tMatch => PARKING");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isProgramForChildern() && features.isProgramForChildern()) {
+			System.out.println("\tMatch => CHILDERN");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isReservations() && features.isReservations()) {
+			System.out.println("\tMatch => RESERVATION");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isTv() && features.isTv()) {
+			System.out.println("\tMatch => TV");
+			matching +=1;
+		}
+		if (requerments.getFeatures().isWifi() && features.isWifi()) {
+			System.out.println("\tMatch => WIFI");
+			matching +=1;
+		}
+		score = matching;
+		System.out.println("matching = " + matching);
+		return matching;
 	}
 
 }

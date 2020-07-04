@@ -44,7 +44,7 @@ export class RestaurantsListComponent implements OnInit {
 
   goToDetails( id: number ) {
     localStorage.setItem('restaurantId', id.toString());
-    this.router.navigateByUrl('restaurant-details');
+    window.open('restaurant-details');
   }
 
   getPicture(picture: string): string {

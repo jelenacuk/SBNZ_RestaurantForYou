@@ -1,13 +1,9 @@
 package com.sbnz.RestaurantForYou.converter;
 
-import java.time.LocalTime;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.sbnz.RestaurantForYou.dto.ReportDTO;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
 import com.sbnz.RestaurantForYou.dto.RestaurantFeaturesDTO;
-import com.sbnz.RestaurantForYou.dto.WorkingDayDTO;
 import com.sbnz.RestaurantForYou.model.Ambience;
 import com.sbnz.RestaurantForYou.model.Capacity;
 import com.sbnz.RestaurantForYou.model.Kitchen;
@@ -16,7 +12,6 @@ import com.sbnz.RestaurantForYou.model.Music;
 import com.sbnz.RestaurantForYou.model.Price;
 import com.sbnz.RestaurantForYou.model.Restaurant;
 import com.sbnz.RestaurantForYou.model.RestaurantFeatures;
-import com.sbnz.RestaurantForYou.model.WorkingDay;
 
 public class RestaurantDTOConverter {
 
@@ -33,12 +28,6 @@ public class RestaurantDTOConverter {
 		Location location = new Location(dto.getStreet(), dto.getNumber(), dto.getLatitude(), dto.getLongitude());
 		restaurant.setLocation(location);
 		restaurant.setFeatures(convertFeaturesFromDTO(dto.getFeatures()));
-		Map<String, WorkingDay> workingDaysMap = new HashMap<String, WorkingDay>();
-		for (WorkingDayDTO dayTime : dto.getWorkingDays()) {
-			workingDaysMap.put(dayTime.getDay(), new WorkingDay(dayTime.getDay(), dayTime.isOpen(),
-					LocalTime.parse(dayTime.getOpeningTime()), LocalTime.parse(dayTime.getClosingTime())));
-		}
-		restaurant.setWorkingDays(workingDaysMap);
 
 		return restaurant;
 
@@ -60,9 +49,6 @@ public class RestaurantDTOConverter {
 		dto.setImage(restaurant.getImage());
 		dto.setId(restaurant.getId());
 		dto.setDescription(restaurant.getDescription());
-		for (WorkingDay workingDay : restaurant.getWorkingDays().values()) {
-			dto.getWorkingDays().add(convertWorkingDay(workingDay));
-		}
 		dto.setFeatures(convertFeaturesToDTO(restaurant.getFeatures()));
 		dto.setReportDTO(reportDTO);
 		return dto;
@@ -82,6 +68,29 @@ public class RestaurantDTOConverter {
 		return dto;
 	}
 	
+	public static RestaurantDTO convertToDTO(Restaurant restaurant, ReportDTO reportDTO, int rated) {
+		RestaurantDTO dto = new RestaurantDTO();
+		dto.setAmbience(restaurant.getAmbience().toString());
+		dto.setCapacity(restaurant.getCapacity().toString());
+		dto.setKitchen(restaurant.getKitchen().toString());
+		dto.setMusic(restaurant.getMusic().toString());
+		dto.setName(restaurant.getName());
+		dto.setPrice(restaurant.getPrice().toString());
+		dto.setLatitude(restaurant.getLocation().getLatitude());
+		dto.setLongitude(restaurant.getLocation().getLongitude());
+		dto.setStreet(restaurant.getLocation().getStreet());
+		dto.setNumber(restaurant.getLocation().getNumber());
+		dto.setImage(restaurant.getImage());
+		dto.setId(restaurant.getId());
+		dto.setDescription(restaurant.getDescription());
+		dto.setFeatures(convertFeaturesToDTO(restaurant.getFeatures()));
+		dto.setReportDTO(reportDTO);
+		dto.setGrade(rated);
+		return dto;
+
+	}
+	
+	
 	private static RestaurantFeatures convertFeaturesFromDTO( RestaurantFeaturesDTO dto) {
 		RestaurantFeatures features = new RestaurantFeatures();
 		features.setAlcohol(dto.isAlcohol());
@@ -93,15 +102,6 @@ public class RestaurantDTOConverter {
 		features.setWifi(dto.isTv());
 		features.setParking(dto.isParking());
 		return features;
-	}
-
-	private static WorkingDayDTO convertWorkingDay(WorkingDay workingDay) {
-		WorkingDayDTO dto = new WorkingDayDTO();
-		dto.setDay(workingDay.getDay());
-		dto.setOpen(workingDay.isOpen());
-		dto.setOpeningTime(workingDay.getOpeningTime().toString());
-		dto.setClosingTime(workingDay.getClosingTime().toString());
-		return dto;
 	}
 
 }

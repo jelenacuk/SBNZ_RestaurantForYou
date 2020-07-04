@@ -19,5 +19,6 @@ export class RestaurantDto {
     size: number;
     reportDTO: ReportDTO;
     features: FeaturesDTO;
+    grade: number;
 
 }

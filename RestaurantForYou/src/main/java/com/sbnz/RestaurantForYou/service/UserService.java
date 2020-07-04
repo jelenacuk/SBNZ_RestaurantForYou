@@ -1,12 +1,8 @@
 package com.sbnz.RestaurantForYou.service;
 
+import java.time.LocalDate;
 import java.util.Date;
 
-import org.kie.api.KieBase;
-import org.kie.api.KieBaseConfiguration;
-import org.kie.api.KieServices;
-import org.kie.api.conf.EventProcessingOption;
-import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,31 +24,51 @@ public class UserService {
 	private UserRepository userRepository;
 	private RestaurantRepository restaurantRepository;
 	private ReviewRepository reviewRepository;
-	private final KieContainer kieContainer;
+	private final KnowledgeService knowledgeService;
 
 	public UserService(UserRepository userRepository, RestaurantRepository restaurantRepository,
-			ReviewRepository reviewRepository, KieContainer kieContainer) {
+			ReviewRepository reviewRepository, KnowledgeService knowledgeService) {
 		this.userRepository = userRepository;
 		this.restaurantRepository = restaurantRepository;
 		this.reviewRepository = reviewRepository;
-		this.kieContainer = kieContainer;
+		this.knowledgeService = knowledgeService;
 	}
 
 	public boolean rateRestaurant(ReviewDTO dto) {
 
 		Restaurant restaurant = restaurantRepository.findById(dto.getRestaurantId()).get();
 		RegisteredUser loggedUser = getLoggedUser();
-		Review review = new Review(loggedUser, restaurant, dto.getRating());
-		reviewRepository.save(review);
-		restaurant.getResetaurantReviews().add(review);
-		restaurantRepository.save(restaurant);
-		RatingEvent ratingEvent = new RatingEvent(new Date(), review);
-		KieSession kieSession = getKieSession();
-		kieSession.insert(ratingEvent);
-		kieSession.getAgenda().getAgendaGroup("rating").setFocus();
-		kieSession.fireAllRules();
-		return true;
-
+		boolean ok = false;
+		Review newReview = null;
+		for (Restaurant r : loggedUser.getRecommendedRestaurants()) {
+			if (r.getId() == dto.getRestaurantId()){
+				ok = true;
+				for (Review review: r.getRestaurantReviews()) {
+					if (review.getUser().getId() == loggedUser.getId()) {
+						newReview = review;
+						break;
+					}
+				}
+				break;
+			}
+		}
+		if (ok) {
+			if (newReview == null) {
+				newReview = new Review(loggedUser, restaurant, dto.getRating(), LocalDate.now());
+			}
+			else {
+				newReview.setRating(dto.getRating());
+			}
+			reviewRepository.save(newReview);
+			restaurant.getResetaurantReviews().add(newReview);
+			restaurantRepository.save(restaurant);
+			RatingEvent ratingEvent = new RatingEvent(new Date(), newReview);
+			KieSession kieSession = knowledgeService.getEventsSession();
+			kieSession.insert(ratingEvent);
+			kieSession.getAgenda().getAgendaGroup("rating").setFocus();
+			kieSession.fireAllRules();
+		}
+		return ok;
 	}
 	
 	// Returns currently logged user
@@ -66,14 +82,6 @@ public class UserService {
 		return null;
 	}
 	
-	private KieSession getKieSession() {
-		KieServices ks = KieServices.Factory.get();
-		KieBaseConfiguration kbconf = ks.newKieBaseConfiguration();
-		kbconf.setOption(EventProcessingOption.STREAM);
-		KieBase kbase = kieContainer.newKieBase(kbconf);
-		KieSession kieSession = kbase.newKieSession();
-		return kieSession;
-	}
 	
 
 }

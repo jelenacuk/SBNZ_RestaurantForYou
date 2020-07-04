@@ -4,7 +4,7 @@
 
 html, body { height: 100%; }
 body {
-     margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+     margin: 0; font-family: 'Times New Roman', Times, serif;
      background: #fff;
  }
 
@@ -77,3 +77,6 @@ body {
 }
 
 
+a {
+    color: rgb(1, 1, 5);
+   }

@@ -10,7 +10,7 @@
               accept=".jpg,.png,.jpeg">
                 <button class="btn btn-outline-secondary btn-sm" style="width: 56%;"  (click)="openInput()" >Upload</button>
             </div><br>
-            <form class="form" [formGroup]="addRestauratForm" (ngSubmit)="addRestauratForm.valid && goToWorkingDays()" noval>
+            <form class="form" [formGroup]="addRestauratForm" (ngSubmit)="addRestauratForm.valid && onAddRestaurantSubmit()" noval>
                 <mat-form-field class="field-full-width">
                     <input id="name"
                       matInput
@@ -104,10 +104,9 @@
                 </div>
 
                 <div  class="submitDiv">
-                    <button type="submit" class="btn btn-success">Next</button>
+                    <button type="submit" (click) = "onAddRestaurantSubmit()" class="btn btn-success">Add</button>
                 </div>
             </form>
           </mat-card-content>
     </mat-card>
-    <app-working-days [restaurantDto] = "restaurantDto"  *ngIf ="workingDays"></app-working-days>
 </div>

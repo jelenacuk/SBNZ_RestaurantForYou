@@ -1,7 +1,5 @@
 package com.sbnz.RestaurantForYou.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class RestaurantDTO {
 
@@ -19,7 +17,7 @@ public class RestaurantDTO {
 	private double latitude;
 	private double longitude;
 	private long size;
-	private List<WorkingDayDTO> workingDays = new ArrayList<WorkingDayDTO>();
+	private int grade;
 	private ReportDTO reportDTO;
 	private RestaurantFeaturesDTO features;
 
@@ -107,13 +105,6 @@ public class RestaurantDTO {
 		this.longitude = longitude;
 	}
 
-	public List<WorkingDayDTO> getWorkingDays() {
-		return workingDays;
-	}
-
-	public void setWorkingDays(List<WorkingDayDTO> workingDays) {
-		this.workingDays = workingDays;
-	}
 
 	public Long getId() {
 		return id;
@@ -161,6 +152,14 @@ public class RestaurantDTO {
 
 	public void setFeatures(RestaurantFeaturesDTO features) {
 		this.features = features;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
 	}
 
 	

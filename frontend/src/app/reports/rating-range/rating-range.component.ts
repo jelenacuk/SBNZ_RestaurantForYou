@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { RatingRangeDTO } from '../dto/rating-range-dto';
-import { RestaurantService } from '../service/restaurant.service';
+import { RatingRangeDTO } from 'src/app/dto/rating-range-dto';
+import { RestaurantDto } from 'src/app/dto/restaurant-dto';
+import { RestaurantService } from 'src/app/service/restaurant.service';
 import { Router } from '@angular/router';
-import { RestaurantDto } from '../dto/restaurant-dto';
-import { ConstantsService } from '../service/constants.service';
+import { ConstantsService } from 'src/app/service/constants.service';
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css']
+  selector: 'app-rating-range',
+  templateUrl: './rating-range.component.html',
+  styleUrls: ['./rating-range.component.css']
 })
-export class ReportsComponent implements OnInit {
+export class RatingRangeComponent implements OnInit {
 
   private from: number;
   private to: number;
@@ -22,7 +22,7 @@ export class ReportsComponent implements OnInit {
 
   ngOnInit() {
     this.from = 0;
-    this.to = 0;
+    this.to = 4;
     this.showResult = false;
   }
 
@@ -44,5 +44,7 @@ export class ReportsComponent implements OnInit {
   getPicture(picture: string): string {
     return this.constants.localhost + picture;
   }
+
+
 
 }

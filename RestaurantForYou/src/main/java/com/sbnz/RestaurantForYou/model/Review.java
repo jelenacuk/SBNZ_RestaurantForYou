@@ -1,5 +1,8 @@
 package com.sbnz.RestaurantForYou.model;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,18 +20,23 @@ public class Review {
 
 	@ManyToOne
 	private Restaurant restaurant;
-
+	
+	@Column
 	private int rating = 0;
+	
+	@Column
+	private LocalDate creationDate;
 
 	public Review() {
 		super();
 	}
 
-	public Review(RegisteredUser user, Restaurant restaurant, int rating) {
+	public Review(RegisteredUser user, Restaurant restaurant, int rating, LocalDate creationDate) {
 		super();
 		this.user = user;
 		this.restaurant = restaurant;
 		this.rating = rating;
+		this.creationDate = creationDate;
 	}
 
 	public Long getId() {
@@ -61,6 +69,14 @@ public class Review {
 
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+
+	public LocalDate getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(LocalDate creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 	

@@ -8,6 +8,7 @@ import { AddRestaurantDto } from '../dto/add-restaurant-dto';
 import { UserExpectations } from '../dto/user-expectations-dto';
 import { ReviewDto } from '../dto/review-dto';
 import { RatingRangeDTO } from '../dto/rating-range-dto';
+import { StatisticDto } from '../dto/statistic-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +34,8 @@ export class RestaurantService {
     return this.http.post<boolean>(this.constants.restaurantPath + '/addRestaurant', dto, { headers: this.headers });
   }
 
-  restaurantRecommandation(dto: UserExpectations): Observable<Array<RestaurantDto>> {
-    return this.http.post<Array<RestaurantDto>>(this.constants.restaurantPath + '/restaurantRecommandation',
+  restaurantRecommandation(dto: UserExpectations): Observable<RestaurantDto> {
+    return this.http.post<RestaurantDto>(this.constants.restaurantPath + '/restaurantSugestion',
      dto, { headers: this.headers });
   }
 
@@ -44,5 +45,9 @@ export class RestaurantService {
 
   getRestaurantsByRatingRange(dto: RatingRangeDTO): Observable<RestaurantDto[]> {
     return this.http.post<RestaurantDto[]>(this.constants.restaurantPath + '/getRestaurantsByRatingRange', dto, { headers: this.headers });
+  }
+
+  getStatistic(numOfMonths: number): Observable<StatisticDto> {
+    return this.http.get<StatisticDto>(this.constants.restaurantPath + '/reports/' + numOfMonths, { headers: this.headers });
   }
 }

@@ -31,11 +31,11 @@ public class BadRatingEventTest {
 		restaurant = new Restaurant();
 		restaurant.setId(101l);
 		restaurant.setName("restaurant");
-		review1 = new Review(user, null, 4);
-		review2 = new Review(user, null, 2);
-		review3 = new Review(user, null, 1);
-		review4 = new Review(user, null, 2);
-		review5 = new Review(user, null, 1);
+		review1 = new Review(user,null, 4, new Date());
+		review2 = new Review(user, null, 2, new Date());
+		review3 = new Review(user, null, 1, new Date());
+		review4 = new Review(user, null, 2, new Date());
+		review5 = new Review(user, null, 1, new Date());
 		restaurant.getResetaurantReviews().add(review1);
 		restaurant.getResetaurantReviews().add(review2);
 		restaurant.getResetaurantReviews().add(review3);

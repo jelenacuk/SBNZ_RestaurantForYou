@@ -1,98 +1,23 @@
 package rules;
 import com.sbnz.RestaurantForYou.model.Restaurant;
 import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
+import java.util.List;
+import java.util.ArrayList;
 
-global RestaurantRrequirements requirements;
+global Restaurant bestRestaurant;
 
-
-rule "price"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(price memberOf $requirements.getPrice, $score: score);
-then
-	restaurant.setScore($score +1);
-end;
-
-rule "music"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(music memberOf $requirements.getMusic, $score: score);
-then
-	restaurant.setScore($score + 3);
-end;
-
-rule "kitchen"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(kitchen memberOf $requirements.getKitchen, $score: score);
-then
-	restaurant.setScore($score + 5);
+rule "The Best Restaurant" 
+	agenda-group "recommendation"
+	salience((100*$restaurant.calculateMatching($requirements)) / 10)
+    when
+		$requirements: RestaurantRrequirements(processed == false);
+		$restaurant: Restaurant($name: name, $value: score);
+    then	
+    	bestRestaurant = $restaurant;
+    	drools.getKnowledgeRuntime().setGlobal("bestRestaurant", $restaurant);
+    	System.out.println("Restaurant: " + $name + " Matching: " + $value + " ===> ");  	
+	    modify($requirements) { setProcessed(true) }
 end;
 
 
-rule "wifi"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isWifi() == true &&  features.isWifi() == $requirements.getFeatures().isWifi() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;
 
-rule "liveMusic"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isLiveMusic() == true &&  features.isLiveMusic() == $requirements.getFeatures().isLiveMusic() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;
-
-rule "Alcohol"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isAlcohol() == true &&  features.isAlcohol() == $requirements.getFeatures().isAlcohol() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;
-
-rule "Reservations"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isReservations() == true &&  features.isReservations() == $requirements.getFeatures().isReservations() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;
-
-rule "ProgramForChildern"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isProgramForChildern() == true &&  features.isProgramForChildern() == $requirements.getFeatures().isProgramForChildern() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;
-
-rule "outdoorSeating"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isOutdoorSeating() == true &&  features.isOutdoorSeating() == $requirements.getFeatures().isOutdoorSeating() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;
-
-
-rule "parking"
-salience 80
-when
-	$requirements: RestaurantRrequirements();
-	restaurant: Restaurant(features.isParking() == true &&  features.isParking() == $requirements.getFeatures().isParking() , $score: score);
-then
-	restaurant.setScore($score +1);
-end;

@@ -1,0 +1,12 @@
+.box {
+    margin: auto;
+    opacity: 1;
+    padding: 0;
+    width: fit-content;
+    border: solid 1.5px  #5cb85c;
+      box-shadow:  0 0 10px#5cb85c;
+      -moz-box-shadow: 0 0 10px  #5cb85c;
+      -webkit-box-shadow: 0 0 10px  #5cb85c;
+      -o-box-shadow: 0 0 10px  #5cb85c;
+      flex: 0 1 calc(23.3% - 22px);
+}
