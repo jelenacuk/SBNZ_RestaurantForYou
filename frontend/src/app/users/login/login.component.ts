@@ -43,11 +43,14 @@ export class LoginComponent implements OnInit {
           const info = jwt.decodeToken(response.token);
           const role = info.role[0].authority;
           localStorage.setItem('role', info.role[0].authority);
-          this.router.navigate(['/home', true]);
+          window.location.replace('/home');
+          //this.router.navigate(['/home', true]);
+        } else {
+          alert('Bad Credentials');
         }
       }),
       (error => {
-        alert(error.error.message);
+        alert('Bad Credentials!');
       })
     );
   }

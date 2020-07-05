@@ -4,6 +4,7 @@ import { RestaurantService } from 'src/app/service/restaurant.service';
 import { PageEvent } from '@angular/material';
 import { ConstantsService } from 'src/app/service/constants.service';
 import { Router } from '@angular/router';
+import { SearchDto } from 'src/app/dto/search-dto';
 
 @Component({
   selector: 'app-restaurants-list',
@@ -14,6 +15,7 @@ export class RestaurantsListComponent implements OnInit {
 
   private restaurants: RestaurantDto[];
   private page: PageEvent = new PageEvent();
+  searchInput = '';
 
   constructor(private restaurantService: RestaurantService, private constants: ConstantsService, private router: Router) { }
 
@@ -34,6 +36,22 @@ export class RestaurantsListComponent implements OnInit {
         if (response !== null) {
           this.restaurants = response;
           this.page.length = this.restaurants[0].size;
+        }
+      }),
+      (error => {
+        alert(error.error.message);
+      })
+    );
+  }
+
+  search() {
+    const dto: SearchDto =  new SearchDto();
+    dto.name = this.searchInput;
+
+    this.restaurantService.search(dto).subscribe(
+      (response => {
+        if (response != null) {
+          this.restaurants = response;
         }
       }),
       (error => {

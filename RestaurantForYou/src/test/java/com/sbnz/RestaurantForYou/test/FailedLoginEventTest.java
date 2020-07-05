@@ -29,7 +29,7 @@ public class FailedLoginEventTest {
 			
 		KieServices ks = KieServices.Factory.get();
 	   	KieContainer kc = ks.newKieClasspathContainer();
-	    KieSession ksession = kc.newKieSession("rulesSession");
+	    KieSession ksession = kc.newKieSession("eventsSession");
 	        
 	    FailedLogInEvent event1 = new FailedLogInEvent(new Date(), user);
 	    FailedLogInEvent event2 = new FailedLogInEvent(new Date(), user);

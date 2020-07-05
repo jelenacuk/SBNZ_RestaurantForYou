@@ -22,7 +22,7 @@ export class RatingRangeComponent implements OnInit {
 
   ngOnInit() {
     this.from = 0;
-    this.to = 4;
+    this.to = 5;
     this.showResult = false;
   }
 
