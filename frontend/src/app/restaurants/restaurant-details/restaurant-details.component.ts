@@ -43,7 +43,7 @@ export class RestaurantDetailsComponent implements OnInit {
     this.barChartLabels = ['1', '2', '3', '4', '5'];
     const report: ReportDTO = this.restaurant.reportDTO;
     this.barChartData = [
-      { data: [report.ones, report.twos, report.threes, report.fours, report.fives], label: 'Best Fruits' }
+      { data: [report.ones, report.twos, report.threes, report.fours, report.fives], label: 'Grades' }
     ];
   }
 

@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
 
-  @Input() loggedIn: boolean;
+  loggedIn: boolean;
   private role: string;
 
   constructor( private router: Router) { }
@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
 
     if (localStorage.getItem('token') !== '' ) {
       this.role = localStorage.getItem('role');
+      this.loggedIn = true;
     }
 
   }
@@ -30,11 +31,7 @@ export class NavbarComponent implements OnInit {
   }
 
   navigateToHome() {
-    if (this.loggedIn) {
-      this.router.navigate(['/home', true]);
-    } else {
-      this.router.navigate(['/home', false]);
-    }
+    this.router.navigateByUrl('');
   }
 
 }

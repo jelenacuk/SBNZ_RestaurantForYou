@@ -9,6 +9,7 @@ import { UserExpectations } from '../dto/user-expectations-dto';
 import { ReviewDto } from '../dto/review-dto';
 import { RatingRangeDTO } from '../dto/rating-range-dto';
 import { StatisticDto } from '../dto/statistic-dto';
+import { SearchDto } from '../dto/search-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -50,4 +51,9 @@ export class RestaurantService {
   getStatistic(numOfMonths: number): Observable<StatisticDto> {
     return this.http.get<StatisticDto>(this.constants.restaurantPath + '/reports/' + numOfMonths, { headers: this.headers });
   }
+
+  search(dto: SearchDto): Observable<RestaurantDto[]> {
+    return this.http.post<RestaurantDto[]>(this.constants.restaurantPath + '/search', dto, { headers: this.headers });
+  }
+
 }

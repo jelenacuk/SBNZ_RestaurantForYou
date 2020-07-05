@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.codec.Base64;
 import com.sbnz.RestaurantForYou.converter.RestaurantDTOConverter;
 import com.sbnz.RestaurantForYou.dto.ReportDTO;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
+import com.sbnz.RestaurantForYou.dto.SearchDto;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
 import com.sbnz.RestaurantForYou.model.RegisteredUser;
 import com.sbnz.RestaurantForYou.model.Restaurant;
@@ -101,6 +102,30 @@ public class RestaurantService {
 		bestRestaurant = (Restaurant) kieSession.getGlobal("bestRestaurant");
 		return bestRestaurant;
 	}
+	
+	public List<RestaurantDTO> search(SearchDto searchDto){
+		InputStream template = RestaurantService.class
+				.getResourceAsStream("/templates/search.drt");
+		ObjectDataCompiler converter = new ObjectDataCompiler();
+		List<SearchDto> data = new ArrayList<>();
+		data.add(searchDto);
+		
+		String drl = converter.compile(data, template);
+		System.out.println("\n\n" + drl + "\n\n");
+		KieSession kieSession = createKieSessionFromDRL(drl);
+		List<Restaurant> result = new ArrayList<Restaurant>();
+		for (Restaurant restaurant : repository.findAll()) {
+			kieSession.insert(restaurant);
+		}
+		kieSession.setGlobal("result", result);
+		kieSession.fireAllRules();
+		
+		return (result.stream().map(restaurant -> {
+			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant,
+					new ReportDTO(restaurant.getAverage(), 0));
+			return dto;
+		})).collect(Collectors.toList());
+	}
 
 	public List<RestaurantDTO> getRestaurantsByRatingRange(RatingRange ratingRange) {
 		InputStream template = RestaurantService.class
@@ -109,9 +134,7 @@ public class RestaurantService {
 		List<RatingRange> data = new ArrayList<RatingRange>();
 		data.add(ratingRange);
 		String drl = converter.compile(data, template);
-		System.out.println("/n/n");
-		System.out.println(drl);
-		System.out.println("/n/n");
+		System.out.println("\n\n" + drl + "\n\n");
 		KieSession kieSession = createKieSessionFromDRL(drl);
 		List<Restaurant> result = new ArrayList<Restaurant>();
 		for (Restaurant restaurant : repository.findAll()) {
@@ -128,10 +151,10 @@ public class RestaurantService {
 
 	public RestaurantDTO getRestaurant(Long id) {
 		KieSession kieSession = knowledgeService.getRulesSession();
-		Optional<Restaurant> restaurantOpt = repository.findById(101l);
+		Optional<Restaurant> restaurantOpt = repository.findById(id);
 		kieSession.insert(restaurantOpt.get());
 		RestaurantDTO restDTO = null;
-		QueryResults results = kieSession.getQueryResults("User ratings", 101l);
+		QueryResults results = kieSession.getQueryResults("User ratings", id);
 		for (QueryResultsRow qrr : results) {
 			Restaurant restaurant = (Restaurant) qrr.get("$restaurant");
 			int reviewSum = (int) qrr.get("$reviewSum");

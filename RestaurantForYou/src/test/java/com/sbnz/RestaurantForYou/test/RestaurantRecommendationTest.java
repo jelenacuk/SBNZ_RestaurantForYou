@@ -72,7 +72,16 @@ public void setUp() {
         ksession.insert(rest1);
         ksession.insert(expectations);
         ksession.insert(restRequirements);
+        ksession.getAgenda().getActivationGroup("requirments");
         long ruleFireCount = ksession.fireAllRules();
+        ksession.dispose();
+        
+        ksession = kc.newKieSession("rulesSession");
+        ksession.insert(rest1);
+        ksession.insert(expectations);
+        ksession.insert(restRequirements);
+        ksession.getAgenda().getActivationGroup("recommendation");
+        ruleFireCount += ksession.fireAllRules();
         
         //Rules should come to the following conclusions for restaurantRequirments
         assertEquals(true, restRequirements.getFeatures().isAlcohol());

@@ -30,9 +30,9 @@
                 <button type="submit" (click)= 'onFormSubmit()' class="btn btn-success">Submit</button>
             </div>
         </form>
-    </div>
+    </div><br><br>
 
-    <div *ngIf = "showResult" style="margin-top: 5%; width: 80%;">
+    <div *ngIf = "showResult" style="margin: auto; width: 70%;">
         <h2 style="text-align:center;">Result:</h2><br>
 
         <app-restaurant-basic-info [restaurant] = result></app-restaurant-basic-info>
@@ -40,7 +40,7 @@
 
     </div>
 
-    <div *ngIf = "showDetails" style="margin-top: 5%; width: 80%; background-color: coral;">
+    <div *ngIf = "showDetails" style="margin: auto; margin-top: 5%; width: 60%; background-color: coral;">
         <app-restaurant-details></app-restaurant-details>
         <button  (click) = "goBack()">Back</button>
     </div>

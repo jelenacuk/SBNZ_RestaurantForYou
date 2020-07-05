@@ -9,17 +9,5 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'frontend';
 
-  loggedIn: boolean;
-  private role: string;
-
-  constructor( private router: Router) { }
-
-  ngOnInit() {
-    if (localStorage.getItem('token') !== '' ) {
-      this.role = localStorage.getItem('role');
-      this.loggedIn = true;
-    }
-
-  }
 
 }

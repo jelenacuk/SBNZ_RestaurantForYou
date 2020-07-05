@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
+import com.sbnz.RestaurantForYou.dto.SearchDto;
 import com.sbnz.RestaurantForYou.dto.StatisticsDTO;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
 import com.sbnz.RestaurantForYou.service.ReportService;
@@ -73,6 +74,13 @@ public class RestaurantController {
 	@PostMapping(value = "/getRestaurantsByRatingRange")
 	public ResponseEntity<List<RestaurantDTO>> getRestaurantsByRatingRange(@RequestBody RatingRange dto) {
 		List<RestaurantDTO> restaurants = restaurantService.getRestaurantsByRatingRange(dto);
+		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
+	}
+	
+
+	@PostMapping(value = "/search")
+	public ResponseEntity<List<RestaurantDTO>> search(@RequestBody SearchDto dto) {
+		List<RestaurantDTO> restaurants = restaurantService.search(dto);
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
 }

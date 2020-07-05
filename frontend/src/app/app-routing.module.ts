@@ -11,8 +11,8 @@ import { ReportsPageComponent } from './reports/reports-page/reports-page.compon
 
 
 const routes: Routes = [
-  {path: '', pathMatch: 'full', redirectTo: '/home/false'},
-  {path: 'home/:loggedIn', component: HomepageComponent},
+  {path: '', pathMatch: 'full', redirectTo: '/home'},
+  {path: 'home', component: HomepageComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegistrationComponent},
   {path: 'restaurants-list', component: RestaurantsListComponent},

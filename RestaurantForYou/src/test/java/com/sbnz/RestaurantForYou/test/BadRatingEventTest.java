@@ -3,6 +3,7 @@ package com.sbnz.RestaurantForYou.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -31,11 +32,11 @@ public class BadRatingEventTest {
 		restaurant = new Restaurant();
 		restaurant.setId(101l);
 		restaurant.setName("restaurant");
-		review1 = new Review(user,null, 4, new Date());
-		review2 = new Review(user, null, 2, new Date());
-		review3 = new Review(user, null, 1, new Date());
-		review4 = new Review(user, null, 2, new Date());
-		review5 = new Review(user, null, 1, new Date());
+		review1 = new Review(user,null, 4, LocalDate.now());
+		review2 = new Review(user, null, 2, LocalDate.now());
+		review3 = new Review(user, null, 1, LocalDate.now());
+		review4 = new Review(user, null, 2, LocalDate.now());
+		review5 = new Review(user, null, 1, LocalDate.now());
 		restaurant.getResetaurantReviews().add(review1);
 		restaurant.getResetaurantReviews().add(review2);
 		restaurant.getResetaurantReviews().add(review3);
@@ -56,7 +57,7 @@ public class BadRatingEventTest {
 		
 		KieServices ks = KieServices.Factory.get();
     	KieContainer kc = ks.newKieClasspathContainer();
-        KieSession ksession = kc.newKieSession("rulesSession");
+        KieSession ksession = kc.newKieSession("eventsSession");
 
         RatingEvent event1 = new RatingEvent(new Date(), review1);
         RatingEvent event2 = new RatingEvent(new Date(), review2);

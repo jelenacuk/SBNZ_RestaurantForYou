@@ -6,17 +6,22 @@ import java.util.ArrayList;
 
 global Restaurant bestRestaurant;
 
+declare Processed
+end
+
 rule "The Best Restaurant" 
 	agenda-group "recommendation"
 	salience((100*$restaurant.calculateMatching($requirements)) / 10)
     when
-		$requirements: RestaurantRrequirements(processed == false);
+		$requirements: RestaurantRrequirements();
 		$restaurant: Restaurant($name: name, $value: score);
+		not Processed()
     then	
     	bestRestaurant = $restaurant;
     	drools.getKnowledgeRuntime().setGlobal("bestRestaurant", $restaurant);
     	System.out.println("Restaurant: " + $name + " Matching: " + $value + " ===> ");  	
 	    modify($requirements) { setProcessed(true) }
+	    insert( new Processed() );
 end;
 
 

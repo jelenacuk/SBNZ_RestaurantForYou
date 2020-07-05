@@ -1,0 +1,35 @@
+template header
+
+name
+
+package rules;
+
+import com.sbnz.RestaurantForYou.model.*;
+import java.util.List;
+import java.util.ArrayList;
+global ArrayList<Restaurant> result;
+
+template "searchByName-rules"
+
+rule "calculate average_@{row.rowNumber}"
+	salience 100
+	when
+		$restaurant: Restaurant();
+		$averageRating:= Number() from accumulate (
+			Review( $mark: rating) from $restaurant.getResetaurantReviews(),
+			average($mark)
+		);
+	then
+		$restaurant.setAverage(Double.parseDouble($averageRating.toString()));
+end;
+
+rule "Get restaurants by name_@{row.rowNumber}"
+no-loop true
+salience 90
+when
+	$restaurant: Restaurant(name.contains("@{name}"));
+then
+	result.add($restaurant);
+end
+
+end template
