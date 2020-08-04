@@ -1,5 +1,6 @@
 package com.sbnz.RestaurantForYou.dto;
 
+import java.time.LocalDate;
 
 public class RestaurantDTO {
 
@@ -12,14 +13,18 @@ public class RestaurantDTO {
 	private String kitchen;
 	private String music;
 	private String ambience;
+	
 	private String street;
 	private String number;
 	private double latitude;
 	private double longitude;
-	private long size;
-	private int grade;
+	
+	private Double averageGrade;
 	private ReportDTO reportDTO;
 	private RestaurantFeaturesDTO features;
+	private LocalDate alarmCreation;
+	
+	private long size;
 
 	public RestaurantDTO() {
 		// TODO Auto-generated constructor stub
@@ -154,12 +159,20 @@ public class RestaurantDTO {
 		this.features = features;
 	}
 
-	public int getGrade() {
-		return grade;
+	public double getAverageGrade() {
+		return averageGrade;
 	}
 
-	public void setGrade(int grade) {
-		this.grade = grade;
+	public void setAverageGrade(double averageGrade) {
+		this.averageGrade = averageGrade;
+	}
+
+	public LocalDate getAlarmCreation() {
+		return alarmCreation;
+	}
+
+	public void setAlarmCreation(LocalDate alarmCreation) {
+		this.alarmCreation = alarmCreation;
 	}
 
 	

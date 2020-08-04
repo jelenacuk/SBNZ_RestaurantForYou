@@ -18,7 +18,7 @@ end
 
 
 rule "In the last two months for 5 recommended restaurants user gave a bad grade in at least 3 cases"
-	agenda-group "reports"
+	agenda-group "dissatisfied"
 	when
 		$user: RegisteredUser($recommendedRestaurants: recommendedRestaurants, recommendedRestaurants.size() >= 5);
 		accumulate (
@@ -48,7 +48,7 @@ query getNumOfRecommendations(Long restaurantId, Long $NumOfRecommendations)
 	);		
 end;
 rule "Most times recommended restaurant"
-	agenda-group "reports"
+	agenda-group "popularity"
 	salience ($NumOfRecommendations*10)
 	when
 		not AlreadyProcessed(ruleName == "Most recommended");
@@ -62,7 +62,7 @@ rule "Most times recommended restaurant"
 end;
 
 rule "The least times recommended restaurant"
-	agenda-group "reports"
+	agenda-group "popularity"
 	salience (100/($NumOfRecommendations+1))
 	when
 		not AlreadyProcessed(ruleName == "Least recommended");

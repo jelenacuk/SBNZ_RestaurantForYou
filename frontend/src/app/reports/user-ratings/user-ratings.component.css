@@ -9,11 +9,15 @@
 }
 
 .text{
-    font-size: larger;
-    text-align: center;
+    font-size: 24px;
 }
 
-
+input {
+    margin-right: 1%;
+    text-align: center;
+    width: 4%;
+    border: solid 1px   black;
+}
 
 .applyBtn{
     text-align: center;

@@ -25,7 +25,9 @@ const MatererialComponents = [
   MatRadioModule,
   ChartsModule,
   MatTabsModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatTableModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
@@ -37,6 +39,6 @@ const MatererialComponents = [
   exports: [
     MatererialComponents
   ],
-  providers: []
+  providers: [{ provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2800, panelClass: ['snackBar'] } }]
 })
 export class MaterialModule { }

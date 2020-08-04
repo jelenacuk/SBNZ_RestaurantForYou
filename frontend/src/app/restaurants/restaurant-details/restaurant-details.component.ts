@@ -7,6 +7,7 @@ import { ConstantsService } from 'src/app/service/constants.service';
 import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { ReportDTO } from 'src/app/dto/report-dto';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -31,7 +32,8 @@ export class RestaurantDetailsComponent implements OnInit {
   barChartData: ChartDataSets[];
 
 
-  constructor(private restaurantService: RestaurantService, private constants: ConstantsService) { }
+  constructor(private restaurantService: RestaurantService, private constants: ConstantsService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
       this.role = localStorage.getItem('role');
@@ -52,10 +54,10 @@ export class RestaurantDetailsComponent implements OnInit {
       (response => {
         this.restaurant = response;
         this.createChart();
-        this.selectedValue = this.restaurant.grade;
+        this.selectedValue = this.restaurant.reportDTO.myReview;
       }),
        (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }
@@ -67,14 +69,14 @@ export class RestaurantDetailsComponent implements OnInit {
     this.restaurantService.rateRestaurant(dto).subscribe(
       (response => {
         if (response === true) {
-          alert('Success!');
+          this.snackBar.open('Success!');
           this.selectedValue = star;
         } else {
-          alert('You can only rate restaurants that are recommended to you.');
+          this.snackBar.open('You can only rate restaurants that are recommended to you.');
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }

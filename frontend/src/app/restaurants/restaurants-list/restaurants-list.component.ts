@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestaurantDto } from 'src/app/dto/restaurant-dto';
 import { RestaurantService } from 'src/app/service/restaurant.service';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatSnackBar } from '@angular/material';
 import { ConstantsService } from 'src/app/service/constants.service';
 import { Router } from '@angular/router';
 import { SearchDto } from 'src/app/dto/search-dto';
@@ -17,7 +17,8 @@ export class RestaurantsListComponent implements OnInit {
   private page: PageEvent = new PageEvent();
   searchInput = '';
 
-  constructor(private restaurantService: RestaurantService, private constants: ConstantsService, private router: Router) { }
+  constructor(private restaurantService: RestaurantService, private constants: ConstantsService,
+              private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     this.page.pageIndex = 0;
@@ -39,7 +40,7 @@ export class RestaurantsListComponent implements OnInit {
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }
@@ -55,7 +56,7 @@ export class RestaurantsListComponent implements OnInit {
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }

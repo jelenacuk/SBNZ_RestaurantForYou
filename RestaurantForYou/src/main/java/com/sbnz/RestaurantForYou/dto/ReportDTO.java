@@ -9,12 +9,13 @@ public class ReportDTO {
 	private long threes;
 	private long fours;
 	private long fives;
+	private int myReview;
 	
 	public ReportDTO() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public ReportDTO(double average, long numOfReviews, long ones, long twos, long threes, long fours, long fives) {
+	public ReportDTO(double average, long numOfReviews, long ones, long twos, long threes, long fours, long fives, int myReview) {
 		super();
 		this.average = average;
 		this.numOfReviews = numOfReviews;
@@ -23,6 +24,7 @@ public class ReportDTO {
 		this.threes = threes;
 		this.fours = fours;
 		this.fives = fives;
+		this.myReview = myReview;
 	}
 	
 	public ReportDTO(double average, long numOfReviews) {
@@ -92,6 +94,14 @@ public class ReportDTO {
 
 	public void setNumOfReviews(long numOfReviews) {
 		this.numOfReviews = numOfReviews;
+	}
+
+	public int getMyReview() {
+		return myReview;
+	}
+
+	public void setMyReview(int myReview) {
+		this.myReview = myReview;
 	}
 	
 	

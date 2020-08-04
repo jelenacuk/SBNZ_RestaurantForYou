@@ -3,10 +3,11 @@
     opacity: 1;
     padding: 0;
     width: fit-content;
-    border: solid 1.5px  #5cb85c;
-      box-shadow:  0 0 10px#5cb85c;
-      -moz-box-shadow: 0 0 10px  #5cb85c;
-      -webkit-box-shadow: 0 0 10px  #5cb85c;
-      -o-box-shadow: 0 0 10px  #5cb85c;
-      flex: 0 1 calc(23.3% - 22px);
+    opacity: 0.9;
+        border: solid 1.5px gray ;
+          box-shadow:  0 0 10px  rgba(0,0,0,0.6);
+          -moz-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+          -webkit-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+          -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
+          flex: 0 1 calc(23.3% - 22px);
 }

@@ -1,5 +1,6 @@
 package com.sbnz.RestaurantForYou.model;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,9 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity
 public class Restaurant {
@@ -46,8 +44,9 @@ public class Restaurant {
 	private int score;
 	@OneToMany()
 	private Set<Review> restaurantReviews = new HashSet<Review>();
-	@JsonInclude()
-	@Transient
+	@Column
+	private LocalDate alarm;
+	@Column
 	private Double average;
 	
 
@@ -229,6 +228,18 @@ public class Restaurant {
 		score = matching;
 		System.out.println("matching = " + matching);
 		return matching;
+	}
+
+	public LocalDate getAlarm() {
+		return alarm;
+	}
+
+	public void setAlarm(LocalDate alarm) {
+		this.alarm = alarm;
+	}
+
+	public void setAverage(Double average) {
+		this.average = average;
 	}
 
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserDto } from 'src/app/dto/user-dto';
 import { UserService } from 'src/app/service/user.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-registration',
@@ -13,7 +14,7 @@ export class RegistrationComponent implements OnInit {
   private registerForm: FormGroup;
   private hide: boolean;
 
-  constructor(private formBuilder: FormBuilder, private userService: UserService ) { }
+  constructor(private formBuilder: FormBuilder, private userService: UserService, private snackBar: MatSnackBar ) { }
 
   ngOnInit() {
     this.hide = true;
@@ -25,11 +26,11 @@ export class RegistrationComponent implements OnInit {
     this.userService.register(dto).subscribe(
       (response => {
         if (response === true) {
-          alert('Successfuly!');
+          this.snackBar.open('Successfuly!');
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }

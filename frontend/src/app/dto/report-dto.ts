@@ -7,4 +7,5 @@ export class ReportDTO {
     fours: number;
     fives: number;
     numOfReviews: number;
+    myReview: number;
 }

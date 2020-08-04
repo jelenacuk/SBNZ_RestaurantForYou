@@ -13,7 +13,6 @@ export class RestaurantBasicInfoComponent implements OnInit {
 
   constructor(private constants: ConstantsService) { }
   ngOnInit() {
-    console.log(JSON.stringify(this.restaurant));
   }
 
   goToDetails(restaurantId: number) {

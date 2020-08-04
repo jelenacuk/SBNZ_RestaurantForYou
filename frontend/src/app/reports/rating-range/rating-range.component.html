@@ -1,33 +1,25 @@
 <div class="form-wrapper">
 
+    <!--Range-->
     <div class="center-div">
         <div >
-            <span class="text">Enter the range of average restaurant ratings:</span>
-            <input id="from"
-                  matInput
-                  pattern="/^[0-5].[0-9]+$"
-                  [ngModelOptions]="{standalone: true}"
-                  [(ngModel)] = "from"  
-                  placeholder="From" 
-                  #name="ngModel"/>
-            <input id="to"
-                  matInput
-                  pattern="/^[0-5].[0-9]+$"
-                  [ngModelOptions]="{standalone: true}"
-                  [(ngModel)] = "to" 
-                  placeholder="To"
-                  #name="ngModel" />
-        </div>
-        <div  class="rangeBtn">
-            <button type="submit" (click) = "getRestaurants()" class="btn btn-success btn-sm">Get Restaurants</button>
-        </div>
-
+            <span class="text">Enter the range of average restaurant ratings:
+                <input matInput
+                pattern="/^[0-5].[0-9]+$" [ngModelOptions]="{standalone: true}" [(ngModel)] = "from" #name="ngModel"
+                (keyup)="getRestaurants($event)"/>
+          to:
+          <input 
+                matInput
+                pattern="/^[0-5].[0-9]+$" [ngModelOptions]="{standalone: true}" [(ngModel)] = "to" #name="ngModel"
+                (keyup)="getRestaurants($event)" />
+            </span>
+      </div>
     </div>
 
+    <!--Results-->
     <div *ngIf = "restaurants"   style="margin-top: 5%;">
         <div style="margin: auto; margin-top: 5%; width: 60%;" *ngFor = "let restaurant of restaurants; index as i">
             <app-restaurant-basic-info  [restaurant] = restaurant></app-restaurant-basic-info>
-
         </div>
 
     </div>

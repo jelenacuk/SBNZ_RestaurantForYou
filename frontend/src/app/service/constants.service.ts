@@ -6,4 +6,5 @@ export class ConstantsService {
     readonly authPath = this.localhost + '/api/auth';
     readonly userPath = this.localhost + '/api/user';
     readonly restaurantPath = this.localhost + '/api/restaraunts';
+    readonly reportsPath = this.localhost + '/api/reports';
 }

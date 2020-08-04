@@ -38,12 +38,15 @@ public class UserService {
 
 		Restaurant restaurant = restaurantRepository.findById(dto.getRestaurantId()).get();
 		RegisteredUser loggedUser = getLoggedUser();
-		boolean ok = false;
+
+		boolean isRecommended = false;
 		Review newReview = null;
+		// check if the restaurant is on the recommended list
 		for (Restaurant r : loggedUser.getRecommendedRestaurants()) {
-			if (r.getId() == dto.getRestaurantId()){
-				ok = true;
-				for (Review review: r.getRestaurantReviews()) {
+			if (r.getId() == dto.getRestaurantId()) {
+				isRecommended = true;
+				// check if the user has already rated the restaurant
+				for (Review review : r.getRestaurantReviews()) {
 					if (review.getUser().getId() == loggedUser.getId()) {
 						newReview = review;
 						break;
@@ -52,25 +55,24 @@ public class UserService {
 				break;
 			}
 		}
-		if (ok) {
+		if (isRecommended) {
 			if (newReview == null) {
 				newReview = new Review(loggedUser, restaurant, dto.getRating(), LocalDate.now());
-			}
-			else {
+			} else {
 				newReview.setRating(dto.getRating());
 			}
 			reviewRepository.save(newReview);
 			restaurant.getResetaurantReviews().add(newReview);
-			restaurantRepository.save(restaurant);
 			RatingEvent ratingEvent = new RatingEvent(new Date(), newReview);
 			KieSession kieSession = knowledgeService.getEventsSession();
 			kieSession.insert(ratingEvent);
 			kieSession.getAgenda().getAgendaGroup("rating").setFocus();
 			kieSession.fireAllRules();
+			restaurantRepository.save(restaurant);
 		}
-		return ok;
+		return isRecommended;
 	}
-	
+
 	// Returns currently logged user
 	private RegisteredUser getLoggedUser() {
 
@@ -81,7 +83,5 @@ public class UserService {
 		}
 		return null;
 	}
-	
-	
 
 }

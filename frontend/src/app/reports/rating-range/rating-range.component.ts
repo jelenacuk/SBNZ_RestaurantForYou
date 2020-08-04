@@ -4,6 +4,8 @@ import { RestaurantDto } from 'src/app/dto/restaurant-dto';
 import { RestaurantService } from 'src/app/service/restaurant.service';
 import { Router } from '@angular/router';
 import { ConstantsService } from 'src/app/service/constants.service';
+import { ReportService } from 'src/app/service/report.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-rating-range',
@@ -18,17 +20,19 @@ export class RatingRangeComponent implements OnInit {
   private restaurants: RestaurantDto[];
 
 
-  constructor( private restaurantService: RestaurantService, private router: Router, private constants: ConstantsService ) { }
+  constructor( private reportService: ReportService, private router: Router,
+               private constants: ConstantsService, private snackBar: MatSnackBar ) { }
 
   ngOnInit() {
     this.from = 0;
     this.to = 5;
     this.showResult = false;
+    this.getRestaurants(null);
   }
 
-  getRestaurants() {
+  getRestaurants(event: Event) {
     const dto = new  RatingRangeDTO(this.from, this.to);
-    this.restaurantService.getRestaurantsByRatingRange(dto).subscribe(
+    this.reportService.getRestaurantsByRatingRange(dto).subscribe(
       (response => {
         if (response !== null) {
           this.restaurants = response;
@@ -36,7 +40,7 @@ export class RatingRangeComponent implements OnInit {
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { RestaurantDto } from 'src/app/dto/restaurant-dto';
 import { RestaurantService } from 'src/app/service/restaurant.service';
 import { ConstantsService } from 'src/app/service/constants.service';
+import { ReportService } from 'src/app/service/report.service';
 
 @Component({
   selector: 'app-user-ratings',
@@ -11,14 +12,31 @@ import { ConstantsService } from 'src/app/service/constants.service';
 export class UserRatingsComponent implements OnInit {
 
   private numOfMonths: number;
-  @Input() mostRecommended: RestaurantDto;
-  @Input() leastRecommended: RestaurantDto;
+  private mostRecommended: RestaurantDto;
+  private leastRecommended: RestaurantDto;
 
-  constructor( private restaurantService: RestaurantService, private constants: ConstantsService) { }
+  constructor( private reportService: ReportService, private constants: ConstantsService) { }
 
   ngOnInit() {
     this.numOfMonths = 2;
+    this.getPopularityReport();
   }
+
+  getPopularityReport() {
+    this.reportService.getPopularityReport(this.numOfMonths).subscribe(
+      (response => {
+        if (response != null) {
+          this.mostRecommended = response.mostRecommended;
+          this.leastRecommended = response.leastRecommended;
+        }
+      }),
+      (error => {
+        alert(error.error.message);
+      })
+    );
+  }
+
+
 
 
   getPicture(picture: string): string {

@@ -4,7 +4,7 @@
             <img class="col" src={{getPicture(restaurant.image)}} height="100%" > 
         </div>
         <div class="col">                   
-                 <mat-card-title>{{restaurant.name}} <mat-chip *ngIf = "restaurant.reportDTO" color="accent" selected>{{restaurant.reportDTO.average}}</mat-chip></mat-card-title>
+                 <mat-card-title>{{restaurant.name}} <mat-chip  color="accent" selected>{{restaurant.averageGrade}}</mat-chip></mat-card-title>
             
             <mat-chip-list>
                 <mat-chip>{{restaurant.kitchen}}</mat-chip>

@@ -6,6 +6,7 @@ import { RestaurantService } from '../service/restaurant.service';
 import { RestaurantDto } from '../dto/restaurant-dto';
 import { ConstantsService } from '../service/constants.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-restaurant-recommandation',
@@ -15,15 +16,13 @@ import { Router } from '@angular/router';
 export class RestaurantRecommandationComponent implements OnInit {
 
   private questionsForm: FormGroup;
-  private questions1: Question[];
-  private questions2: Question[];
+  private questions: Question[];
   private result: RestaurantDto;
   private showForm: boolean;
   private showResult: boolean;
-  private showDetails: boolean;
 
   constructor(private builder: FormBuilder, private restaurantService: RestaurantService,
-              private constants: ConstantsService, private router: Router) { }
+              private constants: ConstantsService, private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.showForm = true;
@@ -39,11 +38,10 @@ export class RestaurantRecommandationComponent implements OnInit {
           this.result = response;
           this.showForm = false;
           this.showResult = true;
-          this.showDetails = false;
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }
@@ -52,12 +50,10 @@ export class RestaurantRecommandationComponent implements OnInit {
     localStorage.setItem('restaurantId', id.toString());
     this.showForm = false;
     this.showResult = false;
-    this.showDetails = true;
   }
 
   goBack() {
     this.showForm = false;
-    this.showDetails = false;
     this.showResult = true;
   }
 
@@ -91,15 +87,15 @@ export class RestaurantRecommandationComponent implements OnInit {
   }
 
   initializeQuestions() {
-    this.questions1 = new Array<Question>();
-    this.questions1.push(new Question('company', 'Who are you going with?', ['Alone', 'Partner', 'Family', 'Friends', 'Colleagues']));
-    this.questions1.push(new Question('occasion', 'On what ocassion?', ['Special', 'No occasion']));
-    this.questions1.push(new Question('numOfPeople', 'Number of people?', []));
-    this.questions1.push(new Question('tourist', 'Are you a tourist?', ['Yes', 'No']));
-    this.questions1.push(new Question('onFoot', 'Will you go on foot?', ['Yes', 'No']));
-    this.questions1.push(new Question('price', 'What prices suit you?', ['Cheap', 'Affordable', 'Expensive', 'Unimportant']));
-    this.questions1.push(new Question('kitchen', 'Kitchen', ['Whatever', 'Local', 'Chinese', 'Italian', 'Fish', 'Fast food']));
-    this.questions1.push(new Question('music', 'Music', ['Whatever', 'Classical', 'Folk', 'Pop', 'Jazz', 'Rock', 'Tamburitza']));
+    this.questions = new Array<Question>();
+    this.questions.push(new Question('company', 'Who are you going with?', ['Alone', 'Partner', 'Family', 'Friends', 'Colleagues']));
+    this.questions.push(new Question('occasion', 'On what ocassion?', ['Special', 'No occasion']));
+    this.questions.push(new Question('numOfPeople', 'Number of people?', []));
+    this.questions.push(new Question('tourist', 'Are you a tourist?', ['Yes', 'No']));
+    this.questions.push(new Question('onFoot', 'Will you go on foot?', ['Yes', 'No']));
+    this.questions.push(new Question('price', 'What prices suit you?', ['Cheap', 'Affordable', 'Expensive', 'Unimportant']));
+    this.questions.push(new Question('kitchen', 'Kitchen', ['Whatever', 'Local', 'Chinese', 'Italian', 'Fish', 'Fast food']));
+    this.questions.push(new Question('music', 'Music', ['Whatever', 'Classical', 'Folk', 'Pop', 'Jazz', 'Rock', 'Tamburitza']));
   }
 
   getPicture(picture: string): string {

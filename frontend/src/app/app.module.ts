@@ -19,6 +19,8 @@ import { RatingRangeComponent } from './reports/rating-range/rating-range.compon
 import { UserRatingsComponent } from './reports/user-ratings/user-ratings.component';
 import { ReportsPageComponent } from './reports/reports-page/reports-page.component';
 import { DissatisfiedUsersComponent } from './reports/dissatisfied-users/dissatisfied-users.component';
+import { ApiComponent } from './api/api.component';
+import { AlarmsComponent } from './reports/alarms/alarms.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { DissatisfiedUsersComponent } from './reports/dissatisfied-users/dissati
     UserRatingsComponent,
     ReportsPageComponent,
     DissatisfiedUsersComponent,
+    ApiComponent,
+    AlarmsComponent,
   ],
   imports: [
     BrowserModule,

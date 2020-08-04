@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DissatisfiedUserDto } from 'src/app/dto/dissatisfied-users-dto';
+import { ReportService } from 'src/app/service/report.service';
 
 @Component({
   selector: 'app-dissatisfied-users',
@@ -8,12 +9,25 @@ import { DissatisfiedUserDto } from 'src/app/dto/dissatisfied-users-dto';
 })
 export class DissatisfiedUsersComponent implements OnInit {
 
-  @Input() dissatisfiedUsers: DissatisfiedUserDto[];
+  dissatisfiedUsers: DissatisfiedUserDto[];
 
-  constructor() { }
+  constructor(  private reportService: ReportService ) { }
 
   ngOnInit() {
-    console.log(JSON.stringify(this.dissatisfiedUsers));
+    this.getDissatisfiedUsers();
+  }
+
+  getDissatisfiedUsers() {
+    this.reportService.getDissatisfiedUsers().subscribe(
+      (response => {
+        if (response != null) {
+          this.dissatisfiedUsers = response;
+        }
+      }),
+      (error => {
+        alert(error.error.message);
+      })
+    );
   }
 
   goToDetails(restaurantId: number) {

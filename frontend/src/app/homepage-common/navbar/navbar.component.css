@@ -1,3 +1,9 @@
+
+.navbar_style{
+    background-color: #FF6A5C;
+    color: white;
+}
+
 .spacer {
     flex-grow: 1;
 }

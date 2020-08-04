@@ -8,6 +8,7 @@ import { HomepageComponent } from './homepage-common/homepage/homepage.component
 import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
 import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
 import { ReportsPageComponent } from './reports/reports-page/reports-page.component';
+import { ApiComponent } from './api/api.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'add-restaurant', component: AddRestaurantComponent},
   {path: 'recommandation', component: RestaurantRecommandationComponent},
   {path: 'restaurant-details', component: RestaurantDetailsComponent},
-  {path: 'reports', component: ReportsPageComponent}
+  {path: 'reports', component: ReportsPageComponent},
+  {path: 'api', component: ApiComponent}
 ];
 
 @NgModule({

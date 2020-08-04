@@ -20,5 +20,7 @@ export class RestaurantDto {
     reportDTO: ReportDTO;
     features: FeaturesDTO;
     grade: number;
+    alarmCreation: Date;
+    averageGrade: number;
 
 }

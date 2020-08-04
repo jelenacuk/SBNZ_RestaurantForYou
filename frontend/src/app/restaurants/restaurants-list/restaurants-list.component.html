@@ -1,30 +1,36 @@
-<div >
-    <div style="margin-top: 5%;">
-      <!-- Search form -->
-      <form class="form-inline d-flex justify-content-center md-form form-sm mt-0" style="width: 30%; margin: auto;">
-        <input  class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"  [ngModelOptions]="{standalone: true}"
-        [(ngModel)] = "searchInput"  
-          aria-label="Search">
-          <mat-icon (click) = "search()" matSuffix>search</mat-icon>
-      </form>
+<div>
+  
+  <!-- Search form -->
+  <div class="input-group md-form form-sm form-2 pl-0">
+    <input class="form-control my-0 py-1 red-border" (keydown.enter)="search($event)" type="text" placeholder="Search" [ngModelOptions]="{standalone: true}" [(ngModel)]="searchInput" aria-label="Search">
+    <div class="input-group-append">
+      <span class="input-group-text red lighten-3" id="basic-text1" ><i class="fas fa-search text-white" (click) = "search($event)"
+          aria-hidden="true"></i></span>
     </div>
-    <div class="float-container">
-        <div class="float-child card" *ngFor="let restaurant of restaurants">
-            <img class="card-img-top" src={{getPicture(restaurant.image)}} width="220" height="220" alt="Card image cap">
-            <div class="card-body">
-              <h5 class="card-title">{{restaurant.name}}</h5>
-              <span class="card-subtitle">Address: {{restaurant.street + ' ' + restaurant.number}}</span><br>
-              <span>Rating: {{restaurant.reportDTO.average}}</span><br>
-              <mat-chip-list aria-label="Fish selection">
-                <mat-chip>{{restaurant.kitchen}}</mat-chip>
-                <mat-chip>{{restaurant.ambience}}</mat-chip>
-              </mat-chip-list>
-              <p class="card-text">{{restaurant.description}}</p>
-              <a  class="btn btn-outline-primary" (click) = "goToDetails(restaurant.id)">READ MORE</a>
-            </div>
-        </div>
+  </div>
+
+  <!-- Restaurant card -->
+  <div class="float-container">
+    <div class="float-child card" *ngFor="let restaurant of restaurants" (click)="goToDetails(restaurant.id)">
+      <img class="card-img-top" src={{getPicture(restaurant.image)}} width="220" height="220" alt="Card image cap">
+      <div class="card-body">
+
+          <h5>{{restaurant.name}}</h5>
+          <span>Address: {{restaurant.street + ' ' + restaurant.number}}</span><br>
+          <span>Rating: {{restaurant.averageGrade}}</span><br>
+          <mat-chip-list aria-label="Fish selection">
+            <mat-chip>{{restaurant.kitchen}}</mat-chip>
+            <mat-chip>{{restaurant.ambience}}</mat-chip>
+          </mat-chip-list><br>
+          <p class="description">{{restaurant.description}}</p>
+
+      </div>
     </div>
-    <mat-paginator class="paginator" [length]="page.length" [pageIndex]="page.pageIndex" [pageSize]="page.pageSize" [pageSizeOptions]="[3, 4, 5, 6, 7, 8]" (page)="nextPage($event)" showFirstLastButtons>
-    </mat-paginator>
-    
+  </div>
+
+  <!-- Paginator -->
+  <mat-paginator class="paginator" [length]="page.length" [pageIndex]="page.pageIndex" [pageSize]="page.pageSize"
+    [pageSizeOptions]="[3, 4, 5, 6, 7, 8]" (page)="nextPage($event)" showFirstLastButtons>
+  </mat-paginator>
+
 </div>

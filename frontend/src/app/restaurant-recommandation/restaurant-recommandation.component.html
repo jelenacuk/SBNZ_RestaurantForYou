@@ -1,46 +1,39 @@
-    <div class="box" *ngIf = "showForm">
-        <br>
-        <form [formGroup] ="questionsForm" (ngSubmit)="questionsForm.valid && onFormSubmit()" noval>
-            <div *ngFor = "let question of questions1">
-                <div class="row text">{{question.text}}</div><br>
-            
-                    <mat-radio-group *ngIf = "question.name !== 'numOfPeople'" aria-label="Select an option" formControlName={{question.name}}>
-                        <div class="row" style="width: 90%;">
-                            <mat-radio-button *ngFor = "let answer of question.answers" value={{answer}}>{{answer}}</mat-radio-button>
-                        </div>
-                        <br>
-                    </mat-radio-group>
-                    <mat-form-field *ngIf = "question.name === 'numOfPeople'" style="width: 100%;">
-                        <input id="numOfPeople"
-                          matInput
-                          type="number"
-                          formControlName="numOfPeople" />
-                    </mat-form-field>
-                <mat-divider></mat-divider><br>
-            </div>
-            <div class="row text">   
-                <mat-form-field appearance="fill" class="col" *ngFor = "let question of questions2" >
-                    <mat-label>{{question.text}}</mat-label>
-                    <mat-select formControlName={{question.name}}>
-                        <mat-option *ngFor = "let answer of question.answers" value={{answer}}>{{answer}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div  class="submitDiv">
-                <button type="submit" (click)= 'onFormSubmit()' class="btn btn-success">Submit</button>
-            </div>
-        </form>
-    </div><br><br>
+<div class="box" *ngIf="showForm"><br>
 
-    <div *ngIf = "showResult" style="margin: auto; width: 70%;">
-        <h2 style="text-align:center;">Result:</h2><br>
+    <!--Reccomendation form-->
+    <form [formGroup]="questionsForm" (ngSubmit)="questionsForm.valid && onFormSubmit()" noval>
+        <div *ngFor="let question of questions">
 
-        <app-restaurant-basic-info [restaurant] = result></app-restaurant-basic-info>
-        <br>
+            <div class="row text">
+                {{question.text}}
+            </div><br>
 
-    </div>
+            <mat-radio-group *ngIf="question.name !== 'numOfPeople'" aria-label="Select an option"
+                formControlName={{question.name}}>
+                <div class="row" style="width: 90%;">
+                    <mat-radio-button *ngFor="let answer of question.answers" value={{answer}}>{{answer}}
+                    </mat-radio-button>
+                </div><br>
+            </mat-radio-group>
 
-    <div *ngIf = "showDetails" style="margin: auto; margin-top: 5%; width: 60%; background-color: coral;">
-        <app-restaurant-details></app-restaurant-details>
-        <button  (click) = "goBack()">Back</button>
-    </div>
+            <mat-form-field *ngIf="question.name === 'numOfPeople'" style="width: 100%;">
+                <input id="numOfPeople" matInput type="number" formControlName="numOfPeople" />
+            </mat-form-field>
+
+            <mat-divider></mat-divider><br>
+        </div>
+
+        <div class="submitDiv">
+            <button type="submit" (click)='onFormSubmit()' class="btn btn-success">Submit</button>
+        </div>
+    </form>
+
+</div>
+<br><br>
+
+<!--Result-->
+<div *ngIf="showResult" style="margin: auto; width: 70%;">
+    <h2 style="text-align:center;">Result:</h2><br>
+    <app-restaurant-basic-info [restaurant]=result></app-restaurant-basic-info>
+    <br>
+</div>

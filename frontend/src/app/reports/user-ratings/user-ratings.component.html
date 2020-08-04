@@ -1,33 +1,24 @@
 <div class="wrapper">
-    <div class = "center-div">
-        
-        <div class = "text">Months: 
-            <input id="numOfMonths" style="width: 10%; height: 100%; text-align: center; margin-right: 1%;"
-                  matInput
-                  type="number"
-                  [ngModelOptions]="{standalone: true}"
-                  [(ngModel)] = "numOfMonths"   
-                  #name="ngModel"/>
-            <button type="submit" class="btn btn-success btn-sm">Apply</button>
+    <div class="center-div">
+
+        <div style="text-align: center;">
+            <span class="text">Months:
+                <input id="numOfMonths"matInput
+                    type="number" [ngModelOptions]="{standalone: true}" [(ngModel)]="numOfMonths" #name="ngModel" />
+            </span>
         </div><br><br>
 
+        <div *ngIf="mostRecommended && leastRecommended" style="margin: auto; width: 70%;">
 
-         
-        <div *ngIf = "mostRecommended && leastRecommended"  style="margin: auto; width: 70%;">
-
-            
-            <div class="report-text">The most recommended restaurant: 
+            <div class="report-text">The most recommended restaurant:
             </div><br>
-            <app-restaurant-basic-info  [restaurant] = mostRecommended></app-restaurant-basic-info>
+            <app-restaurant-basic-info [restaurant]=mostRecommended></app-restaurant-basic-info>
             <br><br>
 
-            <div class="report-text">The least recommended restaurant: 
+            <div class="report-text">The least recommended restaurant:
             </div><br>
-            <app-restaurant-basic-info  [restaurant] = leastRecommended></app-restaurant-basic-info>
+            <app-restaurant-basic-info [restaurant]=leastRecommended></app-restaurant-basic-info>
 
         </div>
-
-
-         
     </div>
 </div>

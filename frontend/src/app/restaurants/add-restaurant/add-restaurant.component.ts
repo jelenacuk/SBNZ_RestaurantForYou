@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AddRestaurantDto } from 'src/app/dto/add-restaurant-dto';
 import { RestaurantService } from 'src/app/service/restaurant.service';
 import { FeaturesDTO } from 'src/app/dto/features-dto';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-add-restaurant',
@@ -21,7 +22,7 @@ export class AddRestaurantComponent implements OnInit {
   private path: string;
   private restaurantDto: AddRestaurantDto = new AddRestaurantDto();
 
-  constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantService) { }
+  constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.path = '../../assets/images/default.jpg';
@@ -36,11 +37,11 @@ export class AddRestaurantComponent implements OnInit {
     this.restaurantService.addRestaurantd(this.restaurantDto).subscribe(
       (response => {
         if (response === true) {
-          alert('Successfuly!');
+          this.snackBar.open('Successfuly!');
         }
       }),
       (error => {
-        alert(error.error.message);
+        this.snackBar.open(error.error.message);
       })
     );
   }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,11 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
 import com.sbnz.RestaurantForYou.dto.SearchDto;
-import com.sbnz.RestaurantForYou.dto.StatisticsDTO;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
-import com.sbnz.RestaurantForYou.service.ReportService;
 import com.sbnz.RestaurantForYou.service.RestaurantService;
-import com.sbnz.RestaurantForYou.template.RatingRange;
 
 @RestController
 @RequestMapping("/api/restaraunts")
@@ -30,19 +28,12 @@ import com.sbnz.RestaurantForYou.template.RatingRange;
 public class RestaurantController {
 
 	private RestaurantService restaurantService;
-	private ReportService reportService;
 
 	@Autowired
-	public RestaurantController(RestaurantService restaurantService, ReportService reportService) {
+	public RestaurantController(RestaurantService restaurantService) {
 		this.restaurantService = restaurantService;
-		this.reportService = reportService;
 	}
-	
-	@GetMapping(value = "reports/{numOfMonths}")
-	public ResponseEntity<StatisticsDTO> samoProba(@PathVariable("numOfMonths") int numOfMonths) {
-		StatisticsDTO dto = this.reportService.samoProba(numOfMonths);
-		return new ResponseEntity<StatisticsDTO>(dto, HttpStatus.OK);
-	}
+
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable("id") Long id) {
@@ -55,8 +46,22 @@ public class RestaurantController {
 		List<RestaurantDTO> restaurants = restaurantService.getRestoraunts(pageable);
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
-
+	
+	@PostMapping(value = "/search")
+	public ResponseEntity<List<RestaurantDTO>> search(@RequestBody SearchDto dto) {
+		List<RestaurantDTO> restaurants = restaurantService.search(dto);
+		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/restaurantSugestion")
+	@PreAuthorize("hasAuthority('ROLE_REGISTERED')")
+	public ResponseEntity<RestaurantDTO> reccomandation(@RequestBody UserExpectationsDTO dto) {
+		RestaurantDTO restaurant = restaurantService.restaurantSugestion(dto);
+		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
+	}
+	
 	@PostMapping(value = "/addRestaurant")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<Boolean> addNewRestaurant(@RequestBody RestaurantDTO dto) throws FileNotFoundException, IOException {
 		boolean result = restaurantService.addNewRestaurant(dto);
 		if (result) {
@@ -64,23 +69,5 @@ public class RestaurantController {
 		}
 		return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
 	}
-	
-	@PostMapping(value = "/restaurantSugestion")
-	public ResponseEntity<RestaurantDTO> reccomandation(@RequestBody UserExpectationsDTO dto) {
-		RestaurantDTO restaurant = restaurantService.restaurantSugestion(dto);
-		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
-	}
-	
-	@PostMapping(value = "/getRestaurantsByRatingRange")
-	public ResponseEntity<List<RestaurantDTO>> getRestaurantsByRatingRange(@RequestBody RatingRange dto) {
-		List<RestaurantDTO> restaurants = restaurantService.getRestaurantsByRatingRange(dto);
-		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
-	}
-	
 
-	@PostMapping(value = "/search")
-	public ResponseEntity<List<RestaurantDTO>> search(@RequestBody SearchDto dto) {
-		List<RestaurantDTO> restaurants = restaurantService.search(dto);
-		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
-	}
 }

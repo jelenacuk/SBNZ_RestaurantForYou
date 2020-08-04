@@ -1,30 +1,55 @@
 package rules;
 import com.sbnz.RestaurantForYou.model.*;
 import com.sbnz.RestaurantForYou.events.*;
+import java.time.LocalDate;
 
-declare BadRatingAlarm
-    @role(event)
-    restaurantId: Long
-    restaurantName: String
-    rating: Number
-end;
 
-rule "The restaurant rating is below 2.5 a minimum of 5 users rated it"
+declare ProcessedEvent
+	eventDate: String
+end
+
+rule "Rating event"
 	agenda-group "rating"
+	salience 100
     when
-        $ratingEvent: RatingEvent($review: review);
-        $mark: Number(doubleValue <= 2.5) from accumulate(
+        $ratingEvent: RatingEvent($review: review );
+        $average: Number() from accumulate(
             Review($rating: rating) from $review.getRestaurant().getResetaurantReviews(),
             average($rating)
         );
-        $usersCnt: Number(intValue >= 5) from accumulate(
+        not ProcessedEvent(eventDate == $ratingEvent.getExecutionTime().toString());
+    then
+    	modify($ratingEvent) { getReview().getRestaurant().setAverage(Double.parseDouble($average.toString())) }
+		insert( new ProcessedEvent($ratingEvent.getExecutionTime().toString()) );
+		
+end;
+
+
+
+rule "The restaurant rating is below 2.5 a minimum of 5 users rated it"
+	agenda-group "rating"
+	salience 90
+    when
+        $ratingEvent: RatingEvent($review: review && review.getRestaurant().getAlarm() == null 
+        							&& review.getRestaurant().getAverage() <= 2.5 );
+        $usersCnt: Number(intValue >= 1) from accumulate(
             Review($rating: rating) from $review.getRestaurant().getResetaurantReviews(),
             count(1)
         );
-        not(BadRatingAlarm(restaurantId == $review.getRestaurant().getId(), restaurantName == $review.getRestaurant().getName()));
     then
-    	System.out.println("WARNING: The rating of the restaurant: " + $review.getRestaurant().getName()+  " is very bad => " + $mark);
-    	insert(new BadRatingAlarm($review.getRestaurant().getId(),  $review.getRestaurant().getName(), $mark));
+    	$review.getRestaurant().setAlarm(LocalDate.now());
+    	System.out.println("WARNING: The rating of the restaurant: " + $review.getRestaurant().getName()+  " is very bad => " + $review.getRestaurant().getAverage());
+end;
+
+rule "The restaurant rating increased over 2.5"
+	agenda-group "rating"
+	salience 90
+    when
+        $ratingEvent: RatingEvent($review: review && review.getRestaurant().getAlarm() != null
+        							&& review.getRestaurant().getAverage() > 2.5 );
+    then
+    	$review.getRestaurant().setAlarm(null);
+    	System.out.println("INFO: The rating of the restaurant: " + $review.getRestaurant().getName()+  " has increased => " + $review.getRestaurant().getAverage());
 end;
 
 

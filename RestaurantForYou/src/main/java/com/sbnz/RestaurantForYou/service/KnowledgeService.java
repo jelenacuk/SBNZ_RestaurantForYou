@@ -21,9 +21,7 @@ public class KnowledgeService {
     }
 
     public KieSession getRulesSession() {
-    	if (rulesSession != null) {
-    		rulesSession.dispose();
-    	}
+    	
     	rulesSession = kieContainer.newKieSession("rulesSession");
         return rulesSession;
     }

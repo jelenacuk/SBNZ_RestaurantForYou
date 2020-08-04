@@ -7,8 +7,6 @@ import { PageEvent } from '@angular/material';
 import { AddRestaurantDto } from '../dto/add-restaurant-dto';
 import { UserExpectations } from '../dto/user-expectations-dto';
 import { ReviewDto } from '../dto/review-dto';
-import { RatingRangeDTO } from '../dto/rating-range-dto';
-import { StatisticDto } from '../dto/statistic-dto';
 import { SearchDto } from '../dto/search-dto';
 
 @Injectable({
@@ -42,14 +40,6 @@ export class RestaurantService {
 
   rateRestaurant(dto: ReviewDto): Observable<boolean> {
     return this.http.post<boolean>(this.constants.userPath + '/rate' , dto, { headers: this.headers });
-  }
-
-  getRestaurantsByRatingRange(dto: RatingRangeDTO): Observable<RestaurantDto[]> {
-    return this.http.post<RestaurantDto[]>(this.constants.restaurantPath + '/getRestaurantsByRatingRange', dto, { headers: this.headers });
-  }
-
-  getStatistic(numOfMonths: number): Observable<StatisticDto> {
-    return this.http.get<StatisticDto>(this.constants.restaurantPath + '/reports/' + numOfMonths, { headers: this.headers });
   }
 
   search(dto: SearchDto): Observable<RestaurantDto[]> {

@@ -39,7 +39,6 @@ import com.sbnz.RestaurantForYou.model.Review;
 import com.sbnz.RestaurantForYou.repository.FeaturesRepository;
 import com.sbnz.RestaurantForYou.repository.RestaurantRepository;
 import com.sbnz.RestaurantForYou.repository.UserRepository;
-import com.sbnz.RestaurantForYou.template.RatingRange;
 
 @Service
 public class RestaurantService {
@@ -104,108 +103,78 @@ public class RestaurantService {
 	}
 	
 	public List<RestaurantDTO> search(SearchDto searchDto){
-		InputStream template = RestaurantService.class
-				.getResourceAsStream("/templates/search.drt");
-		ObjectDataCompiler converter = new ObjectDataCompiler();
-		List<SearchDto> data = new ArrayList<>();
-		data.add(searchDto);
 		
-		String drl = converter.compile(data, template);
-		System.out.println("\n\n" + drl + "\n\n");
-		KieSession kieSession = createKieSessionFromDRL(drl);
+		List<Restaurant> restaurants = repository.findAll();
 		List<Restaurant> result = new ArrayList<Restaurant>();
-		for (Restaurant restaurant : repository.findAll()) {
-			kieSession.insert(restaurant);
+		if (!searchDto.getName().equals("")) {
+			InputStream template = RestaurantService.class
+					.getResourceAsStream("/templates/search.drt");
+			ObjectDataCompiler converter = new ObjectDataCompiler();
+			List<SearchDto> data = new ArrayList<>();
+			data.add(searchDto);
+			String drl = converter.compile(data, template);
+			System.out.println("\n\n" + drl + "\n\n");
+			KieSession kieSession = createKieSessionFromDRL(drl);
+			for (Restaurant restaurant : restaurants) {
+				kieSession.insert(restaurant);
+			}
+			kieSession.setGlobal("result", result);
+			kieSession.fireAllRules();
 		}
-		kieSession.setGlobal("result", result);
-		kieSession.fireAllRules();
-		
+		else {
+			result = restaurants;
+		}
 		return (result.stream().map(restaurant -> {
-			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant,
-					new ReportDTO(restaurant.getAverage(), 0));
+			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant);
 			return dto;
 		})).collect(Collectors.toList());
 	}
 
-	public List<RestaurantDTO> getRestaurantsByRatingRange(RatingRange ratingRange) {
-		InputStream template = RestaurantService.class
-				.getResourceAsStream("/templates/getRestaurantsByRatingRange.drt");
-		ObjectDataCompiler converter = new ObjectDataCompiler();
-		List<RatingRange> data = new ArrayList<RatingRange>();
-		data.add(ratingRange);
-		String drl = converter.compile(data, template);
-		System.out.println("\n\n" + drl + "\n\n");
-		KieSession kieSession = createKieSessionFromDRL(drl);
-		List<Restaurant> result = new ArrayList<Restaurant>();
-		for (Restaurant restaurant : repository.findAll()) {
-			kieSession.insert(restaurant);
-		}
-		kieSession.setGlobal("result", result);
-		kieSession.fireAllRules();
-		return (result.stream().map(restaurant -> {
-			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant,
-					new ReportDTO(restaurant.getAverage(), 0));
-			return dto;
-		})).collect(Collectors.toList());
-	}
 
 	public RestaurantDTO getRestaurant(Long id) {
-		KieSession kieSession = knowledgeService.getRulesSession();
+		
 		Optional<Restaurant> restaurantOpt = repository.findById(id);
+		KieSession kieSession = knowledgeService.getRulesSession();
 		kieSession.insert(restaurantOpt.get());
+		
 		RestaurantDTO restDTO = null;
 		QueryResults results = kieSession.getQueryResults("User ratings", id);
 		for (QueryResultsRow qrr : results) {
+			
+			// Retrieving values from drools query
 			Restaurant restaurant = (Restaurant) qrr.get("$restaurant");
-			int reviewSum = (int) qrr.get("$reviewSum");
 			long reviewNum = (long) qrr.get("$reviewNum");
 			long ones = (long) qrr.get("$ones");
 			long twos = (long) qrr.get("$twos");
 			long threes = (long) qrr.get("$threes");
 			long fours = (long) qrr.get("$fours");
 			long fives = (long) qrr.get("$fives");
-			double average = 0;
-			if (restaurant.getResetaurantReviews().size() != 0) {
-				average = reviewSum / restaurant.getResetaurantReviews().size();
-			}
-			int rated = 0;
+			int userReview = 0;
 			RegisteredUser loggedUser = getLoggedUser();
 			if (loggedUser != null) {
 				for (Review review : restaurant.getRestaurantReviews()) {
 					if (review.getUser().getId() == loggedUser.getId()){
-						rated = review.getRating();
+						userReview = review.getRating();
 						break;
 					}
 				}
 			}
-			ReportDTO reportDTO = new ReportDTO(average, reviewNum, ones, twos, threes, fours, fives);
-			restDTO = RestaurantDTOConverter.convertToDTO(restaurant, reportDTO, rated);
+			ReportDTO reportDTO = new ReportDTO(restaurant.getAverage(), reviewNum, ones, twos, threes, fours, fives, userReview);
+			restDTO = RestaurantDTOConverter.convertToDTO(restaurant, reportDTO);
 		}
 		return restDTO;
 	}
+	
 
 	public List<RestaurantDTO> getRestoraunts(Pageable pageable) {
-
-		KieSession kieSession = knowledgeService.getRulesSession();
+		
 		Page<Restaurant> restaurants = repository.findAll(pageable);
-		for (Restaurant restaurant : restaurants) {
-			kieSession.insert(restaurant);
-		}
-		QueryResults results = kieSession.getQueryResults("Average rating");
-		List<RestaurantDTO> returnList = new ArrayList<RestaurantDTO>();
-		for (QueryResultsRow qrr : results) {
-			Restaurant restaurant = (Restaurant) qrr.get("$restaurant");
-			int reviewSum = (int) qrr.get("$reviewSum");
-			long reviewNum = (long) qrr.get("$reviewNum");
-			double average = 0;
-			if (reviewNum != 0) {
-				average = reviewSum / reviewNum;
-			}
-			ReportDTO reportDTO = new ReportDTO(average, reviewNum);
-			RestaurantDTO restDTO = RestaurantDTOConverter.convertToDTO(restaurant, reportDTO);
-			returnList.add(restDTO);
-		}
-		return returnList;
+		return (restaurants.stream().map(restaurant -> {
+			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant,
+					new ReportDTO(0, 0));
+			dto.setSize(restaurants.getTotalElements());
+			return dto;
+		})).collect(Collectors.toList());
 	}
 
 	public boolean addNewRestaurant(RestaurantDTO dto) throws FileNotFoundException, IOException {
@@ -250,11 +219,12 @@ public class RestaurantService {
 	private RegisteredUser getLoggedUser() {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		if (!(authentication instanceof AnonymousAuthenticationToken) && authentication != null) {
 			String username = authentication.getName();
 			return (RegisteredUser) userRepository.findOneByUsername(username);
 		}
 		return null;
 	}
+
 
 }
