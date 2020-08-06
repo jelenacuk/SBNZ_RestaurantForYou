@@ -1,18 +1,20 @@
 package com.sbnz.RestaurantForYou.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
 
 @Entity
 public class Restaurant {
@@ -20,38 +22,41 @@ public class Restaurant {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(nullable = false)
-	private String name;
-	@Column(nullable = false)
-	private String description;
-	@Enumerated(EnumType.STRING)
-	private Price price;
-	@Enumerated(EnumType.STRING)
-	private Capacity capacity;
-	@Enumerated(EnumType.STRING)
-	private Kitchen kitchen;
-	@Enumerated(EnumType.STRING)
-	private Music music;
-	@Enumerated(EnumType.STRING)
-	private Ambience ambience;
 	@Column
-	private String image;
+	private String name; 
+	@Column(length = 2000)
+	private String description;
+	@Column
+	private String photo;
+	@OneToOne(cascade=CascadeType.ALL)
+	private Location location;
+	@OneToOne(cascade=CascadeType.ALL)
+	private ContactInfo contact;
+	@Column
+	private Boolean closed;
+	@Column
+	private String openNowText;
+	@Column
+	private String price;
+	@ElementCollection
+	List<String> cuisine;
+	@ElementCollection
+	List<String> dietaryRestrictions = new ArrayList<String>();
 	@OneToOne
 	private RestaurantFeatures features;
-	@OneToOne(cascade = CascadeType.ALL)
-	private Location location;
 	@Column
-	private int score;
+	private Integer score;
+	@Column
+	private Double average;
 	@OneToMany()
 	private Set<Review> restaurantReviews = new HashSet<Review>();
 	@Column
 	private LocalDate alarm;
 	@Column
-	private Double average;
+	private Boolean completed;
 	
-
 	public Restaurant() {
-		this.score = 0;
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {
@@ -62,52 +67,36 @@ public class Restaurant {
 		this.id = id;
 	}
 
-	public Price getPrice() {
-		return price;
+	public RestaurantFeatures getFeatures() {
+		return features;
 	}
 
-	public void setPrice(Price price) {
-		this.price = price;
+	public void setFeatures(RestaurantFeatures features) {
+		this.features = features;
 	}
 
-	public Capacity getCapacity() {
-		return capacity;
+	public int getScore() {
+		return score;
 	}
 
-	public void setCapacity(Capacity capacity) {
-		this.capacity = capacity;
+	public void setScore(int score) {
+		this.score = score;
 	}
 
-	public Kitchen getKitchen() {
-		return kitchen;
+	public Double getAverage() {
+		return average;
 	}
 
-	public void setKitchen(Kitchen kitchen) {
-		this.kitchen = kitchen;
+	public void setAverage(Double average) {
+		this.average = average;
 	}
 
-	public Music getMusic() {
-		return music;
+	public Set<Review> getRestaurantReviews() {
+		return restaurantReviews;
 	}
 
-	public void setMusic(Music music) {
-		this.music = music;
-	}
-
-	public Ambience getAmbience() {
-		return ambience;
-	}
-
-	public void setAmbience(Ambience ambience) {
-		this.ambience = ambience;
-	}
-
-	public Location getLocation() {
-		return location;
-	}
-
-	public void setLocation(Location location) {
-		this.location = location;
+	public void setRestaurantReviews(Set<Review> restaurantReviews) {
+		this.restaurantReviews = restaurantReviews;
 	}
 
 	public String getName() {
@@ -118,14 +107,6 @@ public class Restaurant {
 		this.name = name;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
 	public String getDescription() {
 		return description;
 	}
@@ -134,64 +115,151 @@ public class Restaurant {
 		this.description = description;
 	}
 
-	public int getScore() {
-		return score;
+	
+	public String getPhoto() {
+		return photo;
 	}
 
-	public void setScore(int rating) {
-		this.score = rating;
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
-	public Set<Review> getResetaurantReviews() {
-		return restaurantReviews;
+	
+
+	
+	public String getPrice() {
+		return price;
 	}
 
-	public void setRestaurantReviews(Set<Review> resetaurantReviews) {
-		this.restaurantReviews = resetaurantReviews;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
-	public RestaurantFeatures getFeatures() {
-		return features;
+
+
+	public boolean isComplete() {
+		return completed;
 	}
 
-	public void setFeatures(RestaurantFeatures features) {
-		this.features = features;
+	public void setComplete(boolean complete) {
+		this.completed = complete;
 	}
 
-	public Set<Review> getRestaurantReviews() {
-		return restaurantReviews;
+	public List<String> getCuisine() {
+		return cuisine;
 	}
 
-	public double getAverage() {
-		return average;
+	public void setCuisine(List<String> cuisine) {
+		this.cuisine = cuisine;
 	}
 
-	public void setAverage(double average) {
-		this.average = average;
+	public String getOpenNowText() {
+		return openNowText;
+	}
+
+	public void setOpenNowText(String openNowText) {
+		this.openNowText = openNowText;
+	}
+
+	public List<String> getDietaryRestrictions() {
+		return dietaryRestrictions;
+	}
+
+	public void setDietaryRestrictions(List<String> dietaryRestrictions) {
+		this.dietaryRestrictions = dietaryRestrictions;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public ContactInfo getContact() {
+		return contact;
+	}
+
+	public void setContact(ContactInfo contact) {
+		this.contact = contact;
+	}
+
+	public boolean isCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(boolean completed) {
+		this.completed = completed;
+	}
+
+	public Boolean getClosed() {
+		return closed;
+	}
+
+	public void setClosed(Boolean closed) {
+		this.closed = closed;
+	}
+
+	public LocalDate getAlarm() {
+		return alarm;
+	}
+
+	public void setAlarm(LocalDate alarm) {
+		this.alarm = alarm;
+	}
+
+	public Boolean getCompleted() {
+		return completed;
+	}
+
+	public void setCompleted(Boolean completed) {
+		this.completed = completed;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 	
+
 	public int calculateMatching(RestaurantRrequirements requerments) {
 		int matching = 0;
 		System.out.println(name.toUpperCase());
-		if (requerments.getPrice().contains(price)) {
+	
+		if (requerments.getPrice().contains(features.getPrice())) {
 			System.out.println("\tMatch => PRICE");
 			matching +=2;
 		}
-		if (requerments.getCapacity().contains(capacity)) {
+		if (requerments.getCapacity().contains(features.getCapacity())) {
 			System.out.println("\tMatch => CAPACITY");
 			matching +=1;
 		}
-		if (requerments.getKitchen().contains(kitchen)) {
-			System.out.println("\tMatch => KITCHEN");
-			matching +=2;
+		for (String kitchen: requerments.getKitchen()) {
+			for (String item: cuisine) {
+				if (item.equals(kitchen)) {
+					System.out.println("\tMatch => KITCHEN " + kitchen);
+					matching +=2;
+					break;
+				}
+			}
 		}
-		if (requerments.getMusic().contains(music)) {
-			System.out.println("\tMatch => MUSIC");
-			matching +=1;
+		for (Music music: requerments.getMusic()) {
+			for (Music item: features.getMusic()) {
+				if (item.equals(music)) {
+					System.out.println("\tMatch => MUSIC " + music);
+					matching +=1;
+					break;
+				}
+			}
 		}
-		if (requerments.getAmbience().contains(ambience)) {
-			System.out.println("\tMatch => AMBIENCE");
-			matching +=1;
+		for (Ambience ambience: requerments.getAmbience()) {
+			for (Ambience item: features.getAmbience()) {
+				if (item.equals(ambience)) {
+					System.out.println("\tMatch => AMBIENCE " + ambience);
+					matching +=1;
+					break;
+				}
+			}
 		}
 		if (requerments.getFeatures().isAlcohol() && features.isAlcohol()) {
 			System.out.println("\tMatch => ALCOHOL");
@@ -229,17 +297,4 @@ public class Restaurant {
 		System.out.println("matching = " + matching);
 		return matching;
 	}
-
-	public LocalDate getAlarm() {
-		return alarm;
-	}
-
-	public void setAlarm(LocalDate alarm) {
-		this.alarm = alarm;
-	}
-
-	public void setAverage(Double average) {
-		this.average = average;
-	}
-
 }

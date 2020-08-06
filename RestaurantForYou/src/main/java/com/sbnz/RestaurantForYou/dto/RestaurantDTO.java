@@ -1,29 +1,28 @@
 package com.sbnz.RestaurantForYou.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class RestaurantDTO {
 
 	private Long id;
-	private String image;
 	private String name;
 	private String description;
+	private String photo;
 	private String price;
-	private String capacity;
-	private String kitchen;
-	private String music;
-	private String ambience;
-	
-	private String street;
-	private String number;
-	private double latitude;
-	private double longitude;
-	
-	private Double averageGrade;
-	private ReportDTO reportDTO;
+	private List<String> cuisine;
+	private LocationDTO location;
+	private ContactInfoDTO contact;
 	private RestaurantFeaturesDTO features;
-	private LocalDate alarmCreation;
+	private Boolean closed;
+	private String openNowText;
+	List<String> dietaryRestrictions = new ArrayList<String>();
 	
+	private double averageGrade;
+	private ReportDTO reportDTO;
+	private LocalDate alarmCreation;
 	private long size;
 
 	public RestaurantDTO() {
@@ -46,85 +45,12 @@ public class RestaurantDTO {
 		this.price = price;
 	}
 
-	public String getCapacity() {
-		return capacity;
-	}
-
-	public void setCapacity(String capacity) {
-		this.capacity = capacity;
-	}
-
-	public String getKitchen() {
-		return kitchen;
-	}
-
-	public void setKitchen(String kitchen) {
-		this.kitchen = kitchen;
-	}
-
-	public String getMusic() {
-		return music;
-	}
-
-	public void setMusic(String music) {
-		this.music = music;
-	}
-
-	public String getAmbience() {
-		return ambience;
-	}
-
-	public void setAmbience(String ambience) {
-		this.ambience = ambience;
-	}
-
-	public String getStreet() {
-		return street;
-	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public double getLatitude() {
-		return latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-
-
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public String getDescription() {
@@ -175,6 +101,61 @@ public class RestaurantDTO {
 		this.alarmCreation = alarmCreation;
 	}
 
-	
+	public LocationDTO getLocation() {
+		return location;
+	}
+
+	public void setLocation(LocationDTO location) {
+		this.location = location;
+	}
+
+	public ContactInfoDTO getContact() {
+		return contact;
+	}
+
+	public void setContact(ContactInfoDTO contact) {
+		this.contact = contact;
+	}
+
+
+	public List<String> getCuisine() {
+		return cuisine;
+	}
+
+	public void setCuisine(List<String> cuisine) {
+		this.cuisine = cuisine;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Boolean getClosed() {
+		return closed;
+	}
+
+	public void setClosed(Boolean closed) {
+		this.closed = closed;
+	}
+
+	public String getOpenNowText() {
+		return openNowText;
+	}
+
+	public void setOpenNowText(String openNowText) {
+		this.openNowText = openNowText;
+	}
+
+	public List<String> getDietaryRestrictions() {
+		return dietaryRestrictions;
+	}
+
+	public void setDietaryRestrictions(List<String> dietaryRestrictions) {
+		this.dietaryRestrictions = dietaryRestrictions;
+	}
 
 }

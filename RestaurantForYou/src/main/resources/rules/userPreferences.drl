@@ -146,8 +146,7 @@ rule "Cuisine"
 		userExpectation: UserExpectationsDTO($kitchen: kitchen);
 		restRequirements: RestaurantRrequirements();
 	then
-		System.out.println("PRVO OVO");
-		modify(restRequirements){getKitchen().add(Kitchen.StringToEnum($kitchen));};
+		modify(restRequirements){setKitchen($kitchen);};
 end;
 
 rule "Music"

@@ -1,17 +1,17 @@
 <mat-card (click) = "goToDetails(restaurant.id)" class="box" >
     <div class="row" style="height: fit-content;">
         <div class="col" style="height: 230px;" > 
-            <img class="col" src={{getPicture(restaurant.image)}} height="100%" > 
+            <img class="col" src={{restaurant.photo}} height="100%" > 
         </div>
         <div class="col">                   
-                 <mat-card-title>{{restaurant.name}} <mat-chip  color="accent" selected>{{restaurant.averageGrade}}</mat-chip></mat-card-title>
-            
-            <mat-chip-list>
-                <mat-chip>{{restaurant.kitchen}}</mat-chip>
-                <mat-chip>{{restaurant.ambience}}</mat-chip>
-                <mat-chip>{{restaurant.music}} MUSIC</mat-chip>
-            </mat-chip-list><br>
-            <p>{{restaurant.description}}</p> 
+                 <mat-card-title>{{restaurant.name}} 
+                    <button mat-mini-fab  color="warn" >
+                        {{restaurant.averageGrade}}
+                      </button>
+                </mat-card-title>
+      
+            <br>
+            <p class="description">{{restaurant.description}}</p> 
         </div>
     </div>
 </mat-card>

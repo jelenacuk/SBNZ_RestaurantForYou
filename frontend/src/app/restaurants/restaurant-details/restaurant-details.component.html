@@ -2,7 +2,7 @@
     <div class="box">
 
             <div class="text-center">
-                <img style="display: block; margin: auto;" src={{getPicture(restaurant.image)}}  alt="..." width="350" height="230">
+                <img style="display: block; margin: auto;" src={{restaurant.photo}}  alt="..." width="350" height="230">
                 <h2>{{restaurant.name}}</h2>
                 <span style="font-size: 22px;">Rating: {{restaurant.reportDTO.average}} ( {{restaurant.reportDTO.numOfReviews}} )</span>
             </div><br>
@@ -30,12 +30,32 @@
         <br>
          <!--Content-->
          <div class="restaurantContent">
-            Kitchen: {{restaurant.kitchen}} <br>
-            Ambience: {{restaurant.ambience}} <br>
-            Music: {{restaurant.music}} <br>
-            Price: {{restaurant.price}} <br>
-            Capacity: {{restaurant.capacity}} <br>
-            Features: <span  *ngIf = "restaurant.features.outdoorSeating">Outdoor Seating, </span> 
+
+            <h4>Cuisine</h4>
+            <mat-divider></mat-divider>
+                <span *ngFor="let item of restaurant.cuisine; let i = index">{{item}}<span *ngIf = "i != (restaurant.cuisine.length - 1)">, </span> </span>
+            <br><br><br>
+
+
+            <h4>Dietary Restrictions</h4>
+            <mat-divider></mat-divider>
+            <span *ngFor="let item of restaurant.dietaryRestrictions; let i = index">{{item}}<span *ngIf = "i != (restaurant.dietaryRestrictions.length - 1)">, </span> </span>
+            <br><br><br>
+
+
+            <h4>Ambience</h4>
+            <mat-divider></mat-divider>
+            <span *ngFor="let item of restaurant.features.ambience; let i = index">{{item}}<span *ngIf = "i != (restaurant.features.ambience.length - 1)">, </span> </span>
+            <br><br><br>
+
+            <h4>Music</h4>
+            <mat-divider></mat-divider>
+            <span *ngFor="let item of restaurant.features.music; let i = index">{{item}}<span *ngIf = "i != (restaurant.features.music.length - 1)">, </span> </span>
+            <br><br><br>
+
+            <h4>Features</h4>
+            <mat-divider></mat-divider>
+            <span  *ngIf = "restaurant.features.outdoorSeating">Outdoor Seating, </span> 
             <span  *ngIf = "restaurant.features.liveMusic">Live Music, </span>
             <span  *ngIf = "restaurant.features.alcohol">Alcohol, </span>
             <span  *ngIf = "restaurant.features.tv">Tv, </span>
@@ -43,7 +63,10 @@
             <span  *ngIf = "restaurant.features.programForChiledern">Program for childern, </span>
             <span  *ngIf = "restaurant.features.parking">Parking, </span>
             <span  *ngIf = "restaurant.features.reservations">Reservations </span>
-             <br><br>
+             <br><br><br>
+
+            <h4>Description</h4>
+            <mat-divider></mat-divider>
             {{restaurant.description}}
          </div>
          <br><br>

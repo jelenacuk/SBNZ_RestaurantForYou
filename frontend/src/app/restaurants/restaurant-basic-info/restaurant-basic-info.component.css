@@ -11,3 +11,14 @@
           -o-box-shadow: 0 0 10px  rgba(0,0,0,0.6);
           flex: 0 1 calc(23.3% - 22px);
 }
+
+mat-chip{
+  font-size: 24px;
+}
+
+.description {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}

@@ -1,25 +1,24 @@
 import { ReportDTO } from './report-dto';
 import { FeaturesDTO } from './features-dto';
+import { LocationDTO } from './location-dto';
+import { ContactInfoDTO } from './contact-dto';
 
 export class RestaurantDto {
 
     id: string;
     name: string;
     description: string;
-    number: string;
-    image: string;
-    capacity: string;
-    kitchen: string;
-    music: string;
-    ambience: string;
+    photo: string;
     price: string;
-    street: string;
-    latitude: number;
-    longitude: number;
+    cuisine: string[];
+    location: LocationDTO;
+    contact: ContactInfoDTO;
+    closed: boolean;
+    openNowText: string;
+    dietaryRestrictions: string[];
+    features: FeaturesDTO;
     size: number;
     reportDTO: ReportDTO;
-    features: FeaturesDTO;
-    grade: number;
     alarmCreation: Date;
     averageGrade: number;
 

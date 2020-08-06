@@ -62,7 +62,7 @@ public class UserService {
 				newReview.setRating(dto.getRating());
 			}
 			reviewRepository.save(newReview);
-			restaurant.getResetaurantReviews().add(newReview);
+			restaurant.getRestaurantReviews().add(newReview);
 			RatingEvent ratingEvent = new RatingEvent(new Date(), newReview);
 			KieSession kieSession = knowledgeService.getEventsSession();
 			kieSession.insert(ratingEvent);

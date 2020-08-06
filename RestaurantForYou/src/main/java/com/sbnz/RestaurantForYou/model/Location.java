@@ -7,54 +7,29 @@ import javax.persistence.Id;
 
 @Entity
 public class Location {
-
+	
 	@Id
 	@GeneratedValue
 	private Long id;
 	@Column
-	private String street;
-	@Column
-	private String number;
-	@Column
 	private double latitude;
 	@Column
 	private double longitude;
+	@Column
+	private String address;
 	
-	Location(){
-		
+	public Location() {
+		// TODO Auto-generated constructor stub
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Location(String street, String number, double latitude, double longitude) {
-		super();
-		this.street = street;
-		this.number = number;
+	
+	
+	public Location(double latitude, double longitude, String address) {
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.address = address;
 	}
 
-	public String getStreet() {
-		return street;
-	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
 
 	public double getLatitude() {
 		return latitude;
@@ -71,7 +46,13 @@ public class Location {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	
-	
-	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 }

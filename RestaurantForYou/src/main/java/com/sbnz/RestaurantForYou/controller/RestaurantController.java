@@ -1,7 +1,5 @@
 package com.sbnz.RestaurantForYou.controller;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,20 +24,14 @@ import com.sbnz.RestaurantForYou.service.RestaurantService;
 @RequestMapping("/api/restaraunts")
 @CrossOrigin
 public class RestaurantController {
-
+	
 	private RestaurantService restaurantService;
 
 	@Autowired
 	public RestaurantController(RestaurantService restaurantService) {
 		this.restaurantService = restaurantService;
 	}
-
-
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable("id") Long id) {
-		RestaurantDTO restaurant = restaurantService.getRestaurant(id);
-		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
-	}
+	
 	
 	@GetMapping
 	public ResponseEntity<List<RestaurantDTO>> getRestaurants(Pageable pageable){
@@ -47,6 +39,12 @@ public class RestaurantController {
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable("id") Long id) {
+		RestaurantDTO restaurant = restaurantService.getRestaurant(id);
+		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
+	}
+
 	@PostMapping(value = "/search")
 	public ResponseEntity<List<RestaurantDTO>> search(@RequestBody SearchDto dto) {
 		List<RestaurantDTO> restaurants = restaurantService.search(dto);
@@ -60,14 +58,4 @@ public class RestaurantController {
 		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/addRestaurant")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<Boolean> addNewRestaurant(@RequestBody RestaurantDTO dto) throws FileNotFoundException, IOException {
-		boolean result = restaurantService.addNewRestaurant(dto);
-		if (result) {
-			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		}
-		return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
-	}
-
 }

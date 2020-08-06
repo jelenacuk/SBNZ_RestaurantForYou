@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RestaurantRrequirements {
 	
-	private List<Kitchen> kitchen = new ArrayList<Kitchen>();
+	private List<String> kitchen = new ArrayList<String>();
 	private List<Ambience> ambience = new ArrayList<Ambience>();
 	private List<Music> music = new ArrayList<Music>();
 	private List<Capacity> capacity = new ArrayList<Capacity>();
@@ -28,12 +28,6 @@ public class RestaurantRrequirements {
 	}
 	
 	
-	public List<Kitchen> getKitchen() {
-		return kitchen;
-	}
-	public void setKitchen(List<Kitchen> kitchen) {
-		this.kitchen = kitchen;
-	}
 	public List<Ambience> getAmbience() {
 		return ambience;
 	}
@@ -51,12 +45,6 @@ public class RestaurantRrequirements {
 	}
 	public void setCapacity(List<Capacity> capacity) {
 		this.capacity = capacity;
-	}
-	public List<Price> getPrice() {
-		return price;
-	}
-	public void setPrice(List<Price> price) {
-		this.price = price;
 	}
 	
 	public boolean isNearest() {
@@ -102,6 +90,26 @@ public class RestaurantRrequirements {
 
 	public void setProcessed(boolean processed) {
 		this.processed = processed;
+	}
+
+
+	public List<String> getKitchen() {
+		return kitchen;
+	}
+
+
+	public void setKitchen(List<String> kitchen) {
+		this.kitchen = kitchen;
+	}
+
+
+	public List<Price> getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(List<Price> price) {
+		this.price = price;
 	}
 
 	

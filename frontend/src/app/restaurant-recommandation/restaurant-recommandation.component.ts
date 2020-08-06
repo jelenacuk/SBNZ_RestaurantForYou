@@ -77,7 +77,7 @@ export class RestaurantRecommandationComponent implements OnInit {
       occasion: ['', [Validators.required]],
       onFoot: ['', [Validators.required]],
       price: ['', [Validators.required]],
-      kitchen: ['', [Validators.required]],
+      kitchen: [[], [Validators.required]],
       music: ['', [Validators.required]],
       numOfPeople: ['', [Validators.required]],
       age: ['', Validators.required],
@@ -94,8 +94,14 @@ export class RestaurantRecommandationComponent implements OnInit {
     this.questions.push(new Question('tourist', 'Are you a tourist?', ['Yes', 'No']));
     this.questions.push(new Question('onFoot', 'Will you go on foot?', ['Yes', 'No']));
     this.questions.push(new Question('price', 'What prices suit you?', ['Cheap', 'Affordable', 'Expensive', 'Unimportant']));
-    this.questions.push(new Question('kitchen', 'Kitchen', ['Whatever', 'Local', 'Chinese', 'Italian', 'Fish', 'Fast food']));
     this.questions.push(new Question('music', 'Music', ['Whatever', 'Classical', 'Folk', 'Pop', 'Jazz', 'Rock', 'Tamburitza']));
+    this.questions.push(new Question('kitchen', 'Cuisine', ['Barbecue', 'European', 'Grill', 'Fusion', 'Central European',
+                                                            'Mediterranean', 'Vegetarian Friendly', 'Vegan Options', 'Bar',
+                                                             'International', 'Eastern European', 'Gluten Free Options', 'Japanese',
+                                                              'Sushi', 'Central Asian', 'Thai', 'Fusion', 'Seafood', 'Asian',
+                                                               'European', 'French', 'Deli', 'Italian', 'Latin', 'Spanish',
+                                                                'Central American', 'Argentinean']));
+
   }
 
   getPicture(picture: string): string {

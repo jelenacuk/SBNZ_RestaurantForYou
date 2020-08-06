@@ -81,9 +81,6 @@ export class RestaurantDetailsComponent implements OnInit {
     );
   }
 
-  getPicture(picture: string): string {
-    return this.constants.localhost + picture;
-  }
 
   getJson(): string {
     return JSON.stringify(this.restaurant);

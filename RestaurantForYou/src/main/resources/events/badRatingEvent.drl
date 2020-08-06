@@ -14,7 +14,7 @@ rule "Rating event"
     when
         $ratingEvent: RatingEvent($review: review );
         $average: Number() from accumulate(
-            Review($rating: rating) from $review.getRestaurant().getResetaurantReviews(),
+            Review($rating: rating) from $review.getRestaurant().getRestaurantReviews(),
             average($rating)
         );
         not ProcessedEvent(eventDate == $ratingEvent.getExecutionTime().toString());
@@ -33,7 +33,7 @@ rule "The restaurant rating is below 2.5 a minimum of 5 users rated it"
         $ratingEvent: RatingEvent($review: review && review.getRestaurant().getAlarm() == null 
         							&& review.getRestaurant().getAverage() <= 2.5 );
         $usersCnt: Number(intValue >= 1) from accumulate(
-            Review($rating: rating) from $review.getRestaurant().getResetaurantReviews(),
+            Review($rating: rating) from $review.getRestaurant().getRestaurantReviews(),
             count(1)
         );
     then

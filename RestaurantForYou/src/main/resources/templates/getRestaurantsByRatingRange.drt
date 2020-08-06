@@ -17,7 +17,7 @@ no-loop true
 when
 	$restaurant: Restaurant();
 	$mark: Number( doubleValue >= @{minRating} &&  doubleValue <= @{maxRating}) from accumulate(
-            Review($rating: rating) from $restaurant.getResetaurantReviews(),
+            Review($rating: rating) from $restaurant.getRestaurantReviews(),
             average($rating)
         );
 then

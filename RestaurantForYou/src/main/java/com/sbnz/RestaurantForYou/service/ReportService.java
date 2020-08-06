@@ -104,7 +104,6 @@ public class ReportService {
 	}
 
 	public List<RestaurantDTO> getRestaurantsByRatingRange(RatingRange ratingRange) {
-
 		// Creating KieSession and inserting rule from template
 		InputStream template = RestaurantService.class
 				.getResourceAsStream("/templates/getRestaurantsByRatingRange.drt");

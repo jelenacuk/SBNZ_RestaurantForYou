@@ -1,8 +1,10 @@
 package com.sbnz.RestaurantForYou.dto;
 
+import java.util.List;
+
 public class UserExpectationsDTO {
 	
-	private String kitchen;
+	private List<String> kitchen;
 	private String tourist;
 	private int numOfPeople;
 	private String onFoot;
@@ -17,11 +19,11 @@ public class UserExpectationsDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getKitchen() {
+	public List<String> getKitchen() {
 		return kitchen;
 	}
 
-	public void setKitchen(String kitchen) {
+	public void setKitchen(List<String> kitchen) {
 		this.kitchen = kitchen;
 	}
 

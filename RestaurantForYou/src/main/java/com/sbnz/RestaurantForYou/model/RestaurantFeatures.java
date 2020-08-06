@@ -1,7 +1,12 @@
 package com.sbnz.RestaurantForYou.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -27,6 +32,18 @@ public class RestaurantFeatures {
 	private boolean outdoorSeating;
 	@Column
 	private boolean parking;
+	@Enumerated(EnumType.STRING)
+	private Capacity capacity;
+	@Enumerated(EnumType.STRING)
+	private Price price;
+	@Column
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = Music.class)
+	private List<Music> music;
+	@Column
+	@Enumerated(EnumType.STRING)
+	@ElementCollection(targetClass = Ambience.class)
+	private List<Ambience> ambience;
 	
 	public RestaurantFeatures() {
 		// TODO Auto-generated constructor stub
@@ -95,6 +112,49 @@ public class RestaurantFeatures {
 	public void setParking(boolean parking) {
 		this.parking = parking;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Capacity getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Capacity capacity) {
+		this.capacity = capacity;
+	}
+
+	public List<Music> getMusic() {
+		return music;
+	}
+
+	public void setMusic(List<Music> music) {
+		this.music = music;
+	}
+
+	public List<Ambience> getAmbience() {
+		return ambience;
+	}
+
+	public void setAmbience(List<Ambience> ambience) {
+		this.ambience = ambience;
+	}
+
+	public Price getPrice() {
+		return price;
+	}
+
+	public void setPrice(Price price) {
+		this.price = price;
+	}
+
+	
+	
 	
 	
 	

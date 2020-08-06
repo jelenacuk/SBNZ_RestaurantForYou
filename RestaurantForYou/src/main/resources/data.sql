@@ -7,46 +7,141 @@ INSERT INTO `registered_user` VALUES
 (104,'jela@gmail.com','Jelena','Cuk','$2a$10$wn30ra1KW.Rq4iRkH10.huaeCFMqhQQH5iGzrmr1/.NhlKolPgUme','ROLE_ADMIN','jela');
 
 
-INSERT INTO `location` VALUES
-(101,100,100,'27','Dunavska'),
-(102,100,100,'4','Fruskogorska'),
-(103,100,100,'2','Narodnog Fronta'),
-('104', '100', '100', '18', 'Trg Republike'),
-('105', '100', '100', '24', 'Bulevar Jase tomica'),
-('106', '100', '100', '9', 'Sremska'),
-('107', '100', '100', '40', 'Bulevar kralja Petra I '),
-('108', '100', '100', '133', 'Bulevar oslobodjenja'),
-('109', '100', '100', '27', 'Vase Stajica'),
-('110', '100', '100', '5', 'Bulevar Mihajla Pupina');
-
+/*# id, alcohol, capacity, live_music, outdoor_seating, parking, price, program_for_childern, reservations, tv, wifi*/
 INSERT INTO `restaurant_features` VALUES
-(101,  true, true, true, false, false, true, false, true),
-(102,  true, false, true, false, false, true, true, true),
-(103,  true, true, true, false, false, true, false, true),
-(104,  true, true, true, true, true, true, true, true),
-(105,  true, false, false, true, true, true, true, true),
-(106,  true, true, true, true, true, true, false, true),
-(107,  true, true, true, true, true, true, false, true),
-(108,  false, false, false, false, false, true, true, true),
-(109,  true, false, true, false, false, true, false, true),
-(110,  false, false, false, false, false, false, false, false);
+(102,  true, 'MEDIUM', true, true, true, 'AFFORDABLE', false, true, true, true), /*Riddle Bar*/
+(103,  true, 'MEDIUM', false, true, false,  'AFFORDABLE', false, true, true, true), /*Donji Grad*/
+(104,  true, 'LARGE', true, true, true,  'AFFORDABLE', false, true, false, true), /*SkyLounge Belgrade*/
+(105,  true, 'MEDIUM', false, true, false, 'AFFORDABLE', false, true, true, true), /*Casa Nova*/
+(106,  true, 'LARGE', false, true, false,'AFFORDABLE',  false, false, false, true), /*Toro Latin Gastrobar*/
+(107,  true, 'LARGE', true, true, true,  'CHEAP',  true, false, true, true), /*Gradska*/
+(108,  true, 'MEDIUM', true, false, true, 'EXPENSIVE',  false, true, false, true), /*Salon 5*/
+(109,  true, 'SMALL', false, false, false,'CHEAP',  false, true, true, true), /*Trattoria Pepe*/
+(110,  true, 'LARGE', false, false, false, 'AFFORDABLE',  false, true, true, true), /*Ambar*/
+(111,  true, 'LARGE', true, true, true,  'AFFORDABLE',  true, true, false, true), /*Zavicaj Restaurant*/
+(112,  true, 'SMALL', false, true, false, 'CHEAP',  true, true, true, true), /*Red Bread*/
+(113,  true, 'MEDIUM', false, true, true, 'AFFORDABLE',  true, true, false, true), /*Homa Restaurant*/
+(114,  true, 'LARGE', true, true, false, 'EXPENSIVE',  false, true, false, true), /*Voulez-Vous Cafe Restaurant*/
+(115,  true, 'SMALL', false, false, false, 'CHEAP',  false, true, true, true), /*Bistro Grad Hometown Food*/
+(116,  true, 'LARGE', true, false, true,  'EXPENSIVE',  true, true, false, true), /*Salon 1905*/
+(117,  true, 'LARGE', true, true,  true,'EXPENSIVE',  true, true, false, true), /*Frans*/
+(118,  true, 'LARGE', false, true, true, 'CHEAP', true, true, true, true), /*Treminal Gastrobar*/
+(119,  true, 'LARGE', true, true,  true, 'AFFORDABLE',  true, true, false, true), /*Faro*/
+(120,  true, 'MEDIUM', false, true, true,  'EXPENSIVE',  true, true, true, true), /*New Reset*/
+(121,  true, 'MEDIUM', true, true , true,'AFFORDABLE',  true, true, false, true); /*Magaza Gastropub*/
 
 
+INSERT INTO `restaurant_features_ambience` VALUES
+(102, 'CHEERFUL'),
+(102, 'CREATIVE'),
+(103, 'RELAXED'),
+(104, 'ROMANTIC'),
+(104, 'LUXURIOUS'),
+(104, 'CREATIVE'),
+(104, 'CHEERFUL'),
+(105, 'CREATIVE'),
+(105, 'RELAXED'),
+(105, 'ROMANTIC'),
+(106, 'RELAXED'),
+(107,  'TRADITIONAL'),
+(107, 'CHEERFUL'),
+(108, 'CREATIVE'),
+(108, 'ROMANTIC'),
+(109, 'ROMANTIC'),
+(109, 'RELAXED'),
+(110, 'RELAXED'),
+(110, 'CREATIVE'),
+(111,  'TRADITIONAL'),
+(111, 'CHEERFUL'),
+(112, 'RELAXED'),
+(113, 'ROMANTIC'),
+(113, 'RELAXED'),
+(114, 'CHEERFUL'),
+(114, 'ROMANTIC'),
+(115, 'RELAXED'),
+(116, 'ROMANTIC'),
+(116, 'LUXURIOUS'),
+(117, 'RELAXED'),
+(117, 'ROMANTIC'),
+(117, 'LUXURIOUS'),
+(117, 'CHEERFUL'),
+(118, 'RELAXED'),
+(118, 'CREATIVE'),
+(119, 'LUXURIOUS'),
+(119, 'ROMANTIC'),
+(120, 'RELAXED'),
+(120, 'TRADITIONAL'),
+(121, 'CREATIVE'),
+(121, 'CHEERFUL');
 
-INSERT INTO `restaurant` VALUES 
-(101, null, 'LUXURIOUS', 1.0,'MEDIUM','Restoran alla Lanterna smešten je u najživopisniji ambijent jedne od najstarijih gradskih ulica, Dunavskoj ulici.','/images/Restoran alla Lanterna.jpg','ITALIAN','CLASSICAL','Restoran alla Lanterna','EXPENSIVE', 0, 101,101),
-(102, null, 'RELAXED', 2.0,'SMALL','Italijanski fast food restoran Tratoria Vapene – nesvakidašnje mesto za prave gurmane. Tratorije su u Italiji mesta gde možete ručati, popiti kafu ili piće, ali su mnogo manje i prisnije od klasičnih restorana. ','/images/Trattoria Vapene.jpg','ITALIAN','POP','Trattoria Vapene','AFFORDABLE', 0, 102, 102),
-(103, null, 'ROMANTIC', 3.0,'LARGE','Novorenovirani italijanski restoran u N. Sadu, na Limanu 2. Predivan ambijent u italijanskom stilu i duhu. ','/images/Trattoria Offei da Rino.jpg','ITALIAN','POP','Trattoria Offei da Rino','AFFORDABLE',0, 103,103),
-('104', null, 'RELAXED', 4.0, 'MEDIUM', 'Špajz je mesto u rustičnom ruhu, tople prijateljske atmosfere, podseća na vojvođanske salaše.', '/images/Spajz salasa 137.jpg', 'LOCAL', 'FOLK', 'Spajz salasa 137', 'AFFORDABLE',0, 104, '104'),
-('105', null, 'RELAXED', 5.0, 'MEDIUM', 'Kvalitetna domaća kuhinja i specijaliteti koji rasplamsavaju emociju i sećanje na jela koja su spremale Vaše bake i majke. ', '/images/Caffe Restaurant Pianino.jpg', 'LOCAL', 'FOLK', 'Caffe Restaurant Pianino', 'AFFORDABLE',0, 105, '105'),
-('106', null, 'TRADITIONAL', 2.5, 'LARGE', 'Viteška ponuda domaće hrane obogaćena je našim DOMAĆIM CAMELOT PIVOM (svetlo, crveno, tamno) iz naše pivare! ', '/images/Camelot.jpg', 'LOCAL', 'FOLK', 'Camelot', 'AFFORDABLE',0, 106, '106'),
-('107', null, 'TRADITIONAL', 2.0, 'LARGE', 'Ono po čemu se posebno izdvaja ovo prijatno mesto su ćevapi koji među najboljim u gradu. Restoran “Pod orahom” je pravo mesto za gurmane.', '/images/Pod Orahom.jpg', 'LOCAL', 'CLASSICAL', 'Pod Orahom', 'EXPENSIVE',0, 107, '107'),
-('108', null, 'RELAXED', 3.0,  'MEDIUM', 'Moderan i diskretno dekorisan enterijer će Vas opustiti i obuzeti Vaša čula dok će Vas cene vrlo prijatno iznenaditi.', '/images/Kineski restoran 88.jpg', 'CHINESE', 'POP', 'Kineski restoran 88', 'CHEAP',0, 108, '108'),
-('109', null, 'CREATIVE', 4.0, 'MEDIUM', 'U ponudi imamo veliki izbor izvornih kineskih jela, a neka su po prvi put u ponudi u gradu.', '/images/Two Chopsticks.jpg', 'CHINESE', 'POP', 'Two Chopsticks', 'EXPENSIVE',0, 109, '109'),
-('110', null, 'RELAXED', 5.0,  'SMALL', 'Jos iz studenskog grada,od davne 1984 tu smo za vas i dan danas da uživate u originalnom ukusu index sendviča, i drugim ukusnim ponudama', '/images/Index Vanessa.jpg', 'FAST_FOOD', 'POP', 'Index Vanessa', 'CHEAP',0, 110, '110');
+INSERT INTO `restaurant_features_music` VALUES
+(102, 'POP'),
+(102, 'JAZZ'),
+(102, 'ROCK'),
+(103, 'POP'),
+(103, 'FOLK'),
+(104, 'POP'),
+(104, 'JAZZ'),
+(105, 'POP'),
+(105, 'JAZZ'),
+(106, 'POP'),
+(107,  'FOLK'),
+(107, 'TAMBURITZA'),
+(108, 'CLASSICAL'),
+(109, 'CLASSICAL'),
+(109, 'POP'),
+(110, 'POP'),
+(111, 'FOLK'),
+(111, 'TAMBURITZA'),
+(112, 'POP'),
+(112, 'ROCK'),
+(113, 'POP'),
+(113, 'JAZZ'),
+(113, 'ROCK'),
+(114, 'POP'),
+(114, 'JAZZ'),
+(114, 'ROCK'),
+(115, 'JAZZ'),
+(115, 'ROCK'),
+(116, 'CLASSICAL'),
+(116, 'JAZZ'),
+(117, 'CLASSICAL'),
+(117, 'POP'),
+(117, 'TAMBURITZA'),
+(118, 'JAZZ'),
+(118, 'ROCK'),
+(119, 'POP'),
+(120,  'FOLK'),
+(120, 'TAMBURITZA'),
+(121, 'POP'),
+(121, 'JAZZ'),
+(121, 'ROCK');
+
+INSERT INTO `restaurant`  VALUES
+(102, null ,2, false, false, '','Riddle Bar' ,'','','', null, null, 102, null),
+(103, null ,3, false, false, '', 'Donji Grad' ,'','','', null, null, 103, null),
+(104, null ,4, false, false, '','SkyLounge Belgrade' ,'','','', null, null, 104, null),
+(105, null ,5, false, false, '','Casa Nova' ,'','','', null, null, 105, null),
+(106, null ,2.5, false, false, '','Toro Latin Gastrobar' ,'','','', null, null, 106, null),
+(107, null ,2, false, false, '','Gradska' ,'','','', null, null, 107, null),
+(108, null ,3, false, false, '','Salon 5' ,'','','', null, null, 108, null),
+(109, null ,4, false, false, '','Trattoria Pepe' ,'','','', null, null, 109, null),
+(110, null ,5, false, false, '','Ambar' ,'','','', null, null, 110, null),
+(111, null ,0, false, false, '','Zavicaj Restaurant' ,'','','', null, null, 111, null),
+(112, null ,0, false, false, '','Red Bread' ,'','','', null, null, 112, null),
+(113, null ,0, false, false, '','Homa Restaurant' ,'','','', null, null, 113, null),
+(114, null ,0, false, false, '','Voulez-Vous Cafe Restaurant' ,'','','', null, null, 114, null),
+(115, null ,0, false, false, '','Bistro Grad Hometown Food' ,'','','', null, null, 115, null),
+(116, null ,0, false, false, '','Salon 1905' ,'','','', null, null, 116, null),
+(117, null ,0, false, false, '','Frans' ,'','','', null, null, 117, null),
+(118, null ,0, false, false, '','Terminal GastroBar' ,'','','', null, null, 118, null),
+(119, null ,0, false, false, '','Faro' ,'','','', null, null, 119, null),
+(120, null ,0, false, false, '','New Reset' ,'','','', null, null, 120, null),
+(121, null ,0, false, false, '','Magaza Gastropub' ,'','','', null, null, 121, null);
+
+
 
 INSERT INTO `review` VALUES
-(101, '2020-07-02 09:03:42.433000', 1, 101, 101),
 (102, '2020-07-02 09:03:42.433000', 2, 102, 101),
 (103, '2020-07-02 09:03:42.433000', 3, 103, 101),
 (104, '2020-07-02 09:03:42.433000', 4, 104, 101),
@@ -59,7 +154,6 @@ INSERT INTO `review` VALUES
 (112, '2020-07-02 09:03:42.433000', 1, 106, 103);
 
 INSERT INTO `restaurant_restaurant_reviews` VALUES
-(101, 101),
 (102, 102),
 (103, 103),
 (104, 104),
@@ -72,7 +166,6 @@ INSERT INTO `restaurant_restaurant_reviews` VALUES
 (106, 112);
 
 INSERT INTO `registered_user_recommended_restaurants` VALUES
-(101, 101),
 (101, 102),
 (101, 103),
 (101, 104),

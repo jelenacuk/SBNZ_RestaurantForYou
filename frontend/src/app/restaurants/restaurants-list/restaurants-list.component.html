@@ -12,16 +12,15 @@
   <!-- Restaurant card -->
   <div class="float-container">
     <div class="float-child card" *ngFor="let restaurant of restaurants" (click)="goToDetails(restaurant.id)">
-      <img class="card-img-top" src={{getPicture(restaurant.image)}} width="220" height="220" alt="Card image cap">
+      <img class="card-img-top" src={{restaurant.photo}} width="220" height="220" alt="Card image cap">
       <div class="card-body">
 
-          <h5>{{restaurant.name}}</h5>
-          <span>Address: {{restaurant.street + ' ' + restaurant.number}}</span><br>
-          <span>Rating: {{restaurant.averageGrade}}</span><br>
+          <h5 class="text">{{restaurant.name}}</h5>
           <mat-chip-list aria-label="Fish selection">
-            <mat-chip>{{restaurant.kitchen}}</mat-chip>
-            <mat-chip>{{restaurant.ambience}}</mat-chip>
-          </mat-chip-list><br>
+            <mat-chip>Rating: {{restaurant.averageGrade}}</mat-chip>
+          </mat-chip-list>
+          <span>{{restaurant.location.address}}</span><br><br>
+          <mat-divider></mat-divider>
           <p class="description">{{restaurant.description}}</p>
 
       </div>

@@ -1,9 +1,5 @@
 package com.sbnz.RestaurantForYou.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +22,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.itextpdf.text.pdf.codec.Base64;
 import com.sbnz.RestaurantForYou.converter.RestaurantDTOConverter;
 import com.sbnz.RestaurantForYou.dto.ReportDTO;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
@@ -36,7 +31,6 @@ import com.sbnz.RestaurantForYou.model.RegisteredUser;
 import com.sbnz.RestaurantForYou.model.Restaurant;
 import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
 import com.sbnz.RestaurantForYou.model.Review;
-import com.sbnz.RestaurantForYou.repository.FeaturesRepository;
 import com.sbnz.RestaurantForYou.repository.RestaurantRepository;
 import com.sbnz.RestaurantForYou.repository.UserRepository;
 
@@ -46,25 +40,22 @@ public class RestaurantService {
 	private RestaurantRepository repository;
 	private KnowledgeService knowledgeService;
 	private UserRepository userRepository;
-	private FeaturesRepository featuresRepository;
 
 	@Autowired
 	public RestaurantService(RestaurantRepository repository, KnowledgeService knowledgeService,
-			UserRepository userRepository, FeaturesRepository featuresRepository) {
+			UserRepository userRepository) {
 		this.repository = repository;
 		this.knowledgeService = knowledgeService;
 		this.userRepository = userRepository;
-		this.featuresRepository = featuresRepository;
 	}
 	
-
 	public RestaurantDTO restaurantSugestion(UserExpectationsDTO userExpectations) {
 
 		KieSession kieSession = knowledgeService.getRulesSession();
 
 		// Inserting restaurants to session
 		RestaurantRrequirements restRequirements = new RestaurantRrequirements();
-		List<Restaurant> restaurants = repository.findAll();
+		List<Restaurant> restaurants = repository.findAllCompleted();
 		for (Restaurant restaurant : restaurants) {
 			kieSession.insert(restaurant);
 		}
@@ -101,46 +92,27 @@ public class RestaurantService {
 		bestRestaurant = (Restaurant) kieSession.getGlobal("bestRestaurant");
 		return bestRestaurant;
 	}
-	
-	public List<RestaurantDTO> search(SearchDto searchDto){
-		
-		List<Restaurant> restaurants = repository.findAll();
-		List<Restaurant> result = new ArrayList<Restaurant>();
-		if (!searchDto.getName().equals("")) {
-			InputStream template = RestaurantService.class
-					.getResourceAsStream("/templates/search.drt");
-			ObjectDataCompiler converter = new ObjectDataCompiler();
-			List<SearchDto> data = new ArrayList<>();
-			data.add(searchDto);
-			String drl = converter.compile(data, template);
-			System.out.println("\n\n" + drl + "\n\n");
-			KieSession kieSession = createKieSessionFromDRL(drl);
-			for (Restaurant restaurant : restaurants) {
-				kieSession.insert(restaurant);
-			}
-			kieSession.setGlobal("result", result);
-			kieSession.fireAllRules();
-		}
-		else {
-			result = restaurants;
-		}
-		return (result.stream().map(restaurant -> {
-			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant);
+
+	public List<RestaurantDTO> getRestoraunts(Pageable pageable) {
+
+		Page<Restaurant> restaurants = repository.findCompletedRestaurants(pageable);
+		return (restaurants.stream().map(restaurant -> {
+			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant, new ReportDTO(0, 0));
+			dto.setSize(restaurants.getTotalElements());
 			return dto;
 		})).collect(Collectors.toList());
 	}
 
-
 	public RestaurantDTO getRestaurant(Long id) {
-		
+
 		Optional<Restaurant> restaurantOpt = repository.findById(id);
 		KieSession kieSession = knowledgeService.getRulesSession();
 		kieSession.insert(restaurantOpt.get());
-		
+
 		RestaurantDTO restDTO = null;
 		QueryResults results = kieSession.getQueryResults("User ratings", id);
 		for (QueryResultsRow qrr : results) {
-			
+
 			// Retrieving values from drools query
 			Restaurant restaurant = (Restaurant) qrr.get("$restaurant");
 			long reviewNum = (long) qrr.get("$reviewNum");
@@ -153,50 +125,50 @@ public class RestaurantService {
 			RegisteredUser loggedUser = getLoggedUser();
 			if (loggedUser != null) {
 				for (Review review : restaurant.getRestaurantReviews()) {
-					if (review.getUser().getId() == loggedUser.getId()){
+					if (review.getUser().getId() == loggedUser.getId()) {
 						userReview = review.getRating();
 						break;
 					}
 				}
 			}
-			ReportDTO reportDTO = new ReportDTO(restaurant.getAverage(), reviewNum, ones, twos, threes, fours, fives, userReview);
+			ReportDTO reportDTO = new ReportDTO(restaurant.getAverage(), reviewNum, ones, twos, threes, fours, fives,
+					userReview);
 			restDTO = RestaurantDTOConverter.convertToDTO(restaurant, reportDTO);
 		}
 		return restDTO;
 	}
-	
 
-	public List<RestaurantDTO> getRestoraunts(Pageable pageable) {
-		
-		Page<Restaurant> restaurants = repository.findAll(pageable);
-		return (restaurants.stream().map(restaurant -> {
-			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant,
-					new ReportDTO(0, 0));
-			dto.setSize(restaurants.getTotalElements());
+	
+	public List<RestaurantDTO> search(SearchDto searchDto) {
+
+		List<Restaurant> restaurants = repository.findAllCompleted();
+		System.out.println("]tOVAKO = " + restaurants.size());
+		List<Restaurant> result = new ArrayList<Restaurant>();
+		if (!searchDto.getName().equals("")) {
+			InputStream template = RestaurantService.class.getResourceAsStream("/templates/search.drt");
+			ObjectDataCompiler converter = new ObjectDataCompiler();
+			List<SearchDto> data = new ArrayList<>();
+			data.add(searchDto);
+			String drl = converter.compile(data, template);
+			System.out.println("\n\n" + drl + "\n\n");
+			KieSession kieSession = createKieSessionFromDRL(drl);
+			for (Restaurant restaurant : restaurants) {
+				if (restaurant.isComplete()) {
+					kieSession.insert(restaurant);
+				}
+			}
+			kieSession.setGlobal("result", result);
+			kieSession.fireAllRules();
+		} else {
+			result = restaurants;
+		}
+		return (result.stream().map(restaurant -> {
+			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant);
 			return dto;
 		})).collect(Collectors.toList());
 	}
 
-	public boolean addNewRestaurant(RestaurantDTO dto) throws FileNotFoundException, IOException {
-
-		Restaurant newRestaurant = RestaurantDTOConverter.convertFromDTO(dto);
-		if (dto.getImage() != "" && dto.getImage() != null) {
-			byte[] imageByte = Base64.decode((dto.getImage().split(","))[1]);
-			String directory = "/images";
-			File f = new File(directory);
-			f.mkdirs();
-			try (FileOutputStream ff = new FileOutputStream(directory + "/" + dto.getName() + ".jpg")) {
-				ff.write(imageByte);
-			}
-			newRestaurant.setImage("/images/" + dto.getName() + ".jpg");
-		} else {
-			newRestaurant.setImage("/images/" + "defaultTicketBackground" + ".jpg");
-		}
-		featuresRepository.save(newRestaurant.getFeatures());
-		repository.save(newRestaurant);
-		return true;
-	}
-
+	
 	private KieSession createKieSessionFromDRL(String drl) {
 		KieHelper kieHelper = new KieHelper();
 		kieHelper.addContent(drl, ResourceType.DRL);
@@ -225,6 +197,5 @@ public class RestaurantService {
 		}
 		return null;
 	}
-
 
 }

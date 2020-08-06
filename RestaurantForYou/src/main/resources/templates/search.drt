@@ -16,7 +16,7 @@ template "searchByName-rules"
 rule "Get restaurants by name_@{row.rowNumber}"
 no-loop true
 when
-	$restaurant: Restaurant(name.contains("@{name}"));
+	$restaurant: Restaurant(name.toLowerCase().contains("@{name}".toLowerCase()));
 then
 	result.add($restaurant);
 end

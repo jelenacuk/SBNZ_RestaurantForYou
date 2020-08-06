@@ -8,5 +8,8 @@ export class FeaturesDTO {
     tv: boolean;
     outdoorSeating: boolean;
     parking: boolean;
+    capacity: string;
+    music: string[];
+    ambience: string[];
 
 }

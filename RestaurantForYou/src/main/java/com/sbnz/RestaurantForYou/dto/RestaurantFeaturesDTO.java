@@ -1,5 +1,6 @@
 package com.sbnz.RestaurantForYou.dto;
 
+import java.util.List;
 
 public class RestaurantFeaturesDTO {
 
@@ -11,6 +12,9 @@ public class RestaurantFeaturesDTO {
 	private boolean tv;
 	private boolean outdoorSeating;
 	private boolean parking;
+	private String capacity;
+	private List<String> ambience;
+	private List<String> music;
 	
 	public RestaurantFeaturesDTO() {
 		// TODO Auto-generated constructor stub
@@ -78,6 +82,30 @@ public class RestaurantFeaturesDTO {
 
 	public void setParking(boolean parking) {
 		this.parking = parking;
+	}
+
+	public String getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(String capacity) {
+		this.capacity = capacity;
+	}
+
+	public List<String> getAmbience() {
+		return ambience;
+	}
+
+	public void setAmbience(List<String> ambience) {
+		this.ambience = ambience;
+	}
+
+	public List<String> getMusic() {
+		return music;
+	}
+
+	public void setMusic(List<String> music) {
+		this.music = music;
 	}
 	
 	
