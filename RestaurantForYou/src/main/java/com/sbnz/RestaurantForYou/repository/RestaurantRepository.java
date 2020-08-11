@@ -24,4 +24,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 	
 	@Query("SELECT r FROM Restaurant r WHERE  r.completed = true")
 	List<Restaurant> findAllCompleted();
+	
+	@Query("SELECT r FROM Restaurant r WHERE  r.completed = false")
+	List<Restaurant> findAllInompleted();
 }

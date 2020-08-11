@@ -1,5 +1,6 @@
 package com.sbnz.RestaurantForYou.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,7 +47,8 @@ public class RestaurantFeatures {
 	private List<Ambience> ambience;
 	
 	public RestaurantFeatures() {
-		// TODO Auto-generated constructor stub
+		this.music = new ArrayList<Music>();
+		this.ambience = new ArrayList<Ambience>();
 	}
 
 	public boolean isLiveMusic() {

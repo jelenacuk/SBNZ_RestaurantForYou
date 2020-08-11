@@ -8,6 +8,8 @@ import { RestaurantRecommandationComponent } from './restaurant-recommandation/r
 import { RestaurantDetailsComponent } from './restaurants/restaurant-details/restaurant-details.component';
 import { ReportsPageComponent } from './reports/reports-page/reports-page.component';
 import { ApiComponent } from './api/api.component';
+import { AddFeaturesComponent } from './restaurants/add-features/add-features.component';
+import { IncompleteComponent } from './restaurants/incomplete/incomplete.component';
 
 
 const routes: Routes = [
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path: 'recommandation', component: RestaurantRecommandationComponent},
   {path: 'restaurant-details', component: RestaurantDetailsComponent},
   {path: 'reports', component: ReportsPageComponent},
-  {path: 'api', component: ApiComponent}
+  {path: 'api', component: ApiComponent},
+  {path: 'addFeatures', component: AddFeaturesComponent},
+  {path: 'incomplete', component: IncompleteComponent}
 ];
 
 @NgModule({

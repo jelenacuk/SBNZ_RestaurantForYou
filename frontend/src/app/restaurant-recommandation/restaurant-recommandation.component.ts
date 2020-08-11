@@ -53,8 +53,8 @@ export class RestaurantRecommandationComponent implements OnInit {
   }
 
   goBack() {
-    this.showForm = false;
-    this.showResult = true;
+    this.showResult = false;
+    this.showForm = true;
   }
 
   getUserExpectationDTO(): UserExpectations {

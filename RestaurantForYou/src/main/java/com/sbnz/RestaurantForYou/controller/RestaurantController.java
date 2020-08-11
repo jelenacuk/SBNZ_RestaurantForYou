@@ -58,4 +58,18 @@ public class RestaurantController {
 		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
 	}
 	
+	@PostMapping(value = "/updateRestaurant")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Boolean> update(@RequestBody RestaurantDTO dto) {
+		boolean ok = restaurantService.updateRestaurant(dto);
+		return new ResponseEntity<Boolean>(ok, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/incompleteRestaurants")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<List<RestaurantDTO>> incompleteRestaurants(){
+		List<RestaurantDTO> restaurants = restaurantService.incompleteRestaurants();
+		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
+	}
+	
 }

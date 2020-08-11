@@ -1,9 +1,9 @@
-<div class="form-wrapper" *ngIf = "restaurant" style="width: 70%; margin: auto; margin-top: 5%;">
-    <div class="box">
+<div class="form-wrapper" *ngIf = "restaurant" style=" margin: auto; margin-top: 5%; margin-bottom: 5%;">
+    <div class="box" style="width: 60%;">
 
             <div class="text-center">
                 <img style="display: block; margin: auto;" src={{restaurant.photo}}  alt="..." width="350" height="230">
-                <h2>{{restaurant.name}}</h2>
+                <h2>{{restaurant.name}} </h2>
                 <span style="font-size: 22px;">Rating: {{restaurant.reportDTO.average}} ( {{restaurant.reportDTO.numOfReviews}} )</span>
             </div><br>
 
@@ -26,10 +26,34 @@
                       </li> 
                 </ul>
             </div>
+            <!--<mat-chip-list class="chip"><mat-chip >{{restaurant.openNowText}}</mat-chip></mat-chip-list>-->
         </div>
         <br>
          <!--Content-->
          <div class="restaurantContent">
+            <h4>Contact</h4>
+            <mat-divider></mat-divider>
+            <table style="text-align: left;">
+                <tr>
+                    <td>Address:</td>
+                    <td> {{restaurant.location.address}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td> {{restaurant.contact.email}}</td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td> {{restaurant.contact.phone}}</td>
+                </tr>
+                <tr>
+                    <td>Site:</td>
+                    <td><a href="{{restaurant.contact.website}}"> {{restaurant.contact.website}}</a></td>
+                </tr>
+            </table>
+           
+            <br><br>
 
             <h4>Cuisine</h4>
             <mat-divider></mat-divider>

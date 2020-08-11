@@ -1,0 +1,98 @@
+<div class="form-wrapper" *ngIf = "restaurant" style=" margin: auto; margin-top: 5%; margin-bottom: 5%;">
+    <div class="box" style="width: 50%;">
+
+            <div class="text-center">
+                <img style="display: block; margin: auto;" src={{restaurant.photo}}  alt="..." width="350" height="230">
+                <h2>{{restaurant.name}} </h2>
+            </div><br>
+         <!--Content-->
+         <div class="restaurantContent">
+            <h4>Contact</h4>
+            <mat-divider></mat-divider>
+            <table style="text-align: left;">
+                <tr>
+                    <td>Address:</td>
+                    <td> {{restaurant.location.address}}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td> {{restaurant.contact.email}}</td>
+                </tr>
+                <tr>
+                    <td>Phone:</td>
+                    <td> {{restaurant.contact.phone}}</td>
+                </tr>
+                <tr>
+                    <td>Site:</td>
+                    <td><a href="{{restaurant.contact.website}}"> {{restaurant.contact.website}}</a></td>
+                </tr>
+            </table>
+           
+            <br><br>
+
+            <h4>Cuisine</h4>
+            <mat-divider></mat-divider>
+                <span *ngFor="let item of restaurant.cuisine; let i = index">{{item}}<span *ngIf = "i != (restaurant.cuisine.length - 1)">, </span> </span>
+            <br><br><br>
+
+
+            <h4>Dietary Restrictions</h4>
+            <mat-divider></mat-divider>
+            <span *ngFor="let item of restaurant.dietaryRestrictions; let i = index">{{item}}<span *ngIf = "i != (restaurant.dietaryRestrictions.length - 1)">, </span> </span>
+            <br><br><br>
+            
+            <h4>Description</h4>
+            <mat-divider></mat-divider>
+            {{restaurant.description}}
+         </div>
+         <br><br>
+         <form class="form" [formGroup]="addFeaturesForm" (ngSubmit)="addFeaturesForm.valid && onAddRestaurantSubmit()" noval>
+            
+      
+            <div class="row">   
+                <mat-form-field appearance="fill" class="col" >
+                    <mat-label>Prices</mat-label>
+                    <mat-select formControlName="price">
+                    <mat-option value={{price}} *ngFor = "let price of priceValues" >{{price}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="col" >
+                    <mat-label>Capacity</mat-label>
+                    <mat-select  formControlName="capacity">
+                        <mat-option value={{capacity}} *ngFor = "let capacity of capacityValues" >{{capacity}}</mat-option>
+                    </mat-select>
+                </mat-form-field>  
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="fill" class="col" >
+                    <mat-label >Ambience</mat-label>
+                    <mat-select multiple formControlName="ambience">
+                        <mat-option value={{ambience}} *ngFor = "let ambience of ambienceValues" >{{ambience}}</mat-option>
+                    </mat-select>
+                </mat-form-field>  
+                <mat-form-field appearance="fill" class="col" >
+                    <mat-label>Music</mat-label>
+                    <mat-select multiple formControlName="music">
+                        <mat-option value={{music}} *ngFor = "let music of musicValues" >{{music}}</mat-option>
+                    </mat-select>
+                </mat-form-field> 
+            </div>
+            <div class="row">
+                <mat-checkbox formControlName="alcohol" class="col">Alcohol</mat-checkbox>
+                <mat-checkbox formControlName="childern" class="col">Program for childern</mat-checkbox>
+                <mat-checkbox formControlName="garden" class="col">Outdoor seating</mat-checkbox>
+                <mat-checkbox formControlName="liveMusic" class="col">Live Music</mat-checkbox>
+                <mat-checkbox formControlName="reservations" class="col">Reservations</mat-checkbox>
+                <mat-checkbox formControlName="parking" class="col">Parking</mat-checkbox>
+                <mat-checkbox formControlName="wifi" class="col">Wifi</mat-checkbox>
+                <mat-checkbox formControlName="tv" class="col">Tv</mat-checkbox>
+            </div>
+
+            <div  class="submitDiv">
+                <button type="submit" class="btn btn-success">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

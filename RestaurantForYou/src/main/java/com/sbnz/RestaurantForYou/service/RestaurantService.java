@@ -23,14 +23,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.sbnz.RestaurantForYou.converter.RestaurantDTOConverter;
+import com.sbnz.RestaurantForYou.converter.RestaurantSetter;
 import com.sbnz.RestaurantForYou.dto.ReportDTO;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
 import com.sbnz.RestaurantForYou.dto.SearchDto;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
 import com.sbnz.RestaurantForYou.model.RegisteredUser;
 import com.sbnz.RestaurantForYou.model.Restaurant;
+import com.sbnz.RestaurantForYou.model.RestaurantFeatures;
 import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
 import com.sbnz.RestaurantForYou.model.Review;
+import com.sbnz.RestaurantForYou.repository.FeaturesRepository;
 import com.sbnz.RestaurantForYou.repository.RestaurantRepository;
 import com.sbnz.RestaurantForYou.repository.UserRepository;
 
@@ -40,13 +43,17 @@ public class RestaurantService {
 	private RestaurantRepository repository;
 	private KnowledgeService knowledgeService;
 	private UserRepository userRepository;
+	private FeaturesRepository featuresRepository;
+	private RestaurantMatchingService matchingService;
 
 	@Autowired
 	public RestaurantService(RestaurantRepository repository, KnowledgeService knowledgeService,
-			UserRepository userRepository) {
+			UserRepository userRepository, RestaurantMatchingService matchingService, FeaturesRepository featuresRepository) {
 		this.repository = repository;
 		this.knowledgeService = knowledgeService;
 		this.userRepository = userRepository;
+		this.matchingService = matchingService;
+		this.featuresRepository = featuresRepository;
 	}
 	
 	public RestaurantDTO restaurantSugestion(UserExpectationsDTO userExpectations) {
@@ -83,6 +90,7 @@ public class RestaurantService {
 			kieSession.insert(restaurant);
 		}
 		kieSession.insert(restRequirements);
+		kieSession.insert(matchingService);
 		Restaurant bestRestaurant = null;
 		kieSession.setGlobal("bestRestaurant", bestRestaurant);
 
@@ -167,7 +175,27 @@ public class RestaurantService {
 			return dto;
 		})).collect(Collectors.toList());
 	}
-
+	
+	public boolean updateRestaurant(RestaurantDTO dto) {
+		Restaurant restaurant = repository.findById(dto.getId()).get();
+		RestaurantFeatures features = RestaurantSetter.createFeatures(dto.getFeatures());
+		restaurant.setFeatures(features);
+		restaurant.setComplete(true);
+		featuresRepository.save(features);
+		repository.save(restaurant);
+		return true;
+	}
+	
+	public List<RestaurantDTO> incompleteRestaurants() {
+		List<Restaurant> restaurants = repository.findAllInompleted();
+		return (restaurants.stream().map(restaurant -> {
+			RestaurantDTO dto = RestaurantDTOConverter.convertToDTO(restaurant, new ReportDTO(0, 0));
+			return dto;
+		})).collect(Collectors.toList());
+	}
+	
+	
+	
 	
 	private KieSession createKieSessionFromDRL(String drl) {
 		KieHelper kieHelper = new KieHelper();

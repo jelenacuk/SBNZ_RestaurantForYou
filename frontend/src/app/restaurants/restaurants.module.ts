@@ -6,6 +6,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RestaurantDetailsComponent } from './restaurant-details/restaurant-details.component';
 import { ChartsModule } from 'ng2-charts';
 import { RestaurantBasicInfoComponent } from './restaurant-basic-info/restaurant-basic-info.component';
+import { AddFeaturesComponent } from './add-features/add-features.component';
+import { IncompleteComponent } from './incomplete/incomplete.component';
 
 
 
@@ -13,7 +15,9 @@ import { RestaurantBasicInfoComponent } from './restaurant-basic-info/restaurant
   declarations: [
     RestaurantsListComponent,
     RestaurantDetailsComponent,
-    RestaurantBasicInfoComponent
+    RestaurantBasicInfoComponent,
+    AddFeaturesComponent,
+    IncompleteComponent
   ],
   imports: [
     CommonModule,

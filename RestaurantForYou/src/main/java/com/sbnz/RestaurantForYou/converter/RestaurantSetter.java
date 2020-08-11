@@ -3,18 +3,29 @@ package com.sbnz.RestaurantForYou.converter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sbnz.RestaurantForYou.dto.RestaurantFeaturesDTO;
 import com.sbnz.RestaurantForYou.dto.api.ItemDto;
 import com.sbnz.RestaurantForYou.dto.api.RestaurantDataDto;
+import com.sbnz.RestaurantForYou.model.Ambience;
+import com.sbnz.RestaurantForYou.model.Capacity;
 import com.sbnz.RestaurantForYou.model.ContactInfo;
 import com.sbnz.RestaurantForYou.model.Location;
+import com.sbnz.RestaurantForYou.model.Music;
+import com.sbnz.RestaurantForYou.model.Price;
 import com.sbnz.RestaurantForYou.model.Restaurant;
+import com.sbnz.RestaurantForYou.model.RestaurantFeatures;
 
 public class RestaurantSetter {
 	
 	public static Restaurant restaurantSettter(Restaurant api, RestaurantDataDto dto) {
 		
 		api.setName(dto.getName());
-		api.setDescription(dto.getDescription());
+		if (dto.getDescription() == null) {
+			api.setDescription("");
+		}
+		else {
+			api.setDescription(dto.getDescription());
+		}
 		if (dto.isIs_closed()) {
 			api.setClosed(dto.isIs_closed());
 		}else {
@@ -65,6 +76,27 @@ public class RestaurantSetter {
 	private static ContactInfo createContactInfo(RestaurantDataDto dto) {
 		ContactInfo contact = new ContactInfo(dto.getPhone(), dto.getEmail(), dto.getWebsite());
 		return contact;
+	}
+	
+	public static RestaurantFeatures createFeatures(RestaurantFeaturesDTO dto) {
+		RestaurantFeatures features = new RestaurantFeatures();
+		for (String music: dto.getMusic()) {
+			features.getMusic().add(Music.StringToEnum(music));
+		}
+		for (String ambience: dto.getAmbience()) {
+			features.getAmbience().add(Ambience.StringToEnum(ambience));
+		}
+		features.setPrice(Price.StringToEnum(dto.getPrice()));
+		features.setCapacity(Capacity.StringToEnum(dto.getCapacity()));
+		features.setAlcohol(dto.isAlcohol());
+		features.setLiveMusic(dto.isLiveMusic());
+		features.setOutdoorSeating(dto.isOutdoorSeating());
+		features.setProgramForChildern(dto.isProgramForChiledern());
+		features.setReservations(dto.isReservations());
+		features.setTv(dto.isTv());
+		features.setWifi(dto.isTv());
+		features.setParking(dto.isParking());
+		return features;
 	}
 
 

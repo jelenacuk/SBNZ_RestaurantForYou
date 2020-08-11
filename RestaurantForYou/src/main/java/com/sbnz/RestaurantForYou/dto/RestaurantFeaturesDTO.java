@@ -13,11 +13,11 @@ public class RestaurantFeaturesDTO {
 	private boolean outdoorSeating;
 	private boolean parking;
 	private String capacity;
+	private String price;
 	private List<String> ambience;
 	private List<String> music;
 	
 	public RestaurantFeaturesDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public boolean isLiveMusic() {
@@ -106,6 +106,14 @@ public class RestaurantFeaturesDTO {
 
 	public void setMusic(List<String> music) {
 		this.music = music;
+	}
+
+	public String getPrice() {
+		return price;
+	}
+
+	public void setPrice(String price) {
+		this.price = price;
 	}
 	
 	

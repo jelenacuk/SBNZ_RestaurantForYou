@@ -22,7 +22,7 @@ export class RestaurantsListComponent implements OnInit {
 
   ngOnInit() {
     this.page.pageIndex = 0;
-    this.page.pageSize = 4;
+    this.page.pageSize = 8;
     this.getRestaurants();
   }
 

@@ -22,3 +22,9 @@
   h4 {
     color: #FF6A5C;
 }
+
+
+.chip mat-chip{
+  background-color: lawngreen;
+  font-size: large;
+}

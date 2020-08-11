@@ -32,6 +32,7 @@ rule "Special occasion with partner"
 		restRequirements: RestaurantRrequirements();
 	then
 		modify(restRequirements){getAmbience().add(Ambience.ROMANTIC);};
+		modify(restRequirements){getAmbience().add(Ambience.LUXURIOUS);};
 end;
 
 
@@ -59,7 +60,7 @@ rule "The user goes alone or with friends for no particular reason"
 	salience 100
 	agenda-group "requirments"
 	when
-		userExpectation: UserExpectationsDTO(company == "Alone" || company == "Friends");
+		userExpectation: UserExpectationsDTO(company == "Alone" || company == "Friends" || company == "Family");
 		restRequirements: RestaurantRrequirements();
 	then
 		modify(restRequirements){getAmbience().add(Ambience.RELAXED);};
@@ -73,6 +74,16 @@ rule "Relaxed atmosphere"
 	then
 		modify(restRequirements){getFeatures().setWifi(true)};
 		modify(restRequirements){getFeatures().setTv(true)};
+end;
+
+rule "Tourist"
+	salience 100
+	agenda-group "requirments"
+	when
+		userExpectation: UserExpectationsDTO( tourist=="Yes");
+		restRequirements: RestaurantRrequirements();
+	then
+		modify(restRequirements){getAmbience().add(Ambience.TRADITIONAL);};
 end;
 
 rule "Family lunch"

@@ -11,5 +11,6 @@ export class FeaturesDTO {
     capacity: string;
     music: string[];
     ambience: string[];
+    price: string;
 
 }

@@ -71,6 +71,7 @@ export class RestaurantDetailsComponent implements OnInit {
         if (response === true) {
           this.snackBar.open('Success!');
           this.selectedValue = star;
+          window.location.reload();
         } else {
           this.snackBar.open('You can only rate restaurants that are recommended to you.');
         }

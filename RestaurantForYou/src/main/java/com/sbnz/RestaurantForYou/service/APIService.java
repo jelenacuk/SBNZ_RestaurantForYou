@@ -65,6 +65,7 @@ public class APIService {
 				}
 				if (restaurant.getFeatures() == null) {
 					restaurant.setCompleted(false);
+					restaurant.setAverage(0.0);
 				}
 				else {
 					restaurant.setCompleted(true);

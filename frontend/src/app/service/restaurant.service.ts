@@ -29,8 +29,8 @@ export class RestaurantService {
     return this.http.get<RestaurantDto>(this.constants.restaurantPath + '/' + id, { headers: this.headers });
   }
 
-  addRestaurantd(dto: AddRestaurantDto): Observable<boolean> {
-    return this.http.post<boolean>(this.constants.restaurantPath + '/addRestaurant', dto, { headers: this.headers });
+  updateRestaurant(dto: RestaurantDto): Observable<boolean> {
+    return this.http.post<boolean>(this.constants.restaurantPath + '/updateRestaurant', dto, { headers: this.headers });
   }
 
   restaurantRecommandation(dto: UserExpectations): Observable<RestaurantDto> {
@@ -44,6 +44,10 @@ export class RestaurantService {
 
   search(dto: SearchDto): Observable<RestaurantDto[]> {
     return this.http.post<RestaurantDto[]>(this.constants.restaurantPath + '/search', dto, { headers: this.headers });
+  }
+
+  getIncompleteRestaurants() {
+    return this.http.get<RestaurantDto[]>(this.constants.restaurantPath + '/incompleteRestaurants', { headers: this.headers });
   }
 
 }

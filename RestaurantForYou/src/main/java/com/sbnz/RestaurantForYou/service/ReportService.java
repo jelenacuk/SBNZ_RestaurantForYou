@@ -53,7 +53,7 @@ public class ReportService {
 		for (User user : users) {
 			kSession.insert((RegisteredUser) user);
 		}
-		List<Restaurant> restaurants = restaurantRepository.findAll();
+		List<Restaurant> restaurants = restaurantRepository.findAllCompleted();
 		for (Restaurant restaurant : restaurants) {
 			kSession.insert(restaurant);
 		}
@@ -73,14 +73,15 @@ public class ReportService {
 	}
 
 	public Set<DissatisfiedUsersDTO> getDissatisfiedUsers() {
-		
 		// inserting data into session
 		KieSession kSession = knowledgeService.getRulesSession();
 		List<User> users = userRepository.findAll();
 		for (User user : users) {
-			kSession.insert((RegisteredUser) user);
+			RegisteredUser reg = (RegisteredUser) user;
+			System.out.println("\t\tUbacen: " + user.getUsername() + " sa " + reg.getRecommendedRestaurants().size() + " preporucenih." );
+			kSession.insert(reg);
 		}
-		List<Restaurant> restaurants = restaurantRepository.findAll();
+		List<Restaurant> restaurants = restaurantRepository.findAllCompleted();
 		for (Restaurant restaurant : restaurants) {
 			kSession.insert(restaurant);
 		}
@@ -115,8 +116,8 @@ public class ReportService {
 		KieSession kieSession = createKieSessionFromDRL(drl);
 
 		// Application of rules and collecting result
-		List<Restaurant> result = new ArrayList<Restaurant>();
-		for (Restaurant restaurant : restaurantRepository.findAll()) {
+		List<Restaurant> result = new ArrayList<>();
+		for (Restaurant restaurant : restaurantRepository.findAllCompleted()) {
 			kieSession.insert(restaurant);
 		}
 		kieSession.setGlobal("result", result);

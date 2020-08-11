@@ -28,7 +28,9 @@ public class RestaurantDTOConverter {
 		if (restaurant.getPrice() != null) {
 			dto.setPrice(restaurant.getPrice().toString());
 		}
-		dto.setFeatures(convertFeaturesToDTO(restaurant.getFeatures()));
+		if (restaurant.getFeatures() != null) {
+			dto.setFeatures(convertFeaturesToDTO(restaurant.getFeatures()));
+		}
 		if (restaurant.getLocation() != null) {
 			dto.setLocation(RestaurantDTOConverter.convertLocationToDTO(restaurant.getLocation()));
 		}

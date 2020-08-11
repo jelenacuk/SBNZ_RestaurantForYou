@@ -21,6 +21,7 @@ import { ReportsPageComponent } from './reports/reports-page/reports-page.compon
 import { DissatisfiedUsersComponent } from './reports/dissatisfied-users/dissatisfied-users.component';
 import { ApiComponent } from './api/api.component';
 import { AlarmsComponent } from './reports/alarms/alarms.component';
+import { StickyNavModule } from 'ng2-sticky-nav';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { AlarmsComponent } from './reports/alarms/alarms.component';
     RestaurantsModule,
     HomePageModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    StickyNavModule
   ],
   providers: [
     UserService,
