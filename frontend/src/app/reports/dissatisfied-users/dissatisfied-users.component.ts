@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DissatisfiedUserDto } from 'src/app/dto/dissatisfied-users-dto';
+import { RestaurantDto } from 'src/app/dto/restaurant-dto';
+import { UserDto } from 'src/app/dto/user-dto';
 import { ReportService } from 'src/app/service/report.service';
 
 @Component({

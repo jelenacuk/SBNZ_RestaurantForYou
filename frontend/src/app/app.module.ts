@@ -12,28 +12,14 @@ import { ConstantsService } from './service/constants.service';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RestaurantsModule } from './restaurants/restaurants.module';
-import { HomePageModule } from './homepage-common/homepage.module';
-import { RestaurantRecommandationComponent } from './restaurant-recommandation/restaurant-recommandation.component';
+import { HomePageModule } from './homepage-common/homepage_common.module';
 import { ChartsModule } from 'ng2-charts';
-import { RatingRangeComponent } from './reports/rating-range/rating-range.component';
-import { UserRatingsComponent } from './reports/user-ratings/user-ratings.component';
-import { ReportsPageComponent } from './reports/reports-page/reports-page.component';
-import { DissatisfiedUsersComponent } from './reports/dissatisfied-users/dissatisfied-users.component';
-import { ApiComponent } from './api/api.component';
-import { AlarmsComponent } from './reports/alarms/alarms.component';
 import { StickyNavModule } from 'ng2-sticky-nav';
+import { ReportsModule } from './reports/reports.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RestaurantRecommandationComponent,
-    ReportsPageComponent,
-    RatingRangeComponent,
-    UserRatingsComponent,
-    ReportsPageComponent,
-    DissatisfiedUsersComponent,
-    ApiComponent,
-    AlarmsComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -43,12 +29,13 @@ import { StickyNavModule } from 'ng2-sticky-nav';
     FormsModule,
     MaterialModule,
     HttpClientModule,
-    UsersModule,
-    RestaurantsModule,
-    HomePageModule,
     ReactiveFormsModule,
     ChartsModule,
-    StickyNavModule
+    StickyNavModule,
+    HomePageModule,
+    UsersModule,
+    RestaurantsModule,
+    ReportsModule,
   ],
   providers: [
     UserService,

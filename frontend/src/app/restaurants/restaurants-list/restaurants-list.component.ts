@@ -69,5 +69,4 @@ export class RestaurantsListComponent implements OnInit {
   getPicture(picture: string): string {
     return this.constants.localhost + picture;
   }
-
 }

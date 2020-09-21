@@ -50,6 +50,8 @@ public class Restaurant {
 	private Double average;
 	@OneToMany()
 	private Set<Review> restaurantReviews = new HashSet<Review>();
+	@OneToMany()
+	private Set<Comment> restaurantComments = new HashSet<Comment>();
 	@Column
 	private LocalDate alarm;
 	@Column
@@ -219,5 +221,13 @@ public class Restaurant {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Set<Comment> getRestaurantComments() {
+		return restaurantComments;
+	}
+
+	public void setRestaurantComments(Set<Comment> restaurantComments) {
+		this.restaurantComments = restaurantComments;
 	}
 }

@@ -12,7 +12,7 @@ end
 
 rule "The Best Restaurant" 
 	agenda-group "recommendation"
-	salience((100*$matchingService.calculateMatching($restaurant, $requirements)) / 10)
+	salience( $matchingService.calculateMatching($restaurant, $requirements) )
     when
 		$requirements: RestaurantRrequirements();
 		$restaurant: Restaurant($name: name, $value: score);

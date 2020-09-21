@@ -24,15 +24,18 @@ import org.springframework.stereotype.Service;
 
 import com.sbnz.RestaurantForYou.converter.RestaurantDTOConverter;
 import com.sbnz.RestaurantForYou.converter.RestaurantSetter;
+import com.sbnz.RestaurantForYou.dto.CommentDto;
 import com.sbnz.RestaurantForYou.dto.ReportDTO;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
 import com.sbnz.RestaurantForYou.dto.SearchDto;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
+import com.sbnz.RestaurantForYou.model.Comment;
 import com.sbnz.RestaurantForYou.model.RegisteredUser;
 import com.sbnz.RestaurantForYou.model.Restaurant;
 import com.sbnz.RestaurantForYou.model.RestaurantFeatures;
 import com.sbnz.RestaurantForYou.model.RestaurantRrequirements;
 import com.sbnz.RestaurantForYou.model.Review;
+import com.sbnz.RestaurantForYou.repository.CommentRepository;
 import com.sbnz.RestaurantForYou.repository.FeaturesRepository;
 import com.sbnz.RestaurantForYou.repository.RestaurantRepository;
 import com.sbnz.RestaurantForYou.repository.UserRepository;
@@ -45,15 +48,17 @@ public class RestaurantService {
 	private UserRepository userRepository;
 	private FeaturesRepository featuresRepository;
 	private RestaurantMatchingService matchingService;
+	private CommentRepository commentRepository;
 
 	@Autowired
 	public RestaurantService(RestaurantRepository repository, KnowledgeService knowledgeService,
-			UserRepository userRepository, RestaurantMatchingService matchingService, FeaturesRepository featuresRepository) {
+			UserRepository userRepository, RestaurantMatchingService matchingService, FeaturesRepository featuresRepository, CommentRepository commentRepository) {
 		this.repository = repository;
 		this.knowledgeService = knowledgeService;
 		this.userRepository = userRepository;
 		this.matchingService = matchingService;
 		this.featuresRepository = featuresRepository;
+		this.commentRepository = commentRepository;
 	}
 	
 	public RestaurantDTO restaurantSugestion(UserExpectationsDTO userExpectations) {
@@ -194,6 +199,15 @@ public class RestaurantService {
 		})).collect(Collectors.toList());
 	}
 	
+	
+	public List<CommentDto> getComments(Pageable pageable) {
+		Page<Comment> commennts =  commentRepository.findAll(pageable);
+		return (commennts.stream().map(comment -> {
+			String authorName = comment.getUser().getFirstName()+ " " + comment.getUser().getLastName() + "(" + comment.getUser().getUsername()+ ")";
+			CommentDto dto = new CommentDto(comment.getRestaurant().getId(), comment.getText(), authorName, commennts.getTotalElements());
+			return dto;
+		})).collect(Collectors.toList());
+	}
 	
 	
 	

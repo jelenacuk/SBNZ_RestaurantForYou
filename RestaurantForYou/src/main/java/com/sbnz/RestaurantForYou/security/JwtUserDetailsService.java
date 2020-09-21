@@ -25,6 +25,9 @@ public class JwtUserDetailsService implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
 		}
+		if (!user.isActive()) {
+			throw new IllegalArgumentException("This account is blocked");
+		}
 		return user;
 	}
 }

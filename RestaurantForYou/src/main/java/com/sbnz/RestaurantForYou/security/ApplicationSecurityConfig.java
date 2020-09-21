@@ -54,25 +54,27 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
 
-				// comunication between client and server is stateless
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+			// comunication between client and server is stateless
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
-				// don't authenticate this particular request
-				.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/**").permitAll()
+			// don't authenticate this particular request
+			.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/api/**")
+			.permitAll()
+			.antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/registration","/api/restaraunts/search" )
+			.permitAll()
+			.antMatchers(HttpMethod.GET, "/api/restaraunts/", "/api/**").permitAll()
 
-				// all other requests need to be authenticated
-				.anyRequest().authenticated().and()
-
-				// intercept every request and add filter
-				.addFilterBefore(verifyTokenFilter, UsernamePasswordAuthenticationFilter.class);
+			// all other requests need to be authenticated
+			.anyRequest().authenticated().and()
+			
+			// intercept every request and add filter
+			.addFilterBefore(verifyTokenFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 	@Override
 	public void configure(WebSecurity web) {
 		// TokenAuthenticationFilter will ignore the following
-		web.ignoring().antMatchers(HttpMethod.POST, "/api/**");
-		web.ignoring().antMatchers(HttpMethod.GET, "/api/**");
+		web.ignoring().antMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/registration");
+		web.ignoring().antMatchers(HttpMethod.GET,"/api/**");
 	}
 }

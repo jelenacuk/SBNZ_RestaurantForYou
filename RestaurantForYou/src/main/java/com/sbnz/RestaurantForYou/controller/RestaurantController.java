@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sbnz.RestaurantForYou.dto.CommentDto;
 import com.sbnz.RestaurantForYou.dto.RestaurantDTO;
 import com.sbnz.RestaurantForYou.dto.SearchDto;
 import com.sbnz.RestaurantForYou.dto.UserExpectationsDTO;
@@ -32,23 +33,22 @@ public class RestaurantController {
 		this.restaurantService = restaurantService;
 	}
 	
-	
 	@GetMapping
 	public ResponseEntity<List<RestaurantDTO>> getRestaurants(Pageable pageable){
 		List<RestaurantDTO> restaurants = restaurantService.getRestoraunts(pageable);
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{id}")
+	@GetMapping(value = "restaurantDetails/{id}")
 	public ResponseEntity<RestaurantDTO> getRestaurant(@PathVariable("id") Long id) {
 		RestaurantDTO restaurant = restaurantService.getRestaurant(id);
 		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
 	}
-
-	@PostMapping(value = "/search")
-	public ResponseEntity<List<RestaurantDTO>> search(@RequestBody SearchDto dto) {
-		List<RestaurantDTO> restaurants = restaurantService.search(dto);
-		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
+	@PostMapping(value = "/updateRestaurant")
+	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+	public ResponseEntity<Boolean> update(@RequestBody RestaurantDTO dto) {
+		boolean ok = restaurantService.updateRestaurant(dto);
+		return new ResponseEntity<Boolean>(ok, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/restaurantSugestion")
@@ -58,18 +58,24 @@ public class RestaurantController {
 		return new ResponseEntity<RestaurantDTO>(restaurant, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/updateRestaurant")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public ResponseEntity<Boolean> update(@RequestBody RestaurantDTO dto) {
-		boolean ok = restaurantService.updateRestaurant(dto);
-		return new ResponseEntity<Boolean>(ok, HttpStatus.OK);
+	@PostMapping(value = "/search")
+	public ResponseEntity<List<RestaurantDTO>> search(@RequestBody SearchDto dto) {
+		List<RestaurantDTO> restaurants = restaurantService.search(dto);
+		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
 	}
+	
 	
 	@GetMapping(value = "/incompleteRestaurants")
 	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 	public ResponseEntity<List<RestaurantDTO>> incompleteRestaurants(){
 		List<RestaurantDTO> restaurants = restaurantService.incompleteRestaurants();
 		return new ResponseEntity<List<RestaurantDTO>>(restaurants, HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/comments/{id}")
+	public ResponseEntity<List<CommentDto>> getComments(@PathVariable("id") Long id, Pageable pageable){
+		List<CommentDto> comments = restaurantService.getComments(pageable);
+		return new ResponseEntity<List<CommentDto>>(comments, HttpStatus.OK);
 	}
 	
 }

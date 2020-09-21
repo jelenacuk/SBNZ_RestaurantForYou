@@ -8,6 +8,8 @@ public class RegistrationDTO {
 	private String username;
 	private String password;
 	private String repeatedPassword;
+	private boolean active;
+	private long size;
 	
 	public RegistrationDTO() {
 		// TODO Auto-generated constructor stub
@@ -59,6 +61,22 @@ public class RegistrationDTO {
 
 	public void setRepeatedPassword(String repeatedPassword) {
 		this.repeatedPassword = repeatedPassword;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
 	}
 	
 	

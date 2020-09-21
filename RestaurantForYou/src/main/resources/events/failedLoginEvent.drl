@@ -10,17 +10,19 @@ declare SuspiciousUserEvent
     reason: String
 end;
 
-rule "More than 5 logging in unsuccessfully in 1 minute from one user"
+rule "More than 10 logging in unsuccessfully in 1 minute from one user"
     when
         $t1: FailedLogInEvent($id: user.getId(), $user: user)
-        Number(intValue >= 5) from accumulate(
+        Number(intValue >= 10) from accumulate(
             $t2: FailedLogInEvent(
                 this != $t1, 
                 user.getId() == $id) over window:time( 1m ),
             count($t2)
         )
-        not (SuspiciousUserEvent(user.getId() == $id, reason == "More than 5 unsuccessful login attempts in 2 minutes from one user."))
+        not (SuspiciousUserEvent(user.getId() == $id, 
+        	reason == "More than 10 unsuccessful login attempts in 2 minutes from one user."))
     then
-    	System.out.println("WARNING: More than 5 unsuccessful login attempts in 2 minutes from one user. ");
-        insert(new SuspiciousUserEvent($user, "More than 5 unsuccessful login attempts in 2 minutes from one user."));
+    	modify($user) { setActive(false) }
+    	String reason = "More than 10 unsuccessful login attempts in 2 minutes from one user.";
+        insert(new SuspiciousUserEvent($user, reason));
 end;

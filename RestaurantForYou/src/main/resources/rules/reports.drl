@@ -16,10 +16,10 @@ declare AlreadyProcessed
 	ruleName: String
 end
 
-rule "In the last two months for 5 recommended restaurants user gave a bad grade in at least 3 cases"
+rule "In the last two months for 10 recommended restaurants user gave a bad grade in at least 5 cases"
 	agenda-group "dissatisfied"
 	when
-		$user: RegisteredUser($recommendedRestaurants: recommendedRestaurants, recommendedRestaurants.size() >= 5);
+		$user: RegisteredUser($recommendedRestaurants: recommendedRestaurants, recommendedRestaurants.size() >= 10);
 		accumulate (
 			Restaurant( $restaurant: this, $reviews: restaurantReviews) from $recommendedRestaurants
 			and 
@@ -29,7 +29,7 @@ rule "In the last two months for 5 recommended restaurants user gave a bad grade
          	),
 			$restaurants: collectList($restaurant)
 		);
-		eval($restaurants.size() >= 3);
+		eval($restaurants.size() >= 5);
 	then
 		System.out.println("\tDissatisfied User => : " + $user.getUsername() + ", bad grades: " + $restaurants.size());			
 		dissatisfiedUsers.add(new UserRestaurantsDTO($user, $restaurants ));
@@ -40,12 +40,11 @@ query getNumOfRecommendations(Long restaurantId, Long $NumOfRecommendations)
 	$NumOfRecommendations:= Number() from accumulate (
 		RegisteredUser($user: this, $recommendedRestaurants: recommendedRestaurants ) from $users
 		and
-		List(size == 1) from collect(
-         	Restaurant( id == restaurantId ) from $recommendedRestaurants
-         ),
+		List(size == 1) from collect(Restaurant( id == restaurantId ) from $recommendedRestaurants),
 		count($user)
 	);		
 end;
+
 rule "Most times recommended restaurant"
 	agenda-group "popularity"
 	salience ($NumOfRecommendations*10)

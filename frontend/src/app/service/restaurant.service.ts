@@ -4,7 +4,7 @@ import { ConstantsService } from './constants.service';
 import { Observable } from 'rxjs';
 import { RestaurantDto } from '../dto/restaurant-dto';
 import { PageEvent } from '@angular/material';
-import { AddRestaurantDto } from '../dto/add-restaurant-dto';
+import { CommentDto } from '../dto/comment-dto';
 import { UserExpectations } from '../dto/user-expectations-dto';
 import { ReviewDto } from '../dto/review-dto';
 import { SearchDto } from '../dto/search-dto';
@@ -26,7 +26,7 @@ export class RestaurantService {
   }
 
   getRestaurantById(id: number): Observable<RestaurantDto> {
-    return this.http.get<RestaurantDto>(this.constants.restaurantPath + '/' + id, { headers: this.headers });
+    return this.http.get<RestaurantDto>(this.constants.restaurantPath + '/restaurantDetails/' + id, { headers: this.headers });
   }
 
   updateRestaurant(dto: RestaurantDto): Observable<boolean> {
@@ -38,8 +38,9 @@ export class RestaurantService {
      dto, { headers: this.headers });
   }
 
-  rateRestaurant(dto: ReviewDto): Observable<boolean> {
-    return this.http.post<boolean>(this.constants.userPath + '/rate' , dto, { headers: this.headers });
+  getComments(id: number, event: PageEvent): Observable<CommentDto[]> {
+    return this.http.get<CommentDto[]>(this.constants.restaurantPath + '/comments/' + id + '/?page=' + event.pageIndex + '&size=' +
+    event.pageSize , { headers: this.headers });
   }
 
   search(dto: SearchDto): Observable<RestaurantDto[]> {

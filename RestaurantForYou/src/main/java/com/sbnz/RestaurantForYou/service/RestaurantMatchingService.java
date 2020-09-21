@@ -28,7 +28,7 @@ public class RestaurantMatchingService {
 	
 		if (requerments.getPrice().contains(restaurant.getFeatures().getPrice())) {
 			System.out.println("\tMatch => PRICE");
-			matching +=2;
+			matching +=3;
 		}
 		if (requerments.getCapacity().contains(restaurant.getFeatures().getCapacity())) {
 			System.out.println("\tMatch => CAPACITY");
@@ -38,7 +38,7 @@ public class RestaurantMatchingService {
 			for (String item: restaurant.getCuisine()) {
 				if (item.equals(kitchen)) {
 					System.out.println("\tMatch => KITCHEN " + kitchen);
-					matching +=2;
+					matching +=3;
 					break;
 				}
 			}
@@ -47,7 +47,7 @@ public class RestaurantMatchingService {
 			for (Music item: restaurant.getFeatures().getMusic()) {
 				if (item.equals(music)) {
 					System.out.println("\tMatch => MUSIC " + music);
-					matching +=1;
+					matching +=2;
 					break;
 				}
 			}
@@ -56,7 +56,7 @@ public class RestaurantMatchingService {
 			for (Ambience item: restaurant.getFeatures().getAmbience()) {
 				if (item.equals(ambience)) {
 					System.out.println("\tMatch => AMBIENCE " + ambience);
-					matching +=1;
+					matching +=2;
 					break;
 				}
 			}

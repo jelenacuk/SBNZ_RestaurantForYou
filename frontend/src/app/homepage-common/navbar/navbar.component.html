@@ -12,8 +12,10 @@
             <button mat-button (click) = "navigateToHome()"><i class="fa fa-home fa-2x" aria-hidden="true"> </i>&nbsp;Home</button>
             <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/incomplete"><i class="fa fa-database fa-2x" aria-hidden="true"> </i>&nbsp;Incomplete Restaurants</button>
             <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/reports"><i class="fa fa-bar-chart fa-2x" aria-hidden="true"> </i>&nbsp;Reports</button>
+            <button mat-button *ngIf = "role === 'ROLE_ADMIN'" routerLink = "/users"><i class="fa fa-users fa-2x" aria-hidden="true"> </i>&nbsp;Users</button>
+
             <button mat-button *ngIf = "role === 'ROLE_REGISTERED'" routerLink = "/recommandation"><i class="fa fa-cutlery fa-2x" aria-hidden="true"> </i>&nbsp;Restaurant Reccomandation</button>
-            <button mat-button><i class="fa fa-user fa-2x" aria-hidden="true"> </i>&nbsp;Profile</button>
+            <button mat-button *ngIf = "role === 'ROLE_REGISTERED'"><i class="fa fa-user fa-2x" aria-hidden="true"> </i>&nbsp;Profile</button>
             <button mat-button (click)="onLogOut()"><i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>Log Out</button>
         </div>
     </mat-toolbar-row>

@@ -33,11 +33,12 @@ public class User implements UserDetails {
 	private String lastName;
 	@Column(nullable = false)
 	private String email;
+	@Column
+	private boolean active;
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	
 	public User() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public User(String username, String password) {
@@ -129,6 +130,14 @@ public class User implements UserDetails {
 
 	public void setRole(Role role) {
 		this.role = role;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 

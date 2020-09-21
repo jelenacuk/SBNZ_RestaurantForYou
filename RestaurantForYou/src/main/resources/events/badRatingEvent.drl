@@ -3,7 +3,6 @@ import com.sbnz.RestaurantForYou.model.*;
 import com.sbnz.RestaurantForYou.events.*;
 import java.time.LocalDate;
 
-
 declare ProcessedEvent
 	eventDate: String
 end
@@ -20,11 +19,8 @@ rule "Rating event"
         not ProcessedEvent(eventDate == $ratingEvent.getExecutionTime().toString());
     then
     	modify($ratingEvent) { getReview().getRestaurant().setAverage(Double.parseDouble($average.toString())) }
-		insert( new ProcessedEvent($ratingEvent.getExecutionTime().toString()) );
-		
+		insert( new ProcessedEvent($ratingEvent.getExecutionTime().toString()) );		
 end;
-
-
 
 rule "The restaurant rating is below 2.5 a minimum of 3 users rated it"
 	agenda-group "rating"

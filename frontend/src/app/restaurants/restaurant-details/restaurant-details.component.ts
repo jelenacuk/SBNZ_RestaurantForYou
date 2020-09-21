@@ -8,6 +8,7 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
 import { ReportDTO } from 'src/app/dto/report-dto';
 import { MatSnackBar } from '@angular/material';
+import { UserService } from 'src/app/service/user.service';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -33,7 +34,7 @@ export class RestaurantDetailsComponent implements OnInit {
 
 
   constructor(private restaurantService: RestaurantService, private constants: ConstantsService,
-              private snackBar: MatSnackBar) { }
+              private  userService: UserService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
       this.role = localStorage.getItem('role');
@@ -66,7 +67,7 @@ export class RestaurantDetailsComponent implements OnInit {
     const dto: ReviewDto = new ReviewDto();
     dto.rating = star;
     dto.restaurantId = this.restaurantId;
-    this.restaurantService.rateRestaurant(dto).subscribe(
+    this.userService.rateRestaurant(dto).subscribe(
       (response => {
         if (response === true) {
           this.snackBar.open('Success!');

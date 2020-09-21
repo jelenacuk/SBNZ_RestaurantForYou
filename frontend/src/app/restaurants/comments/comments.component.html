@@ -1,0 +1,17 @@
+<div>
+    <div *ngIf = "this.role === 'ROLE_REGISTERED'">
+        <textarea name="comment"  id="" style="width: 100%;" placeholder="Write comment" 
+        [ngModelOptions]="{standalone: true}" [(ngModel)] = "text">
+        </textarea>
+        <button (click) = "submitComment()">Submit</button>
+    </div>
+    <br>
+    <div class="comment_border" *ngFor = "let comment of comments"> 
+        <div><b>{{comment.authorName}} </b></div>
+        <div>{{comment.text}}</div>
+    </div>
+    <!-- Paginator -->
+  <mat-paginator class="paginator" [length]="page.length" [pageIndex]="page.pageIndex" [pageSize]="page.pageSize"
+  [pageSizeOptions]="[3, 4, 5, 6, 7, 8]" (page)="nextPage($event)" showFirstLastButtons>
+</mat-paginator>
+</div>

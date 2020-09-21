@@ -19,6 +19,7 @@ public class RegistrationDTOConverter {
 		user.setLastName(dto.getLastName());
 		user.setEmail(dto.getEmail());
 		user.setRole(Role.ROLE_REGISTERED);
+		user.setActive(true);
 		return user;
 
 	}
@@ -30,6 +31,7 @@ public class RegistrationDTOConverter {
 		dto.setLastName(user.getLastName());
 		dto.setEmail(user.getEmail());
 		dto.setUsername(user.getUsername());
+		dto.setActive(user.isActive());
 		return dto;
 	}
 }

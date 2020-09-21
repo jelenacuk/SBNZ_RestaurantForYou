@@ -1,15 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { RestaurantDto } from 'src/app/dto/restaurant-dto';
-import { RestaurantService } from 'src/app/service/restaurant.service';
 import { ConstantsService } from 'src/app/service/constants.service';
 import { ReportService } from 'src/app/service/report.service';
 
 @Component({
-  selector: 'app-user-ratings',
-  templateUrl: './user-ratings.component.html',
-  styleUrls: ['./user-ratings.component.css']
+  selector: 'app-popularity',
+  templateUrl: './popularity.component.html',
+  styleUrls: ['./popularity.component.css']
 })
-export class UserRatingsComponent implements OnInit {
+export class PopularityComponent implements OnInit {
 
   private numOfMonths: number;
   private mostRecommended: RestaurantDto;

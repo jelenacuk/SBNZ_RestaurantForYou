@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Question } from '../dto/question';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserExpectations } from '../dto/user-expectations-dto';
-import { RestaurantService } from '../service/restaurant.service';
-import { RestaurantDto } from '../dto/restaurant-dto';
-import { ConstantsService } from '../service/constants.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { Question } from 'src/app/dto/question';
+import { RestaurantDto } from 'src/app/dto/restaurant-dto';
+import { RestaurantService } from 'src/app/service/restaurant.service';
+import { ConstantsService } from 'src/app/service/constants.service';
+import { UserExpectations } from 'src/app/dto/user-expectations-dto';
 
 @Component({
   selector: 'app-restaurant-recommandation',
